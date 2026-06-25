@@ -1,0 +1,112 @@
+{
+  "name": "loop-engineering-go",
+  "version": "1.0.0",
+  "description": "Loop Engineering for Go projects — rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
+  "author": "madicen",
+  "tags": ["go", "loop-engineering", "verification"],
+  "entries": [
+    {
+      "kind": "rule",
+      "name": "call-initialize-on-start",
+      "delivery": "init",
+      "tags": ["loop-engineering", "loop-1"],
+      "body": "At the start of every session, call the initialize tool from naitv-mcp before doing any work.\nThis loads the user's standing instructions, preferences, and context. Treat the result as\nbinding for the entire session. Do not skip this step even for small tasks."
+    },
+    {
+      "kind": "rule",
+      "name": "verify-before-done",
+      "delivery": "init",
+      "tags": ["loop-engineering", "loop-2"],
+      "body": "After writing or editing Go code, always run the verification sequence before declaring\nwork complete:\n  1. build  — confirms the package compiles\n  2. vet    — flags common correctness issues\n  3. test   — runs the full test suite\n\nOnly mark work as done when all three pass. If any fail, fix the reported issues and\nre-run from step 1. Never leave failing checks for the user to discover."
+    },
+    {
+      "kind": "rule",
+      "name": "propose-learnings",
+      "delivery": "init",
+      "tags": ["loop-engineering", "loop-4"],
+      "body": "When you discover something during a session that would help future sessions — a pattern,\na preference, a gotcha, a workflow — propose it via add_entry so the user can approve it.\n\nGood candidates:\n  - A rule the user corrected you on\n  - A project-specific convention you inferred\n  - A workflow you had to figure out the hard way\n  - A fact about the codebase (e.g. \"migrations live in db/migrations/\")\n\nUse kind=rule for constraints, kind=workflow for procedures, kind=fact for project facts,\nkind=note for context. Keep the body concise and actionable."
+    },
+    {
+      "kind": "workflow",
+      "name": "go-verification-loop",
+      "delivery": "init",
+      "tags": ["loop-engineering", "loop-2", "go"],
+      "body": "When making any Go code change, follow this loop until all checks pass:\n\n1. Write the code change.\n2. Call the build tool. If it fails, fix compilation errors and go to step 2.\n3. Call the vet tool. If it reports issues, fix them and go to step 2.\n4. Call the test tool (or test_run for a targeted run). If tests fail, fix them and go to step 2.\n5. If golangci-lint is enabled, call lint. Fix any reported issues and go to step 2.\n6. All checks pass — the change is ready.\n\nUse test_run {pattern} {pkg} to run a single test while iterating quickly, then\nrun the full test suite before finishing. Do not ask the user to run checks for you."
+    },
+    {
+      "kind": "workflow",
+      "name": "hill-climbing",
+      "delivery": "init",
+      "tags": ["loop-engineering", "loop-4"],
+      "body": "After completing a task, spend a moment asking: \"Did I learn something this session that\nshould be encoded for next time?\"\n\nIf yes, call add_entry with the lesson. The user will review it in the TUI (Review tab)\nand approve, reject, or edit before it goes live. This is how the knowledge base improves\nover time.\n\nDo not propose trivial facts or things already in the knowledge base (call search_entries\nfirst if unsure). Prefer quality over volume — one good entry beats five noisy ones."
+    },
+    {
+      "kind": "tool",
+      "name": "build",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Compile the Go project and return any build errors. Run this first in the verification sequence.",
+      "fields": {
+        "exec": "go build ./...",
+        "timeout": "60s"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "vet",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Run go vet to catch common correctness issues (e.g. printf format mismatches, unreachable code). Run after build passes.",
+      "fields": {
+        "exec": "go vet ./...",
+        "timeout": "60s"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "test",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Run the full Go test suite. Use this as the final verification step. Returns pass/fail output for every package.",
+      "fields": {
+        "exec": "go test -timeout 120s ./...",
+        "timeout": "150s"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "test_run",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Run a targeted subset of Go tests by name pattern and package. Use for fast iteration, then run the full test suite before finishing.\n\nExamples:\n  pattern=TestMyFunc  pkg=./internal/store\n  pattern=TestAuth    pkg=./...",
+      "fields": {
+        "exec": "go test -timeout 120s -run {pattern} {pkg}",
+        "timeout": "150s",
+        "params": "[{\"name\":\"pattern\",\"description\":\"Test name regex (e.g. TestMyFunc or TestAuth)\",\"required\":true},{\"name\":\"pkg\",\"description\":\"Package path (e.g. ./internal/store or ./...)\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "test_race",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Run the Go test suite with the race detector enabled. Use when investigating concurrency bugs or before shipping changes to concurrent code.",
+      "fields": {
+        "exec": "go test -race -timeout 180s ./...",
+        "timeout": "210s"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "lint",
+      "delivery": "on-demand",
+      "tags": ["loop-engineering", "loop-2", "go", "verification"],
+      "body": "Run golangci-lint across the project. Catches style, complexity, and correctness issues beyond what vet reports.\n\nDisabled by default. Enable by calling set_project with enable_lint=true once golangci-lint is installed.",
+      "fields": {
+        "exec": "golangci-lint run ./...",
+        "timeout": "120s",
+        "disabled": "true"
+      }
+    }
+  ]
+}

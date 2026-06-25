@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    {
+      "name": "loop-engineering-go",
+      "description": "Loop Engineering for Go projects — rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-plugins/main/plugins/loop-engineering-go.json",
+      "tags": ["go", "loop-engineering", "verification"],
+      "version": "1.0.0",
+      "author": "madicen"
+    }
+  ]
+}
