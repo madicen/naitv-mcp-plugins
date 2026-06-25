@@ -1,94 +1,98 @@
-# naitv-plugins
+# naitv-mcp-plugins
 
-Plugin registry for [naitv-mcp](https://github.com/madicen/naitv-mcp) — the local MCP server + TUI for managing AI agent context.
+The official plugin registry for [naitv-mcp](https://github.com/madicen/naitv-mcp).
 
-Plugins are JSON manifests that bundle entry definitions (rules, workflows, executable tools) and are installed through the MCP protocol:
+Plugins are bundles of entries (rules, workflows, tools, facts) that agents can install into naitv-mcp in one shot. This repo is the canonical home for all plugins — nothing lives in the main naitv-mcp repo.
+
+## Installing a plugin
+
+Use the `install_plugin` MCP tool from naitv-mcp, passing either the plugin name (resolved against this registry) or a direct path/URL to the JSON file:
 
 ```
-install_plugin(source="loop-engineering-go")
+# By name (resolves via registry.json)
+install_plugin(name="loop-engineering-go")
+
+# By URL
+install_plugin(source="https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go.json")
+
+# By local path (useful during development)
+install_plugin(source="/path/to/my-plugin.json")
 ```
 
-naitv-mcp fetches `registry.json` from this repo to resolve plugin names to URLs.
-
----
+All entries in a plugin are installed as `pending` proposals — you review and approve them in the **Review** tab of the TUI before they go live.
 
 ## Available plugins
 
-| Plugin | Description |
-|--------|-------------|
-| [loop-engineering-go](plugins/loop-engineering-go.json) | Loop Engineering for Go — rules, workflows, and verification tools (build, vet, test, lint) |
-
----
+| Plugin | Description | Version |
+|--------|-------------|---------|
+| [`loop-engineering-go`](plugins/loop-engineering-go.json) | Loop-engineering rules, workflows, and Go verification tools (build, vet, test, lint) for use with Continue/Cursor | 1.1.0 |
 
 ## Plugin format
 
-Each plugin is a JSON file in `plugins/` with this shape:
+A plugin is a single JSON file with the following shape:
 
 ```json
 {
   "name": "my-plugin",
   "version": "1.0.0",
-  "description": "What this plugin does",
-  "author": "your-username",
-  "tags": ["optional", "tags"],
+  "description": "What this plugin does.",
+  "author": "your-github-handle",
+  "tags": ["tag1", "tag2"],
   "entries": [
     {
       "kind": "rule",
       "name": "my-rule",
       "delivery": "init",
-      "body": "Rule text shown to the agent at session start.",
-      "tags": ["my-tag"]
-    },
-    {
-      "kind": "tool",
-      "name": "my-tool",
-      "delivery": "on-demand",
-      "body": "Description shown to the agent.",
-      "fields": {
-        "exec": "some-command --flag {param}",
-        "timeout": "60s",
-        "params": "[{\"name\":\"param\",\"description\":\"...\",\"required\":true}]"
-      }
+      "tags": ["my-plugin"],
+      "body": "The rule text the agent will see.",
+      "group": "my-plugin"
     }
   ]
 }
 ```
 
-**Field reference:**
+### Entry fields
 
-| Field | Values | Notes |
-|-------|--------|-------|
-| `kind` | `rule`, `workflow`, `fact`, `note`, `tool` | Entry type |
-| `delivery` | `init`, `on-demand` | `init` = included in initialize bundle; default if omitted |
-| `fields.exec` | shell command string | Makes a `tool` entry executable |
-| `fields.timeout` | e.g. `"60s"` | Execution timeout |
-| `fields.params` | JSON string (array of `{name, description, required}`) | Interpolated as `{name}` in exec |
-| `fields.disabled` | `"true"` / `"false"` | Disables the tool without removing it |
-| `fields.working_dir` | absolute path | Set via `set_project` after install |
+| Field | Required | Description |
+|-------|----------|-------------|
+| `kind` | ✓ | Free-form label: `rule`, `workflow`, `tool`, `fact`, `note`, `project`, etc. |
+| `name` | ✓ | Unique (within the plugin) human-readable identifier. |
+| `body` | ✓ | The content the agent reads. Plain text or markdown. |
+| `delivery` | | `init` — included in the initialization bundle every session. `on-demand` — agent fetches it explicitly. Defaults to `init`. |
+| `tags` | | Array of strings for filtering and search. |
+| `group` | | Display group in the TUI Entries tab. Defaults to the plugin name. |
+| `fields` | | Key/value map for structured metadata (e.g. `exec`, `working_dir`, `timeout` for executable tools). |
 
----
+### Executable tools
 
-## Adding a plugin to the registry
+Entries with `kind: tool` and an `exec` field in `fields` are runnable directly by the agent via the `run_tool` MCP call. Supported `fields` keys:
 
-1. Add your plugin JSON to `plugins/your-plugin-name.json`
-2. Add an entry to `registry.json` pointing at the raw GitHub URL
-3. Open a PR
+| Field | Description |
+|-------|-------------|
+| `exec` | Shell command to run. Supports `{placeholder}` interpolation from call-time args. |
+| `working_dir` | Directory to run in. Supports `{placeholder}` interpolation (e.g. `{project_root}`). |
+| `timeout` | Hard timeout, e.g. `60s`, `2m`. |
+| `disabled` | Set to `"true"` to prevent execution without deleting the entry. |
+| `params` | JSON array of `{name, description, required}` objects describing accepted arguments. |
 
----
+## Adding a plugin
 
-## Installing plugins
+1. Create `plugins/<your-plugin-name>.json` following the format above.
+2. Add an entry to `registry.json`:
 
-With [naitv-mcp](https://github.com/madicen/naitv-mcp) running, ask your agent:
-
+```json
+{
+  "name": "your-plugin-name",
+  "description": "One-line description.",
+  "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/your-plugin-name.json",
+  "tags": ["relevant", "tags"],
+  "version": "1.0.0",
+  "author": "your-github-handle"
+}
 ```
-# By name (looks up registry.json automatically)
-install_plugin(source="loop-engineering-go")
 
-# By direct URL
-install_plugin(source="https://raw.githubusercontent.com/madicen/naitv-plugins/main/plugins/loop-engineering-go.json")
+3. Open a PR. The registry is intentionally minimal — no CI gate, no schema validator yet.
 
-# From a local file (useful during development)
-install_plugin(source="./path/to/my-plugin.json")
-```
+## Updating a plugin
 
-All entries are proposed as **pending** — review and approve them in the naitv-mcp TUI before they go live.
+Bump `version` in both the plugin JSON file and the corresponding entry in `registry.json`. naitv-mcp uses the version field to detect when a locally installed plugin is out of date.
