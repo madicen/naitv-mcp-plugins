@@ -26,6 +26,13 @@ All entries in a plugin are installed as `pending` proposals — you review and 
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [`loop-engineering-go`](plugins/loop-engineering-go.json) | Loop-engineering rules, workflows, and Go verification tools (build, vet, test, lint) for use with Continue/Cursor | 1.1.0 |
+| [`lazy-dev`](plugins/lazy-dev.json) | Lazy senior dev mode (à la [ponytail](https://github.com/DietrichGebert/ponytail)) — YAGNI ladder, stdlib first, review/audit workflows. Universal [AGENTS.md adapter](adapters/lazy-dev/AGENTS.md) for non-MCP agents | 1.0.0 |
+
+## Using a plugin without naitv-mcp (any agent)
+
+Any MCP-capable agent gets plugins through naitv-mcp automatically. For agents without MCP, some plugins ship a universal adapter in [`adapters/`](adapters/) — a compact `AGENTS.md` you copy into your project root (or your agent's global instructions). Nearly every modern agent (Codex, Gemini CLI, OpenCode, Copilot CLI, and others) reads `AGENTS.md`; for hosts with their own convention (Cursor, Windsurf, Cline), copy the same text into their rules file.
+
+The plugin JSON is always the source of truth; adapters are distillations kept aligned with it. See [docs/how-agent-portable-plugins-work.md](docs/how-agent-portable-plugins-work.md) for the architecture behind this pattern.
 
 ## Plugin format
 

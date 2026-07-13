@@ -7,6 +7,14 @@
       "tags": ["go", "loop-engineering", "verification"],
       "version": "1.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "lazy-dev",
+      "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) — YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lazy-dev.json",
+      "tags": ["lazy-dev", "yagni", "minimalism", "code-quality"],
+      "version": "1.0.0",
+      "author": "madicen"
     }
   ]
 }
