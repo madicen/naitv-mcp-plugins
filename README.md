@@ -27,6 +27,7 @@ All entries in a plugin are installed as `pending` proposals — you review and 
 |--------|-------------|---------|
 | [`loop-engineering-go`](plugins/loop-engineering-go.json) | Loop-engineering rules, workflows, and Go verification tools (build, vet, test, lint) for use with Continue/Cursor | 1.1.0 |
 | [`lazy-dev`](plugins/lazy-dev.json) | Lazy senior dev mode (à la [ponytail](https://github.com/DietrichGebert/ponytail)) — YAGNI ladder, stdlib first, review/audit workflows. Universal [AGENTS.md adapter](adapters/lazy-dev/AGENTS.md) for non-MCP agents | 1.0.0 |
+| [`structural-anchor`](plugins/structural-anchor.json) | Codebase structural map — packages, symbols, languages, and stats (Python + Go). Universal [AGENTS.md adapter](adapters/structural-anchor/AGENTS.md) for non-MCP agents | 1.0.0 |
 
 ## Using a plugin without naitv-mcp (any agent)
 
