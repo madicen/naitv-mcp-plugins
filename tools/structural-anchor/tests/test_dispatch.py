@@ -7,13 +7,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run_cli(root: Path, tool: str, home: Path) -> subprocess.CompletedProcess[str]:
+def run_cli(
+    root: Path,
+    tool: str,
+    home: Path,
+    skip_dirs: list[str] | str | None = None,
+) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     env["HOME"] = str(home)
     env["TOOL_NAME"] = tool
+    payload = {"root_path": str(root), "depth": 5}
+    if skip_dirs is not None:
+        payload["skip_dirs"] = skip_dirs
     return subprocess.run(
         [sys.executable, str(ROOT / "structural_anchor.py")],
-        input=json.dumps({"root_path": str(root), "depth": 5}) + "\n",
+        input=json.dumps(payload) + "\n",
         capture_output=True,
         text=True,
         env=env,
@@ -71,6 +79,32 @@ def test_unknown_tool_name_exits_nonzero(tmp_path: Path):
 
     assert proc.returncode != 0
     assert "unknown or missing TOOL_NAME" in proc.stderr
+
+
+def test_skip_dirs_accepts_comma_separated_and_json_array_strings(tmp_path: Path):
+    (tmp_path / "keep").mkdir()
+    (tmp_path / "keep" / "keep.py").write_text("x = 1\n")
+    for dirname in ("generated", "third_party"):
+        (tmp_path / dirname).mkdir()
+        (tmp_path / dirname / "skip.py").write_text("x = 1\n")
+
+    comma = run_cli(
+        tmp_path,
+        "get_codebase_statistics",
+        tmp_path / "comma-home",
+        "generated, third_party",
+    )
+    json_array = run_cli(
+        tmp_path,
+        "get_codebase_statistics",
+        tmp_path / "json-home",
+        '["generated", "third_party"]',
+    )
+
+    assert comma.returncode == 0, comma.stderr
+    assert json_array.returncode == 0, json_array.stderr
+    assert json.loads(comma.stdout)["total_files"] == 1
+    assert json.loads(json_array.stdout)["total_files"] == 1
 
 
 def test_unparseable_python_contributes_to_total_lines(tmp_path: Path):

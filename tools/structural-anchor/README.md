@@ -32,6 +32,7 @@ The script reads one JSON line from stdin and writes one JSON line to stdout. na
 | `skip_dirs` | no | see below | Directory basenames to prune |
 
 Default `skip_dirs`: `node_modules`, `.git`, `vendor`, `.venv`, `dist`, `build`, `__pycache__`.
+`skip_dirs` accepts a JSON list, a comma-separated string, or a JSON-array string.
 
 ## Cache
 
@@ -41,9 +42,11 @@ Results are cached under:
 ~/.cache/naitv-mcp/structural-anchor/<key>.json
 ```
 
-The cache key combines `root_path`, `depth`, `skip_dirs`, and a git commit fingerprint (HEAD SHA, or index mtime, or directory hash fallback). Repeated calls with the same fingerprint return `"cached": true`.
+The cache key combines `root_path`, `depth`, `skip_dirs`, and a git fingerprint (HEAD SHA plus dirty status, or index mtime, or directory hash fallback). Clean repeated calls return `"cached": true`; dirty working trees bypass the cache.
 
-Go symbol extraction builds a helper binary into `~/.cache/naitv-mcp/bin/` when needed.
+Go symbol extraction builds a helper binary into `~/.cache/naitv-mcp/bin/` when needed. Degraded results produced without Go symbols are not cached.
+
+Nested Python classes and their methods are included. Definitions nested under control-flow statements such as `if` and `try` are intentionally out of scope.
 
 ## Examples
 

@@ -22,6 +22,7 @@ DEFAULT_SKIP_DIRS = {
     "__pycache__",
 }
 SOURCE_EXTS = {".py", ".go"}
+CACHE_VERSION = 2
 
 
 def iter_source_files(root: Path, depth: int, skip_dirs: set[str]) -> list[Path]:
@@ -70,6 +71,20 @@ def git_commit(root: Path) -> str | None:
 def fingerprint(root: Path) -> str:
     commit = git_commit(root)
     if commit:
+        try:
+            status = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=5,
+                check=False,
+            )
+            if status.returncode == 0 and status.stdout:
+                dirty = hashlib.sha256(status.stdout.encode()).hexdigest()[:16]
+                return f"{commit}:dirty:{dirty}"
+        except (OSError, subprocess.TimeoutExpired):
+            pass
         return commit
     index = root / ".git" / "index"
     if index.is_file():
@@ -96,8 +111,26 @@ def bin_dir() -> Path:
 
 
 def cache_key(root: Path, depth: int, skip_dirs: set[str], fp: str) -> str:
-    raw = f"{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
+    raw = f"{CACHE_VERSION}|{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
     return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def normalize_skip_dirs(value: Any) -> set[str]:
+    if isinstance(value, str):
+        value = value.strip()
+        if not value:
+            return set(DEFAULT_SKIP_DIRS)
+        if value.startswith("["):
+            try:
+                value = json.loads(value)
+            except json.JSONDecodeError:
+                return set(DEFAULT_SKIP_DIRS)
+        else:
+            value = value.split(",")
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        return set(DEFAULT_SKIP_DIRS)
+    normalized = {item.strip() for item in value if item.strip()}
+    return normalized or set(DEFAULT_SKIP_DIRS)
 
 
 def load_cache(key: str) -> dict[str, Any] | None:
@@ -166,9 +199,25 @@ def _ann(a: ast.expr | None) -> str:
 
 def _args_sig(args: ast.arguments) -> str:
     parts: list[str] = []
-    for a in args.args:
+
+    def append_arg(a: ast.arg, prefix: str = "") -> None:
         ann = _ann(a.annotation)
-        parts.append(f"{a.arg}: {ann}" if ann else a.arg)
+        parts.append(f"{prefix}{a.arg}: {ann}" if ann else f"{prefix}{a.arg}")
+
+    for a in args.posonlyargs:
+        append_arg(a)
+    if args.posonlyargs:
+        parts.append("/")
+    for a in args.args:
+        append_arg(a)
+    if args.vararg:
+        append_arg(args.vararg, "*")
+    elif args.kwonlyargs:
+        parts.append("*")
+    for a in args.kwonlyargs:
+        append_arg(a)
+    if args.kwarg:
+        append_arg(args.kwarg, "**")
     return ", ".join(parts)
 
 
@@ -179,37 +228,35 @@ def extract_python_symbols(path: Path) -> tuple[list[dict[str, Any]], list[float
     symbols: list[dict[str, Any]] = []
     complexities: list[float] = []
 
+    def add_function(node: ast.FunctionDef | ast.AsyncFunctionDef, kind: str) -> None:
+        prefix = "async def" if isinstance(node, ast.AsyncFunctionDef) else "def"
+        ret = _ann(node.returns)
+        sig = f"{prefix} {node.name}({_args_sig(node.args)})"
+        if ret:
+            sig += f" -> {ret}"
+        symbols.append({"name": node.name, "kind": kind, "signature": sig, "line": node.lineno})
+        complexities.append(cyclomatic_python(node))
+
+    def add_class(node: ast.ClassDef) -> None:
+        symbols.append(
+            {
+                "name": node.name,
+                "kind": "class",
+                "signature": f"class {node.name}",
+                "line": node.lineno,
+            }
+        )
+        for item in node.body:
+            if isinstance(item, ast.ClassDef):
+                add_class(item)
+            elif isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                add_function(item, "method")
+
     for node in tree.body:
         if isinstance(node, ast.ClassDef):
-            symbols.append(
-                {
-                    "name": node.name,
-                    "kind": "class",
-                    "signature": f"class {node.name}",
-                    "line": node.lineno,
-                }
-            )
-            for item in node.body:
-                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    prefix = "async def" if isinstance(item, ast.AsyncFunctionDef) else "def"
-                    ret = _ann(item.returns)
-                    sig = f"{prefix} {item.name}({_args_sig(item.args)})"
-                    if ret:
-                        sig += f" -> {ret}"
-                    symbols.append(
-                        {"name": item.name, "kind": "method", "signature": sig, "line": item.lineno}
-                    )
-                    complexities.append(cyclomatic_python(item))
+            add_class(node)
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            prefix = "async def" if isinstance(node, ast.AsyncFunctionDef) else "def"
-            ret = _ann(node.returns)
-            sig = f"{prefix} {node.name}({_args_sig(node.args)})"
-            if ret:
-                sig += f" -> {ret}"
-            symbols.append(
-                {"name": node.name, "kind": "function", "signature": sig, "line": node.lineno}
-            )
-            complexities.append(cyclomatic_python(node))
+            add_function(node, "function")
     return symbols, complexities, lines
 
 
@@ -239,12 +286,8 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
         symbols, function_complexity, lines = extracted
         relative_parent = path.parent.relative_to(root)
         package_path = relative_parent.as_posix() if relative_parent.parts else "."
-        if package_path == ".":
-            key = f"python:{path.relative_to(root).as_posix()}"
-            name = path.stem
-        else:
-            key = f"python:{package_path}"
-            name = path.parent.name
+        key = package_path
+        name = root.name if package_path == "." else path.parent.name
         package = packages.setdefault(
             key, {"name": name, "path": package_path, "symbols": []}
         )
@@ -271,6 +314,7 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
         except OSError:
             parse_errors += 1
 
+    go_degraded = bool(go_files)
     if go_files:
         go_bin = ensure_go_symbols_bin(Path(__file__).parent / "go_symbols")
         if go_bin is None:
@@ -288,6 +332,7 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
                 if proc.returncode != 0:
                     raise RuntimeError(proc.stderr.strip() or "go-symbols failed")
                 result = json.loads(proc.stdout)
+                go_degraded = False
                 parse_errors += int(result.get("errors", 0))
                 complexities["go"].extend(result.get("func_complexity", []))
                 for go_package in sorted(
@@ -298,7 +343,7 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
                         package_path = package_dir.relative_to(root).as_posix() or "."
                     except ValueError:
                         package_path = package_dir.as_posix()
-                    key = f"go:{package_path}"
+                    key = package_path
                     package = packages.setdefault(
                         key,
                         {
@@ -338,17 +383,24 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
     commit = git_commit(root)
     if commit:
         payload["commit"] = commit
+    if go_degraded:
+        payload["_go_degraded"] = True
     return payload
 
 
 def get_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, Any]:
     root = root.resolve()
-    key = cache_key(root, depth, skip_dirs, fingerprint(root))
-    payload = load_cache(key)
+    fp = fingerprint(root)
+    dirty = ":dirty:" in fp
+    key = cache_key(root, depth, skip_dirs, fp)
+    payload = None if dirty else load_cache(key)
     cached = payload is not None
     if payload is None:
         payload = build_project_map(root, depth, skip_dirs)
-        save_cache(key, payload)
+        if not dirty and not payload.pop("_go_degraded", False):
+            save_cache(key, payload)
+        else:
+            payload.pop("_go_degraded", None)
     return {**payload, "cached": cached}
 
 
@@ -395,7 +447,7 @@ def main() -> None:
         print("root_path required", file=sys.stderr)
         sys.exit(1)
     depth = int(data.get("depth", 3))
-    skip = set(data.get("skip_dirs") or DEFAULT_SKIP_DIRS)
+    skip = normalize_skip_dirs(data.get("skip_dirs"))
     handlers = {
         "get_project_map": get_project_map,
         "list_languages": list_languages,

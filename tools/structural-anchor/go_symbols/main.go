@@ -1,13 +1,16 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
+	"go/printer"
 	"go/token"
 	"os"
 	"path/filepath"
+	"strings"
 	"unicode"
 	"unicode/utf8"
 )
@@ -52,6 +55,23 @@ func cyclomatic(n ast.Node) float64 {
 	return float64(d + 1)
 }
 
+func nodeString(fset *token.FileSet, node any) string {
+	var out bytes.Buffer
+	if err := printer.Fprint(&out, fset, node); err != nil {
+		return ""
+	}
+	return out.String()
+}
+
+func funcSignature(fset *token.FileSet, decl *ast.FuncDecl) string {
+	funcType := strings.TrimPrefix(nodeString(fset, decl.Type), "func")
+	if decl.Recv == nil || len(decl.Recv.List) == 0 {
+		return "func " + decl.Name.Name + funcType
+	}
+	receiver := nodeString(fset, decl.Recv.List[0].Type)
+	return "func (" + receiver + ") " + decl.Name.Name + funcType
+}
+
 func extract(files []string) (Result, error) {
 	fset := token.NewFileSet()
 	byDir := map[string][]*ast.File{}
@@ -76,12 +96,11 @@ func extract(files []string) (Result, error) {
 				switch d := decl.(type) {
 				case *ast.FuncDecl:
 					kind := "function"
-					sig := "func " + d.Name.Name
 					if d.Recv != nil {
 						kind = "method"
 					}
 					line := fset.Position(d.Pos()).Line
-					pkg.Symbols = append(pkg.Symbols, Symbol{Name: d.Name.Name, Kind: kind, Signature: sig, Line: line})
+					pkg.Symbols = append(pkg.Symbols, Symbol{Name: d.Name.Name, Kind: kind, Signature: funcSignature(fset, d), Line: line})
 					res.FuncComplexity = append(res.FuncComplexity, cyclomatic(d))
 				case *ast.GenDecl:
 					for _, spec := range d.Specs {
