@@ -1,0 +1,55 @@
+{
+  "name": "structural-anchor",
+  "version": "1.0.0",
+  "description": "Codebase structural map — packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
+  "author": "madicen",
+  "tags": ["structural-anchor", "context", "codebase-map"],
+  "entries": [
+    {
+      "kind": "rule",
+      "name": "prefer-structural-anchor",
+      "delivery": "init",
+      "tags": ["structural-anchor"],
+      "body": "Before broad greps or opening many files to learn a repo, call get_project_map (or list_languages / get_codebase_statistics) from structural-anchor with root_path set to the project root. Use the returned packages/symbols map to orient; only then open specific files."
+    },
+    {
+      "kind": "tool",
+      "name": "get_project_map",
+      "delivery": "on-demand",
+      "tags": ["structural-anchor"],
+      "body": "Build a flattened map of packages and symbols (Python + Go) for root_path. Cached per commit fingerprint under ~/.cache/naitv-mcp/.",
+      "fields": {
+        "exec": "TOOL_NAME=get_project_map python3 ~/.config/naitv-mcp/tools/structural-anchor/structural_anchor.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_languages",
+      "delivery": "on-demand",
+      "tags": ["structural-anchor"],
+      "body": "Detect programming languages (file/line counts) under root_path. Shares cache with get_project_map.",
+      "fields": {
+        "exec": "TOOL_NAME=list_languages python3 ~/.config/naitv-mcp/tools/structural-anchor/structural_anchor.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "get_codebase_statistics",
+      "delivery": "on-demand",
+      "tags": ["structural-anchor"],
+      "body": "Return size and approximate complexity metrics for root_path. Shares cache with get_project_map.",
+      "fields": {
+        "exec": "TOOL_NAME=get_codebase_statistics python3 ~/.config/naitv-mcp/tools/structural-anchor/structural_anchor.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false}]"
+      }
+    }
+  ]
+}

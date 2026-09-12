@@ -15,6 +15,14 @@
       "tags": ["lazy-dev", "yagni", "minimalism", "code-quality"],
       "version": "1.0.0",
       "author": "madicen"
+    },
+    {
+      "name": "structural-anchor",
+      "description": "Codebase structural map — packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/structural-anchor.json",
+      "tags": ["structural-anchor", "context", "codebase-map"],
+      "version": "1.0.0",
+      "author": "madicen"
     }
   ]
 }
