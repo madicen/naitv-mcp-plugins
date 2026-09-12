@@ -2,10 +2,12 @@
 """structural-anchor: codebase map for naitv-mcp (JSON stdin/stdout)."""
 from __future__ import annotations
 
+import ast
 import hashlib
 import os
 import subprocess
 from pathlib import Path
+from typing import Any
 
 DEFAULT_SKIP_DIRS = {
     "node_modules",
@@ -80,3 +82,73 @@ def fingerprint(root: Path) -> str:
     except OSError:
         h.update(b"empty")
     return f"top:{h.hexdigest()[:16]}"
+
+
+def cyclomatic_python(node: ast.AST) -> float:
+    decisions = 0
+    for n in ast.walk(node):
+        if isinstance(n, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.With, ast.Assert)):
+            decisions += 1
+        elif isinstance(n, ast.BoolOp):
+            decisions += max(0, len(n.values) - 1)
+        elif isinstance(n, ast.comprehension):
+            decisions += 1
+    return float(decisions + 1)
+
+
+def _ann(a: ast.expr | None) -> str:
+    if a is None:
+        return ""
+    try:
+        return ast.unparse(a)
+    except Exception:
+        return ""
+
+
+def _args_sig(args: ast.arguments) -> str:
+    parts: list[str] = []
+    for a in args.args:
+        ann = _ann(a.annotation)
+        parts.append(f"{a.arg}: {ann}" if ann else a.arg)
+    return ", ".join(parts)
+
+
+def extract_python_symbols(path: Path) -> tuple[list[dict[str, Any]], list[float], int]:
+    src = path.read_text(encoding="utf-8", errors="replace")
+    lines = src.count("\n") + (0 if src.endswith("\n") or not src else 1)
+    tree = ast.parse(src, filename=str(path))
+    symbols: list[dict[str, Any]] = []
+    complexities: list[float] = []
+
+    for node in tree.body:
+        if isinstance(node, ast.ClassDef):
+            symbols.append(
+                {
+                    "name": node.name,
+                    "kind": "class",
+                    "signature": f"class {node.name}",
+                    "line": node.lineno,
+                }
+            )
+            for item in node.body:
+                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    prefix = "async def" if isinstance(item, ast.AsyncFunctionDef) else "def"
+                    ret = _ann(item.returns)
+                    sig = f"{prefix} {item.name}({_args_sig(item.args)})"
+                    if ret:
+                        sig += f" -> {ret}"
+                    symbols.append(
+                        {"name": item.name, "kind": "method", "signature": sig, "line": item.lineno}
+                    )
+                    complexities.append(cyclomatic_python(item))
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            prefix = "async def" if isinstance(node, ast.AsyncFunctionDef) else "def"
+            ret = _ann(node.returns)
+            sig = f"{prefix} {node.name}({_args_sig(node.args)})"
+            if ret:
+                sig += f" -> {ret}"
+            symbols.append(
+                {"name": node.name, "kind": "function", "signature": sig, "line": node.lineno}
+            )
+            complexities.append(cyclomatic_python(node))
+    return symbols, complexities, lines
