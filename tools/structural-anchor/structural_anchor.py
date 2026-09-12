@@ -228,6 +228,13 @@ def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, 
         path, extracted = result
         if isinstance(extracted, Exception):
             parse_errors += 1
+            try:
+                source = path.read_text(encoding="utf-8", errors="replace")
+                line_counts["python"] += source.count("\n") + (
+                    0 if source.endswith("\n") or not source else 1
+                )
+            except OSError:
+                pass
             return
         symbols, function_complexity, lines = extracted
         relative_parent = path.parent.relative_to(root)
