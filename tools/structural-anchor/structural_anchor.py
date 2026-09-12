@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import ast
+import concurrent.futures
 import hashlib
 import json
 import os
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -126,13 +128,16 @@ def ensure_go_symbols_bin(src_dir: Path) -> Path | None:
     if not need:
         return out
     bin_dir().mkdir(parents=True, exist_ok=True)
-    r = subprocess.run(
-        ["go", "build", "-o", str(out), "."],
-        cwd=src_dir,
-        capture_output=True,
-        text=True,
-        timeout=120,
-    )
+    try:
+        r = subprocess.run(
+            ["go", "build", "-o", str(out), "."],
+            cwd=src_dir,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
     if r.returncode != 0:
         return None
     return out if out.is_file() else None
@@ -206,3 +211,196 @@ def extract_python_symbols(path: Path) -> tuple[list[dict[str, Any]], list[float
             )
             complexities.append(cyclomatic_python(node))
     return symbols, complexities, lines
+
+
+def build_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, Any]:
+    root = root.resolve()
+    files = sorted(iter_source_files(root, depth, skip_dirs))
+    python_files = [path for path in files if path.suffix == ".py"]
+    go_files = [path for path in files if path.suffix == ".go"]
+    packages: dict[str, dict[str, Any]] = {}
+    complexities: dict[str, list[float]] = {"python": [], "go": []}
+    line_counts = {"python": 0, "go": 0}
+    parse_errors = 0
+
+    def add_python(result: tuple[Path, tuple[list[dict[str, Any]], list[float], int] | Exception]) -> None:
+        nonlocal parse_errors
+        path, extracted = result
+        if isinstance(extracted, Exception):
+            parse_errors += 1
+            return
+        symbols, function_complexity, lines = extracted
+        relative_parent = path.parent.relative_to(root)
+        package_path = relative_parent.as_posix() if relative_parent.parts else "."
+        if package_path == ".":
+            key = f"python:{path.relative_to(root).as_posix()}"
+            name = path.stem
+        else:
+            key = f"python:{package_path}"
+            name = path.parent.name
+        package = packages.setdefault(
+            key, {"name": name, "path": package_path, "symbols": []}
+        )
+        package["symbols"].extend(symbols)
+        complexities["python"].extend(function_complexity)
+        line_counts["python"] += lines
+
+    def extract(path: Path) -> tuple[Path, tuple[list[dict[str, Any]], list[float], int] | Exception]:
+        try:
+            return path, extract_python_symbols(path)
+        except (OSError, SyntaxError) as exc:
+            return path, exc
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        for result in executor.map(extract, python_files):
+            add_python(result)
+
+    for path in go_files:
+        try:
+            source = path.read_text(encoding="utf-8", errors="replace")
+            line_counts["go"] += source.count("\n") + (
+                0 if source.endswith("\n") or not source else 1
+            )
+        except OSError:
+            parse_errors += 1
+
+    if go_files:
+        go_bin = ensure_go_symbols_bin(Path(__file__).parent / "go_symbols")
+        if go_bin is None:
+            print("warning: Go symbols unavailable", file=sys.stderr)
+        else:
+            try:
+                proc = subprocess.run(
+                    [str(go_bin)],
+                    input=json.dumps({"files": [str(path) for path in go_files]}),
+                    capture_output=True,
+                    text=True,
+                    timeout=120,
+                    check=False,
+                )
+                if proc.returncode != 0:
+                    raise RuntimeError(proc.stderr.strip() or "go-symbols failed")
+                result = json.loads(proc.stdout)
+                parse_errors += int(result.get("errors", 0))
+                complexities["go"].extend(result.get("func_complexity", []))
+                for go_package in sorted(
+                    result.get("packages", []), key=lambda package: package["path"]
+                ):
+                    package_dir = Path(go_package["path"])
+                    try:
+                        package_path = package_dir.relative_to(root).as_posix() or "."
+                    except ValueError:
+                        package_path = package_dir.as_posix()
+                    key = f"go:{package_path}"
+                    package = packages.setdefault(
+                        key,
+                        {
+                            "name": go_package["name"],
+                            "path": package_path,
+                            "symbols": [],
+                        },
+                    )
+                    package["symbols"].extend(go_package.get("symbols", []))
+            except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError, RuntimeError) as exc:
+                print(f"warning: Go symbols unavailable: {exc}", file=sys.stderr)
+
+    by_language: dict[str, dict[str, float | int]] = {}
+    file_counts = {"python": len(python_files), "go": len(go_files)}
+    for language in sorted(language for language, count in file_counts.items() if count):
+        values = complexities[language]
+        by_language[language] = {
+            "files": file_counts[language],
+            "lines": line_counts[language],
+            "complexity": sum(values) / len(values) if values else 0,
+        }
+    all_complexities = complexities["python"] + complexities["go"]
+    payload: dict[str, Any] = {
+        "packages": sorted(packages.values(), key=lambda package: (package["path"], package["name"])),
+        "languages": sorted(by_language),
+        "statistics": {
+            "total_files": len(files),
+            "total_lines": sum(line_counts.values()),
+            "complexity": (
+                sum(all_complexities) / len(all_complexities) if all_complexities else 0
+            ),
+            "packages": len(packages),
+            "parse_errors": parse_errors,
+            "by_language": by_language,
+        },
+    }
+    commit = git_commit(root)
+    if commit:
+        payload["commit"] = commit
+    return payload
+
+
+def get_project_map(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, Any]:
+    root = root.resolve()
+    key = cache_key(root, depth, skip_dirs, fingerprint(root))
+    payload = load_cache(key)
+    cached = payload is not None
+    if payload is None:
+        payload = build_project_map(root, depth, skip_dirs)
+        save_cache(key, payload)
+    return {**payload, "cached": cached}
+
+
+def list_languages(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, Any]:
+    project_map = get_project_map(root, depth, skip_dirs)
+    by_language = project_map["statistics"]["by_language"]
+    languages = [
+        {
+            "id": language,
+            "file_count": by_language[language]["files"],
+            "line_count": by_language[language]["lines"],
+        }
+        for language in sorted(by_language)
+    ]
+    result: dict[str, Any] = {
+        "languages": languages,
+        "primary": max(languages, key=lambda item: item["file_count"])["id"]
+        if languages
+        else None,
+        "cached": project_map["cached"],
+    }
+    if "commit" in project_map:
+        result["commit"] = project_map["commit"]
+    return result
+
+
+def get_codebase_statistics(root: Path, depth: int, skip_dirs: set[str]) -> dict[str, Any]:
+    project_map = get_project_map(root, depth, skip_dirs)
+    result = {**project_map["statistics"], "cached": project_map["cached"]}
+    if "commit" in project_map:
+        result["commit"] = project_map["commit"]
+    return result
+
+
+def main() -> None:
+    tool = os.environ.get("TOOL_NAME", "").strip()
+    try:
+        data = json.loads(sys.stdin.readline())
+    except Exception as exc:
+        print(f"invalid JSON: {exc}", file=sys.stderr)
+        sys.exit(1)
+    root = data.get("root_path")
+    if not root:
+        print("root_path required", file=sys.stderr)
+        sys.exit(1)
+    depth = int(data.get("depth", 3))
+    skip = set(data.get("skip_dirs") or DEFAULT_SKIP_DIRS)
+    handlers = {
+        "get_project_map": get_project_map,
+        "list_languages": list_languages,
+        "get_codebase_statistics": get_codebase_statistics,
+    }
+    if tool not in handlers:
+        print(f"unknown or missing TOOL_NAME: {tool!r}", file=sys.stderr)
+        sys.exit(1)
+    result = handlers[tool](Path(root), depth, skip)
+    json.dump(result, sys.stdout)
+    sys.stdout.write("\n")
+
+
+if __name__ == "__main__":
+    main()
