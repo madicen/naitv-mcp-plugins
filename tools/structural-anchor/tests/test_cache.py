@@ -28,13 +28,20 @@ def test_fingerprint_changes_and_cache_misses_when_git_worktree_becomes_dirty(
     root = tmp_path / "repo"
     root.mkdir()
     monkeypatch.setenv("HOME", str(tmp_path / "home"))
-    subprocess.run(["git", "init", "-q"], cwd=root, check=True)
-    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=root, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
+    # Empty template avoids copying hooks (fails in restricted sandboxes).
+    env = {
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "GIT_CONFIG_GLOBAL": "/dev/null",
+        "HOME": str(tmp_path / "home"),
+        "PATH": __import__("os").environ.get("PATH", ""),
+    }
+    subprocess.run(["git", "init", "-q", "--template="], cwd=root, check=True, env=env)
+    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=root, check=True, env=env)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True, env=env)
     source = root / "sample.py"
     source.write_text("value = 1\n")
-    subprocess.run(["git", "add", "sample.py"], cwd=root, check=True)
-    subprocess.run(["git", "commit", "-qm", "initial"], cwd=root, check=True)
+    subprocess.run(["git", "add", "sample.py"], cwd=root, check=True, env=env)
+    subprocess.run(["git", "commit", "-qm", "initial"], cwd=root, check=True, env=env)
 
     clean = fingerprint(root)
     assert get_project_map(root, 3, set())["cached"] is False
