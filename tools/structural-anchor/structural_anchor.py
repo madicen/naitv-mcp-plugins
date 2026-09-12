@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import hashlib
+import json
 import os
 import subprocess
 from pathlib import Path
@@ -82,6 +83,59 @@ def fingerprint(root: Path) -> str:
     except OSError:
         h.update(b"empty")
     return f"top:{h.hexdigest()[:16]}"
+
+
+def cache_dir() -> Path:
+    return Path.home() / ".cache" / "naitv-mcp" / "structural-anchor"
+
+
+def bin_dir() -> Path:
+    return Path.home() / ".cache" / "naitv-mcp" / "bin"
+
+
+def cache_key(root: Path, depth: int, skip_dirs: set[str], fp: str) -> str:
+    raw = f"{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def load_cache(key: str) -> dict[str, Any] | None:
+    p = cache_dir() / f"{key}.json"
+    if not p.is_file():
+        return None
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def save_cache(key: str, payload: dict[str, Any]) -> None:
+    d = cache_dir()
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"{key}.json").write_text(json.dumps(payload), encoding="utf-8")
+
+
+def ensure_go_symbols_bin(src_dir: Path) -> Path | None:
+    """Build go_symbols into cache bin if needed. None if go unavailable."""
+    out = bin_dir() / "go-symbols"
+    main_go = src_dir / "main.go"
+    if not main_go.is_file():
+        return None
+    need = True
+    if out.is_file():
+        need = out.stat().st_mtime_ns < main_go.stat().st_mtime_ns
+    if not need:
+        return out
+    bin_dir().mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(
+        ["go", "build", "-o", str(out), "."],
+        cwd=src_dir,
+        capture_output=True,
+        text=True,
+        timeout=120,
+    )
+    if r.returncode != 0:
+        return None
+    return out if out.is_file() else None
 
 
 def cyclomatic_python(node: ast.AST) -> float:
