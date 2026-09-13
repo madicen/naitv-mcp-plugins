@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import ast
+import concurrent.futures
 import hashlib
+import json
 import os
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -107,6 +110,58 @@ def fingerprint(root: Path) -> str:
     except OSError:
         h.update(b"empty")
     return f"top:{h.hexdigest()[:16]}"
+
+
+def cache_dir() -> Path:
+    return Path.home() / ".cache" / "naitv-mcp" / "symbol-navigator"
+
+
+def bin_dir() -> Path:
+    return Path.home() / ".cache" / "naitv-mcp" / "bin"
+
+
+def cache_key(root: Path, depth: int, skip_dirs: set[str], fp: str) -> str:
+    raw = f"{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def load_index(key: str) -> dict[str, Any] | None:
+    path = cache_dir() / f"{key}.json"
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def save_index(key: str, payload: dict[str, Any]) -> None:
+    directory = cache_dir()
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / f"{key}.json").write_text(json.dumps(payload), encoding="utf-8")
+
+
+def ensure_go_nav_bin(src_dir: Path) -> Path | None:
+    """Build go_nav into the cache when stale; return None if unavailable."""
+    try:
+        output = bin_dir() / "go-nav"
+        main_go = src_dir / "main.go"
+        if not main_go.is_file():
+            return None
+        if output.is_file() and output.stat().st_mtime_ns >= main_go.stat().st_mtime_ns:
+            return output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        result = subprocess.run(
+            ["go", "build", "-o", str(output), "."],
+            cwd=src_dir,
+            capture_output=True,
+            text=True,
+            timeout=120,
+            check=False,
+        )
+        return output if result.returncode == 0 and output.is_file() else None
+    except (OSError, subprocess.TimeoutExpired):
+        return None
 
 
 def _ann(a: ast.expr | None) -> str:
@@ -259,3 +314,60 @@ def find_python_refs(
             maybe_add(node)
 
     return out
+
+
+def build_index(
+    root: Path, depth: int, skip_dirs: set[str],
+) -> tuple[dict[str, Any], bool]:
+    files = sorted(iter_source_files(root, depth, skip_dirs))
+    python_files = [path for path in files if path.suffix == ".py"]
+    go_files = [path for path in files if path.suffix == ".go"]
+    defs: list[dict[str, Any]] = []
+
+    def extract(path: Path) -> list[dict[str, Any]]:
+        try:
+            return extract_python_defs(path)
+        except (OSError, SyntaxError):
+            return []
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        for extracted in executor.map(extract, python_files):
+            defs.extend(extracted)
+
+    go_degraded = bool(go_files)
+    if go_files:
+        go_bin = ensure_go_nav_bin(Path(__file__).parent / "go_nav")
+        if go_bin is None:
+            print("warning: Go symbols unavailable", file=sys.stderr)
+        else:
+            try:
+                result = subprocess.run(
+                    [str(go_bin)],
+                    input=json.dumps({
+                        "mode": "index",
+                        "files": [str(path) for path in go_files],
+                    }),
+                    capture_output=True,
+                    text=True,
+                    timeout=120,
+                    check=False,
+                )
+                if result.returncode != 0:
+                    raise RuntimeError(result.stderr.strip() or "go-nav failed")
+                defs.extend(json.loads(result.stdout).get("defs", []))
+                go_degraded = False
+            except (
+                OSError,
+                subprocess.TimeoutExpired,
+                json.JSONDecodeError,
+                RuntimeError,
+            ) as exc:
+                print(f"warning: Go symbols unavailable: {exc}", file=sys.stderr)
+
+    defs.sort(key=lambda item: (
+        item.get("file", ""),
+        item.get("line", 0),
+        item.get("column", 0),
+        item.get("name", ""),
+    ))
+    return {"defs": defs}, go_degraded
