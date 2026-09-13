@@ -17,6 +17,7 @@ DEFAULT_SKIP_DIRS = {
     "node_modules", ".git", "vendor", ".venv", "dist", "build", "__pycache__",
 }
 SOURCE_EXTS = {".py", ".go"}
+CACHE_VERSION = 1
 
 
 def normalize_skip_dirs(raw) -> set[str]:
@@ -122,7 +123,7 @@ def bin_dir() -> Path:
 
 
 def cache_key(root: Path, depth: int, skip_dirs: set[str], fp: str) -> str:
-    raw = f"{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
+    raw = f"{CACHE_VERSION}|{root.resolve()}|{depth}|{','.join(sorted(skip_dirs))}|{fp}"
     return hashlib.sha256(raw.encode()).hexdigest()
 
 
@@ -226,6 +227,21 @@ def extract_python_defs(path: Path) -> list[dict[str, Any]]:
             "imports": list(imports),
         })
 
+    def add_assignment(node: ast.Assign | ast.AnnAssign) -> None:
+        targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+        pending = list(targets)
+        while pending:
+            target = pending.pop()
+            if isinstance(target, ast.Name):
+                kind = (
+                    "const"
+                    if re.fullmatch(r"[A-Z][A-Z0-9_]*", target.id)
+                    else "var"
+                )
+                add(target.id, kind, target, target.id)
+            elif isinstance(target, (ast.Tuple, ast.List)):
+                pending.extend(reversed(target.elts))
+
     def walk_body(body: list[ast.stmt]) -> None:
         for node in body:
             if isinstance(node, ast.ClassDef):
@@ -240,6 +256,8 @@ def extract_python_defs(path: Path) -> list[dict[str, Any]]:
                         if ret:
                             sig += f" -> {ret}"
                         add(item.name, "method", item, sig)
+                    elif isinstance(item, (ast.Assign, ast.AnnAssign)):
+                        add_assignment(item)
             elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 prefix = "async def" if isinstance(node, ast.AsyncFunctionDef) else "def"
                 ret = _ann(node.returns)
@@ -247,6 +265,8 @@ def extract_python_defs(path: Path) -> list[dict[str, Any]]:
                 if ret:
                     sig += f" -> {ret}"
                 add(node.name, "function", node, sig)
+            elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+                add_assignment(node)
 
     walk_body(tree.body)
     return out
@@ -463,13 +483,6 @@ def get_symbol_references(
         (definition for definition in definitions if definition.get("name") == symbol),
         key=lambda item: (item.get("file", ""), item.get("line", 0)),
     )
-    if not matches:
-        return {
-            "definition": None,
-            "references": [],
-            "cached": cached,
-            "heuristic": True,
-        }
 
     files = iter_source_files(root, depth, skip_dirs)
     if file_path:
@@ -552,7 +565,7 @@ def get_symbol_references(
         item["column"],
     ))
     return {
-        "definition": _definition_result(matches[0]),
+        "definition": _definition_result(matches[0]) if matches else None,
         "references": references,
         "cached": cached,
         "heuristic": True,
@@ -575,6 +588,9 @@ def main() -> None:
         root_path = data.get("root_path")
         if not root_path:
             raise ValueError("root_path required")
+        root = Path(root_path)
+        if not root.is_dir():
+            raise ValueError("root_path must be an existing directory")
         depth = int(data.get("depth", 3))
         skip_dirs = normalize_skip_dirs(data.get("skip_dirs"))
         if tool == "search_by_pattern":
@@ -582,7 +598,7 @@ def main() -> None:
             if not isinstance(pattern, str):
                 raise ValueError("pattern required")
             result = search_by_pattern(
-                Path(root_path), depth, skip_dirs, pattern, data.get("kind"),
+                root, depth, skip_dirs, pattern, data.get("kind"),
             )
         else:
             symbol = data.get("symbol")
@@ -590,11 +606,11 @@ def main() -> None:
                 raise ValueError("symbol required")
             if tool == "find_symbol_definition":
                 result = find_symbol_definition(
-                    Path(root_path), depth, skip_dirs, symbol, data.get("kind"),
+                    root, depth, skip_dirs, symbol, data.get("kind"),
                 )
             else:
                 result = get_symbol_references(
-                    Path(root_path), depth, skip_dirs, symbol, data.get("file_path"),
+                    root, depth, skip_dirs, symbol, data.get("file_path"),
                 )
     except re.error as exc:
         print(f"invalid regex: {exc}", file=sys.stderr)

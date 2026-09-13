@@ -17,7 +17,7 @@ From the plugin repo root, `$(pwd)` resolves to the checkout. Adjust if you clon
 
 ## Performance
 
-- **Warm path (cached index):** lookups should complete in **&lt;100ms** — this is the SLA agents should rely on for per-call MCP use.
+- **Warm path (cached index):** end-to-end lookups typically complete in **&lt;200ms**, including the git fingerprint; the in-process index lookup target after fingerprinting is **&lt;100ms**.
 - **Cold path:** first request on a tree walks sources, builds the symbol index, and may exceed 100ms; results are cached under `~/.cache/naitv-mcp/symbol-navigator/` keyed by git fingerprint.
 
 ## Tools (via `TOOL_NAME`)

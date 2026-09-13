@@ -89,6 +89,18 @@ def test_unknown_tool_name_exits_nonzero(tmp_path):
     assert "unknown or missing TOOL_NAME" in proc.stderr
 
 
+def test_missing_root_directory_exits_nonzero(tmp_path):
+    missing = tmp_path / "does-not-exist"
+    proc = run_cli(
+        "find_symbol_definition",
+        tmp_path / "home",
+        {"root_path": str(missing), "symbol": "Anything"},
+    )
+
+    assert proc.returncode == 1
+    assert "root_path must be an existing directory" in proc.stderr
+
+
 def test_invalid_regex_exits_nonzero(tmp_path):
     proc = run_cli(
         "search_by_pattern",

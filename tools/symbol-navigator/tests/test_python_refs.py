@@ -29,3 +29,19 @@ def test_references_keep_same_line_use_when_def_excluded_by_column(
     assert refs[0]["line"] == result["definition"]["line"]
     assert refs[0]["column"] != result["definition"]["column"]
     assert "Foo()" in refs[0]["context"]
+
+
+def test_references_scan_when_symbol_has_no_definition(tmp_path, monkeypatch):
+    monkeypatch.setenv("HOME", str(tmp_path / "home"))
+    root = tmp_path / "proj"
+    root.mkdir()
+    (root / "usage.py").write_text(
+        "result = externally_defined()\n",
+        encoding="utf-8",
+    )
+
+    result = get_symbol_references(root, 2, set(), "externally_defined")
+
+    assert result["definition"] is None
+    assert len(result["references"]) == 1
+    assert "externally_defined()" in result["references"][0]["context"]

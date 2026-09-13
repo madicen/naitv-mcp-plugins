@@ -13,4 +13,4 @@ After you have oriented (e.g. with structural-anchor's project map), use these t
 
 **Not a replacement for gopls.** References are AST/heuristic (`heuristic: true`); same-name false positives are possible.
 
-Warm lookups (cached index) target **&lt;100ms**; the first call on a tree may build the index and take longer. Install the tool bundle before first use (see `tools/symbol-navigator/README.md` in the plugin repo). Index cache: `~/.cache/naitv-mcp/symbol-navigator/`.
+Warm end-to-end lookups (cached index) typically take **&lt;200ms**, including the git fingerprint; in-process index lookup after fingerprinting targets **&lt;100ms**. The first call on a tree may build the index and take longer. Install the tool bundle before first use (see `tools/symbol-navigator/README.md` in the plugin repo). Index cache: `~/.cache/naitv-mcp/symbol-navigator/`.

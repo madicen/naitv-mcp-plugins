@@ -22,6 +22,17 @@ def test_cache_roundtrip(monkeypatch, tmp_path):
     assert load_index(key)["defs"][0]["name"] == "X"
 
 
+def test_cache_key_includes_schema_version(monkeypatch):
+    original = cache_key(Path("/repo"), 3, {"vendor"}, "abc")
+    monkeypatch.setattr(
+        symbol_navigator,
+        "CACHE_VERSION",
+        symbol_navigator.CACHE_VERSION + 1,
+    )
+
+    assert cache_key(Path("/repo"), 3, {"vendor"}, "abc") != original
+
+
 def test_go_degraded_not_saved(monkeypatch, tmp_path):
     monkeypatch.setenv("HOME", str(tmp_path / "home"))
     root = tmp_path / "p"
