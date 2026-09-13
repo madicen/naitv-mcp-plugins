@@ -48,7 +48,7 @@
         "exec": "TOOL_NAME=get_symbol_references python3 ~/.config/naitv-mcp/tools/symbol-navigator/symbol_navigator.py",
         "io_mode": "json",
         "timeout": "30s",
-        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false},{\"name\":\"symbol\",\"description\":\"Symbol name to find uses of\",\"required\":true},{\"name\":\"file_path\",\"description\":\"Optional path hint to prefer the definition's package/directory first\",\"required\":false}]"
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false},{\"name\":\"symbol\",\"description\":\"Symbol name to find uses of\",\"required\":true},{\"name\":\"file_path\",\"description\":\"Optional path hint to prefer the hint file's directory first\",\"required\":false}]"
       }
     }
   ]
