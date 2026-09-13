@@ -2,10 +2,12 @@
 """symbol-navigator: AST symbol defs/refs for naitv-mcp (JSON stdin/stdout)."""
 from __future__ import annotations
 
+import ast
 import hashlib
 import os
 import subprocess
 from pathlib import Path
+from typing import Any
 
 DEFAULT_SKIP_DIRS = {
     "node_modules", ".git", "vendor", ".venv", "dist", "build", "__pycache__",
@@ -105,3 +107,90 @@ def fingerprint(root: Path) -> str:
     except OSError:
         h.update(b"empty")
     return f"top:{h.hexdigest()[:16]}"
+
+
+def _ann(a: ast.expr | None) -> str:
+    if a is None:
+        return ""
+    try:
+        return ast.unparse(a)
+    except Exception:
+        return ""
+
+
+def _args_sig(args: ast.arguments) -> str:
+    parts: list[str] = []
+    for a in args.posonlyargs:
+        ann = _ann(a.annotation)
+        parts.append(f"{a.arg}: {ann}" if ann else a.arg)
+    if args.posonlyargs:
+        parts.append("/")
+    for a in args.args:
+        ann = _ann(a.annotation)
+        parts.append(f"{a.arg}: {ann}" if ann else a.arg)
+    if args.vararg:
+        parts.append("*" + args.vararg.arg)
+    elif args.kwonlyargs:
+        parts.append("*")
+    for a in args.kwonlyargs:
+        ann = _ann(a.annotation)
+        parts.append(f"{a.arg}: {ann}" if ann else a.arg)
+    if args.kwarg:
+        parts.append("**" + args.kwarg.arg)
+    return ", ".join(parts)
+
+
+def _file_imports(tree: ast.AST) -> list[str]:
+    names: list[str] = []
+    for node in tree.body if isinstance(tree, ast.Module) else []:
+        if isinstance(node, ast.Import):
+            names.extend(a.name for a in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            mod = node.module or ""
+            names.append(mod)
+    return names
+
+
+def extract_python_defs(path: Path) -> list[dict[str, Any]]:
+    src = path.read_text(encoding="utf-8", errors="replace")
+    tree = ast.parse(src, filename=str(path))
+    imports = _file_imports(tree)
+    out: list[dict[str, Any]] = []
+
+    def add(name, kind, node, signature):
+        col = getattr(node, "col_offset", None)
+        out.append({
+            "name": name,
+            "kind": kind,
+            "file": str(path.resolve()),
+            "line": getattr(node, "lineno", 0),
+            "column": (col + 1) if col is not None else 0,
+            "signature": signature,
+            "receivers": [],
+            "imports": list(imports),
+        })
+
+    def walk_body(body: list[ast.stmt]) -> None:
+        for node in body:
+            if isinstance(node, ast.ClassDef):
+                add(node.name, "class", node, f"class {node.name}")
+                for item in node.body:
+                    if isinstance(item, ast.ClassDef):
+                        walk_body([item])
+                    elif isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                        prefix = "async def" if isinstance(item, ast.AsyncFunctionDef) else "def"
+                        ret = _ann(item.returns)
+                        sig = f"{prefix} {item.name}({_args_sig(item.args)})"
+                        if ret:
+                            sig += f" -> {ret}"
+                        add(item.name, "method", item, sig)
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                prefix = "async def" if isinstance(node, ast.AsyncFunctionDef) else "def"
+                ret = _ann(node.returns)
+                sig = f"{prefix} {node.name}({_args_sig(node.args)})"
+                if ret:
+                    sig += f" -> {ret}"
+                add(node.name, "function", node, sig)
+
+    walk_body(tree.body)
+    return out
