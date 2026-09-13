@@ -597,7 +597,7 @@ Three tools with B1 `TOOL_NAME=…`, `io_mode=json`, `timeout=30s`, params per s
 
 - [ ] **Step 2: Adapter + README**
 
-README must say: **Not a replacement for gopls**; warm &lt;100ms SLA; heuristic refs; symlink install path; Go optional.
+README must say: **Not a replacement for gopls**; warm <100ms SLA; heuristic refs; symlink install path; Go optional.
 
 - [ ] **Step 3: Registry + root README table row**
 
@@ -659,7 +659,7 @@ jj commit -m "test(symbol-navigator): integration and warm lookup perf smoke"
 | Go + Python only | 1–4 |
 | Independent of structural-anchor | Global |
 | Heuristic scoped refs | 3, 4, 6 |
-| Warm &lt;100ms | 5, 8 |
+| Warm <100ms | 5, 8 |
 | Dirty fingerprint + no Go poison | 1, 5 |
 | skip_dirs normalize | 1 |
 | Plugin/registry/README | 7 |
