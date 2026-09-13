@@ -7,6 +7,7 @@ import concurrent.futures
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -371,3 +372,228 @@ def build_index(
         item.get("name", ""),
     ))
     return {"defs": defs}, go_degraded
+
+
+def ensure_index(
+    root: Path, depth: int, skip_dirs: set[str],
+) -> tuple[list[dict[str, Any]], bool, bool]:
+    root = root.resolve()
+    key = cache_key(root, depth, skip_dirs, fingerprint(root))
+    payload = load_index(key)
+    if payload is not None:
+        return payload.get("defs", []), True, False
+
+    payload, go_degraded = build_index(root, depth, skip_dirs)
+    if not go_degraded:
+        save_index(key, payload)
+    return payload.get("defs", []), False, go_degraded
+
+
+def _definition_result(definition: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "file": definition.get("file", ""),
+        "line": definition.get("line", 0),
+        "column": definition.get("column", 0),
+        "type": definition.get("kind", ""),
+        "signature": definition.get("signature", ""),
+        "receivers": definition.get("receivers", []),
+        "imports": definition.get("imports", []),
+        "source": "ast",
+    }
+
+
+def find_symbol_definition(
+    root: Path,
+    depth: int,
+    skip_dirs: set[str],
+    symbol: str,
+    kind: str | None = None,
+) -> dict[str, Any]:
+    definitions, cached, _ = ensure_index(root, depth, skip_dirs)
+    matches = [
+        definition for definition in definitions
+        if definition.get("name") == symbol
+        and (kind is None or definition.get("kind") == kind)
+    ]
+    matches.sort(key=lambda item: (item.get("file", ""), item.get("line", 0)))
+    if not matches:
+        return {"matches": [], "cached": cached}
+
+    result = {**_definition_result(matches[0]), "cached": cached}
+    if len(matches) > 1:
+        result["matches"] = [_definition_result(match) for match in matches]
+    return result
+
+
+def search_by_pattern(
+    root: Path,
+    depth: int,
+    skip_dirs: set[str],
+    pattern: str,
+    kind: str | None = None,
+) -> dict[str, Any]:
+    regex = re.compile(pattern)
+    definitions, cached, _ = ensure_index(root, depth, skip_dirs)
+    results = [
+        {
+            "name": definition.get("name", ""),
+            "kind": definition.get("kind", ""),
+            "file": definition.get("file", ""),
+            "line": definition.get("line", 0),
+            "signature": definition.get("signature", ""),
+        }
+        for definition in definitions
+        if regex.search(definition.get("name", ""))
+        and (kind is None or definition.get("kind") == kind)
+    ]
+    results.sort(key=lambda item: (item["file"], item["line"], item["name"]))
+    return {"results": results, "cached": cached}
+
+
+def get_symbol_references(
+    root: Path,
+    depth: int,
+    skip_dirs: set[str],
+    symbol: str,
+    file_path: str | None = None,
+) -> dict[str, Any]:
+    root = root.resolve()
+    definitions, cached, _ = ensure_index(root, depth, skip_dirs)
+    matches = sorted(
+        (definition for definition in definitions if definition.get("name") == symbol),
+        key=lambda item: (item.get("file", ""), item.get("line", 0)),
+    )
+    if not matches:
+        return {
+            "definition": None,
+            "references": [],
+            "cached": cached,
+            "heuristic": True,
+        }
+
+    files = iter_source_files(root, depth, skip_dirs)
+    if file_path:
+        hint = Path(file_path)
+        if not hint.is_absolute():
+            hint = root / hint
+        package = hint.resolve().parent
+        files.sort(key=lambda path: (
+            path.resolve().parent != package,
+            str(path.resolve()),
+        ))
+    else:
+        files.sort(key=lambda path: str(path.resolve()))
+
+    excluded = {
+        (str(Path(definition.get("file", "")).resolve()), definition.get("line", 0))
+        for definition in matches
+    }
+    references: list[dict[str, Any]] = []
+    for path in (path for path in files if path.suffix == ".py"):
+        try:
+            references.extend(find_python_refs(path, symbol))
+        except (OSError, SyntaxError):
+            continue
+
+    go_files = [path for path in files if path.suffix == ".go"]
+    if go_files:
+        go_bin = ensure_go_nav_bin(Path(__file__).parent / "go_nav")
+        if go_bin is None:
+            print("warning: Go references unavailable", file=sys.stderr)
+        else:
+            try:
+                result = subprocess.run(
+                    [str(go_bin)],
+                    input=json.dumps({
+                        "mode": "refs",
+                        "symbol": symbol,
+                        "files": [str(path) for path in go_files],
+                        "exclude": [
+                            {"file": definition.get("file", ""), "line": definition.get("line", 0)}
+                            for definition in matches
+                        ],
+                    }),
+                    capture_output=True,
+                    text=True,
+                    timeout=120,
+                    check=False,
+                )
+                if result.returncode != 0:
+                    raise RuntimeError(result.stderr.strip() or "go-nav failed")
+                references.extend(json.loads(result.stdout).get("references", []))
+            except (
+                OSError,
+                subprocess.TimeoutExpired,
+                json.JSONDecodeError,
+                RuntimeError,
+            ) as exc:
+                print(f"warning: Go references unavailable: {exc}", file=sys.stderr)
+
+    references = [
+        reference for reference in references
+        if (str(Path(reference["file"]).resolve()), reference["line"]) not in excluded
+    ]
+    file_order = {str(path.resolve()): index for index, path in enumerate(files)}
+    references.sort(key=lambda item: (
+        file_order.get(str(Path(item["file"]).resolve()), len(file_order)),
+        item["line"],
+        item["column"],
+    ))
+    return {
+        "definition": _definition_result(matches[0]),
+        "references": references,
+        "cached": cached,
+        "heuristic": True,
+    }
+
+
+def main() -> None:
+    tool = os.environ.get("TOOL_NAME", "").strip()
+    handlers = {
+        "find_symbol_definition": find_symbol_definition,
+        "search_by_pattern": search_by_pattern,
+        "get_symbol_references": get_symbol_references,
+    }
+    if tool not in handlers:
+        print(f"unknown or missing TOOL_NAME: {tool!r}", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        data = json.loads(sys.stdin.readline())
+        root_path = data.get("root_path")
+        if not root_path:
+            raise ValueError("root_path required")
+        depth = int(data.get("depth", 3))
+        skip_dirs = normalize_skip_dirs(data.get("skip_dirs"))
+        if tool == "search_by_pattern":
+            pattern = data.get("pattern")
+            if not isinstance(pattern, str):
+                raise ValueError("pattern required")
+            result = search_by_pattern(
+                Path(root_path), depth, skip_dirs, pattern, data.get("kind"),
+            )
+        else:
+            symbol = data.get("symbol")
+            if not isinstance(symbol, str) or not symbol:
+                raise ValueError("symbol required")
+            if tool == "find_symbol_definition":
+                result = find_symbol_definition(
+                    Path(root_path), depth, skip_dirs, symbol, data.get("kind"),
+                )
+            else:
+                result = get_symbol_references(
+                    Path(root_path), depth, skip_dirs, symbol, data.get("file_path"),
+                )
+    except re.error as exc:
+        print(f"invalid regex: {exc}", file=sys.stderr)
+        sys.exit(1)
+    except (json.JSONDecodeError, TypeError, ValueError) as exc:
+        print(str(exc), file=sys.stderr)
+        sys.exit(1)
+
+    json.dump(result, sys.stdout)
+    sys.stdout.write("\n")
+
+
+if __name__ == "__main__":
+    main()
