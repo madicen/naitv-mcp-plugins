@@ -194,3 +194,68 @@ def extract_python_defs(path: Path) -> list[dict[str, Any]]:
 
     walk_body(tree.body)
     return out
+
+
+def _python_name_is_def_site(node: ast.AST, parents: dict[ast.AST, ast.AST], symbol: str) -> bool:
+    if isinstance(node, ast.Name) and node.id == symbol:
+        p = parents.get(node)
+        if isinstance(p, ast.Assign):
+            for t in p.targets:
+                if t is node:
+                    return True
+        if isinstance(p, ast.AnnAssign) and p.target is node:
+            return True
+        if isinstance(p, ast.alias) and (p.asname == symbol or p.name.split(".")[-1] == symbol):
+            return True
+        if isinstance(p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            return p.name == symbol
+    if isinstance(node, ast.Attribute) and node.attr == symbol:
+        p = parents.get(node)
+        if isinstance(p, ast.Assign):
+            for t in p.targets:
+                if t is node:
+                    return True
+    return False
+
+
+def find_python_refs(
+    path: Path, symbol: str, exclude_line: int | None = None,
+) -> list[dict[str, Any]]:
+    src = path.read_text(encoding="utf-8", errors="replace")
+    lines = src.splitlines()
+    tree = ast.parse(src, filename=str(path))
+    file_str = str(path.resolve())
+    parents: dict[ast.AST, ast.AST] = {}
+
+    for parent in ast.walk(tree):
+        for child in ast.iter_child_nodes(parent):
+            parents[child] = parent
+
+    out: list[dict[str, Any]] = []
+
+    def maybe_add(node: ast.AST) -> None:
+        lineno = getattr(node, "lineno", None)
+        if lineno is None:
+            return
+        if exclude_line is not None and lineno == exclude_line:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                if node.name == symbol:
+                    return
+            if _python_name_is_def_site(node, parents, symbol):
+                return
+        col = getattr(node, "col_offset", None)
+        ctx = lines[lineno - 1].strip() if 1 <= lineno <= len(lines) else ""
+        out.append({
+            "file": file_str,
+            "line": lineno,
+            "column": (col + 1) if col is not None else 0,
+            "context": ctx,
+        })
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and node.id == symbol:
+            maybe_add(node)
+        elif isinstance(node, ast.Attribute) and node.attr == symbol:
+            maybe_add(node)
+
+    return out
