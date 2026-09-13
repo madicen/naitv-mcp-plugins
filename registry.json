@@ -23,6 +23,14 @@
       "tags": ["structural-anchor", "context", "codebase-map"],
       "version": "1.0.0",
       "author": "madicen"
+    },
+    {
+      "name": "symbol-navigator",
+      "description": "AST-based symbol definition, pattern search, and heuristic references (Go + Python) for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/symbol-navigator.json",
+      "tags": ["symbol-navigator", "context", "definitions", "references"],
+      "version": "1.0.0",
+      "author": "madicen"
     }
   ]
 }

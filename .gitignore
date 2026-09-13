@@ -2,3 +2,4 @@ __pycache__/
 *.py[cod]
 .venv/
 .superpowers/
+tools/symbol-navigator/go_nav/go_nav
