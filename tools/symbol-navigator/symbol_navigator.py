@@ -485,7 +485,11 @@ def get_symbol_references(
         files.sort(key=lambda path: str(path.resolve()))
 
     excluded = {
-        (str(Path(definition.get("file", "")).resolve()), definition.get("line", 0))
+        (
+            str(Path(definition.get("file", "")).resolve()),
+            definition.get("line", 0),
+            definition.get("column", 0),
+        )
         for definition in matches
     }
     references: list[dict[str, Any]] = []
@@ -509,7 +513,11 @@ def get_symbol_references(
                         "symbol": symbol,
                         "files": [str(path) for path in go_files],
                         "exclude": [
-                            {"file": definition.get("file", ""), "line": definition.get("line", 0)}
+                            {
+                                "file": definition.get("file", ""),
+                                "line": definition.get("line", 0),
+                                "column": definition.get("column", 0),
+                            }
                             for definition in matches
                         ],
                     }),
@@ -531,7 +539,11 @@ def get_symbol_references(
 
     references = [
         reference for reference in references
-        if (str(Path(reference["file"]).resolve()), reference["line"]) not in excluded
+        if (
+            str(Path(reference["file"]).resolve()),
+            reference["line"],
+            reference.get("column", 0),
+        ) not in excluded
     ]
     file_order = {str(path.resolve()): index for index, path in enumerate(files)}
     references.sort(key=lambda item: (

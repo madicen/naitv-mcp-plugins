@@ -36,8 +36,9 @@ type Reference struct {
 }
 
 type Location struct {
-	File string `json:"file"`
-	Line int    `json:"line"`
+	File   string `json:"file"`
+	Line   int    `json:"line"`
+	Column int    `json:"column"`
 }
 
 type IndexResult struct {
@@ -176,13 +177,16 @@ func Index(files []string) IndexResult {
 
 func Refs(symbol string, files []string, exclude []Location) RefsResult {
 	out := RefsResult{References: []Reference{}}
-	excluded := map[string]map[int]bool{}
+	type span struct {
+		line, column int
+	}
+	excluded := map[string]map[span]bool{}
 	for _, location := range exclude {
 		path := absolute(location.File)
 		if excluded[path] == nil {
-			excluded[path] = map[int]bool{}
+			excluded[path] = map[span]bool{}
 		}
-		excluded[path][location.Line] = true
+		excluded[path][span{location.Line, location.Column}] = true
 	}
 	for _, path := range files {
 		path = absolute(path)
@@ -204,7 +208,7 @@ func Refs(symbol string, files []string, exclude []Location) RefsResult {
 				return true
 			}
 			position := fset.Position(ident.Pos())
-			if excluded[path][position.Line] {
+			if excluded[path][span{position.Line, position.Column}] {
 				return true
 			}
 			context := ""

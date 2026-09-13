@@ -68,7 +68,7 @@ func TestRefsFindsUsesAndHonorsExclusions(t *testing.T) {
 	}
 
 	hello := def("Hello")
-	out := Refs("Hello", files, []Location{{File: hello.File, Line: hello.Line}})
+	out := Refs("Hello", files, []Location{{File: hello.File, Line: hello.Line, Column: hello.Column}})
 	if out.Errors != 0 {
 		t.Fatalf("errors=%d", out.Errors)
 	}
@@ -78,7 +78,7 @@ func TestRefsFindsUsesAndHonorsExclusions(t *testing.T) {
 	}
 
 	service := def("UserService")
-	out = Refs("UserService", files, []Location{{File: service.File, Line: service.Line}})
+	out = Refs("UserService", files, []Location{{File: service.File, Line: service.Line, Column: service.Column}})
 	got := make([]int, len(out.References))
 	for i, ref := range out.References {
 		got[i] = ref.Line
