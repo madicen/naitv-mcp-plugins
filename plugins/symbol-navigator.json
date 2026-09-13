@@ -1,0 +1,55 @@
+{
+  "name": "symbol-navigator",
+  "version": "1.0.0",
+  "description": "AST-based symbol definition, pattern search, and heuristic references (Go + Python) for naitv-mcp agents.",
+  "author": "madicen",
+  "tags": ["symbol-navigator", "context", "definitions", "references"],
+  "entries": [
+    {
+      "kind": "rule",
+      "name": "prefer-symbol-navigator",
+      "delivery": "init",
+      "tags": ["symbol-navigator"],
+      "body": "After orienting with structural-anchor (or when you already know the repo layout), use symbol-navigator for precise “where is X defined?” and “where is X used?” — find_symbol_definition, search_by_pattern, get_symbol_references — instead of blind grep. References are heuristic (not gopls); treat matches as hints."
+    },
+    {
+      "kind": "tool",
+      "name": "find_symbol_definition",
+      "delivery": "on-demand",
+      "tags": ["symbol-navigator"],
+      "body": "Find the best AST definition for symbol under root_path (Go + Python). Uses cached symbol index under ~/.cache/naitv-mcp/symbol-navigator/.",
+      "fields": {
+        "exec": "TOOL_NAME=find_symbol_definition python3 ~/.config/naitv-mcp/tools/symbol-navigator/symbol_navigator.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false},{\"name\":\"symbol\",\"description\":\"Symbol name to resolve\",\"required\":true},{\"name\":\"kind\",\"description\":\"Optional kind filter (function, method, class, type, etc.)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "search_by_pattern",
+      "delivery": "on-demand",
+      "tags": ["symbol-navigator"],
+      "body": "Search indexed symbol names with a regex pattern under root_path. Shares cache with find_symbol_definition.",
+      "fields": {
+        "exec": "TOOL_NAME=search_by_pattern python3 ~/.config/naitv-mcp/tools/symbol-navigator/symbol_navigator.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false},{\"name\":\"pattern\",\"description\":\"Regex matched against symbol names\",\"required\":true},{\"name\":\"kind\",\"description\":\"Optional kind filter\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "get_symbol_references",
+      "delivery": "on-demand",
+      "tags": ["symbol-navigator"],
+      "body": "Heuristic reference scan for symbol (Go + Python). Always returns heuristic: true — not a replacement for gopls. Optional file_path scopes search to that file's directory first.",
+      "fields": {
+        "exec": "TOOL_NAME=get_symbol_references python3 ~/.config/naitv-mcp/tools/symbol-navigator/symbol_navigator.py",
+        "io_mode": "json",
+        "timeout": "30s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false},{\"name\":\"skip_dirs\",\"description\":\"Directory basenames to prune\",\"required\":false},{\"name\":\"symbol\",\"description\":\"Symbol name to find uses of\",\"required\":true},{\"name\":\"file_path\",\"description\":\"Optional path hint to prefer the definition's package/directory first\",\"required\":false}]"
+      }
+    }
+  ]
+}
