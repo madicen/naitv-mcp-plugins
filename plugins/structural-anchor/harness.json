@@ -43,7 +43,7 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["structural-anchor"],
+    "treatment_plugins": ["structural-anchor", "symbol-navigator"],
     "tool_names": [
       "get_project_map",
       "list_languages",

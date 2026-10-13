@@ -10,7 +10,7 @@
     "l2": true,
     "l3_golden": true,
     "l4": true,
-    "l5": false
+    "l5": true
   },
   "golden": {
     "fixtures": ["py-small", "go-small", "empty", "mixed-polyglot", "hostile"],
@@ -55,7 +55,7 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["symbol-navigator"],
+    "treatment_plugins": ["structural-anchor", "symbol-navigator"],
     "tool_names": [
       "find_symbol_definition",
       "search_by_pattern",

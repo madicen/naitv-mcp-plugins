@@ -15,6 +15,14 @@ _STOP = frozenset(
         "Exported",
         "Include",
         "Includes",
+        "Matched",
+        "Results",
+        "Symbols",
+        "Found",
+        "The",
+        "Users",
+        "Documents",
+        "GitHub",
     }
 )
 

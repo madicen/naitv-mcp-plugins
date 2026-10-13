@@ -2,8 +2,8 @@
 """L5 uplift eval harness (navigation suite).
 
 Conditions:
-  baseline  — no structural-anchor plugin tools
-  treatment — structural-anchor tools via naitv-mcp MCP
+  baseline  — no plugin tools
+  treatment — suite treatment_plugins via naitv-mcp MCP (navigation: structural-anchor + symbol-navigator)
 
 Agents:
   stub   — deterministic; uses MCP tools under treatment
@@ -39,8 +39,13 @@ from plugin_harness import load_harness  # noqa: E402
 
 
 def treatment_plugins_for(suite: str) -> list[str]:
-    """Resolve treatment plugins from harness.json (suite → primary plugin)."""
-    # lazy: suite name maps to a primary plugin; extend via env or suite meta later
+    """Resolve treatment plugins: suite.json first, else primary plugin harness.l5."""
+    meta_path = TASKS_ROOT / suite / "suite.json"
+    if meta_path.is_file():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        plugins = meta.get("treatment_plugins")
+        if plugins:
+            return list(plugins)
     primary = {
         "navigation": "structural-anchor",
     }.get(suite, "structural-anchor")
@@ -81,6 +86,8 @@ def stub_baseline(task: dict[str, Any]) -> dict[str, Any]:
         text = "I am not sure where Greeter lives without searching the tree."
     elif task["id"].startswith("nav-002"):
         text = "This project seems to contain some source files."
+    elif task["id"].startswith("nav-004"):
+        text = "I do not know which symbols match that pattern."
     else:
         text = "I do not know the package layout."
     return {

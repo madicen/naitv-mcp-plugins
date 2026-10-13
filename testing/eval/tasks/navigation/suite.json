@@ -1,0 +1,5 @@
+{
+  "name": "navigation",
+  "description": "Orientation + symbol lookup uplift (structural-anchor + symbol-navigator)",
+  "treatment_plugins": ["structural-anchor", "symbol-navigator"]
+}
