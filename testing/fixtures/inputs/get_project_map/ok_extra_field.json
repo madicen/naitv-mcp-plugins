@@ -1,0 +1,6 @@
+{
+  "_contract": {"expect": "success", "reason": "unknown_extra_field"},
+  "root_path": "$FIXTURE/py-small",
+  "depth": 2,
+  "totally_unknown_field": {"nested": true}
+}

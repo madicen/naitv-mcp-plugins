@@ -1,0 +1,1 @@
+"""py-small package root."""

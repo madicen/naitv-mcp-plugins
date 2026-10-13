@@ -193,7 +193,8 @@ def resolve_placeholders(payload: Any, fixtures_root: Path) -> Any:
         if payload == "$MISSING_PATH":
             return str((fixtures_root / "__does_not_exist__" / "nope").resolve())
         if payload == "$TRAVERSAL_PATH":
-            return str((fixtures_root / "py-small" / ".." / ".." / ".." / "etc").resolve())
+            # Keep literal ".." segments so tools must reject or normalize.
+            return str(fixtures_root / "py-small" / ".." / ".." / ".." / "etc" / "passwd")
         return payload
     if isinstance(payload, list):
         return [resolve_placeholders(v, fixtures_root) for v in payload]
@@ -404,6 +405,11 @@ def run_tool_inputs(
 def main() -> int:
     parser = argparse.ArgumentParser(description="L2 JSON I/O contract tests")
     parser.add_argument("plugin", help="plugin directory name under plugins/")
+    parser.add_argument(
+        "--use-repo-tools",
+        action="store_true",
+        help="symlink tools/<plugin> into a temp HOME so ~/.config/naitv-mcp/tools/... resolves",
+    )
     args = parser.parse_args()
 
     report = Report()
@@ -416,11 +422,12 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="naitv-contract-") as tmp:
         home = Path(tmp)
-        linked = prepare_home(args.plugin, home)
-        if linked is None:
-            report.section(
-                f"note: tools/{args.plugin} not in repo; exec targets must already exist"
-            )
+        if args.use_repo_tools:
+            linked = prepare_home(args.plugin, home)
+            if linked is None:
+                report.section(
+                    f"note: tools/{args.plugin} not in repo; cannot --use-repo-tools"
+                )
         for entry in entries:
             run_tool_inputs(args.plugin, entry, home, report)
 
