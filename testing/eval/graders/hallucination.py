@@ -3,66 +3,18 @@ from __future__ import annotations
 import re
 from typing import Any
 
-# Identifiers that look like code symbols (skip tiny / common English words).
-_IDENT = re.compile(r"\b([A-Z][A-Za-z0-9_]{2,}|[a-z_][a-z0-9_]{3,})\b")
+# Code-like identifiers only: CamelCase / snake_case (not plain English words).
+_IDENT = re.compile(
+    r"\b([A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+|[A-Z][a-zA-Z0-9]{2,}|[a-z]+_[a-z0-9_]+)\b"
+)
 _STOP = frozenset(
     {
-        "this",
-        "that",
-        "with",
-        "from",
-        "file",
-        "path",
-        "class",
-        "function",
-        "method",
-        "package",
-        "primary",
-        "language",
-        "languages",
-        "defined",
-        "under",
-        "project",
-        "repo",
-        "root",
-        "name",
-        "kind",
-        "symbol",
-        "symbols",
-        "count",
-        "exported",
-        "python",
-        "golang",  # allow language ids
-        "what",
-        "where",
-        "which",
-        "does",
-        "into",
-        "only",
-        "also",
-        "return",
-        "returns",
-        "sentence",
-        "sentences",
-        "explain",
-        "open",
-        "integer",
-        "integers",
-        "argument",
-        "arguments",
-        "return",
-        "returns",
-        "without",
-        "searching",
-        "tree",
-        "source",
-        "files",
-        "seems",
-        "contain",
-        "layout",
-        "know",
-        "sure",
-        "lives",
+        "Greeter",  # real in fixtures — kept via project map anyway
+        "Primary",
+        "Languages",
+        "Exported",
+        "Include",
+        "Includes",
     }
 )
 
@@ -71,7 +23,7 @@ def extract_candidate_symbols(text: str) -> list[str]:
     found: list[str] = []
     for match in _IDENT.finditer(text or ""):
         token = match.group(1)
-        if token.lower() in _STOP:
+        if token in _STOP or token.lower() in {s.lower() for s in _STOP}:
             continue
         if token not in found:
             found.append(token)

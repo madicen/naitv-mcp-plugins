@@ -17,4 +17,6 @@ Run `./scripts/perf.sh structural-anchor` for the nightly 50k perf gate
 Run `./scripts/l4.sh structural-anchor` (or `RUN_L4=1 ./scripts/test.sh …`) for MCP
 integration; requires `naitv-mcp` on PATH.
 L5: `./scripts/eval.sh baseline` **before** any treatment run; then
-`./scripts/eval.sh treatment`. Use `AGENT=ollama OLLAMA_MODEL=…` for a real model.
+`./scripts/eval.sh treatment` (stub uses MCP tools under treatment).
+`AGENT=ollama OLLAMA_MODEL=qwen3:8b ./scripts/eval.sh treatment` for a real model
+tool-loop. Compare: `python3 testing/eval/compare_eval.py`.

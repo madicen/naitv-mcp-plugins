@@ -28,9 +28,15 @@ if [[ "$CONDITION" != "baseline" && "$CONDITION" != "treatment" ]]; then
   exit 2
 fi
 
-exec python3 "$ROOT/testing/eval/run_eval.py" \
+python3 "$ROOT/testing/eval/run_eval.py" \
   --suite "$SUITE" \
   --version "$VERSION" \
   --condition "$CONDITION" \
   --agent "$AGENT" \
   --seeds "$SEEDS"
+
+if [[ "$CONDITION" == "treatment" && -f "$ROOT/testing/eval/runs/BASELINE_NAVIGATION_V1.json" ]]; then
+  echo
+  echo "=== Compare vs baseline (§6e gates) ==="
+  python3 "$ROOT/testing/eval/compare_eval.py"
+fi
