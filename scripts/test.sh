@@ -55,17 +55,20 @@ fi
 echo
 echo "=== L2 contract ($PLUGIN) ==="
 set +e
-python "$ROOT/testing/contract/run_contract.py" "$PLUGIN"
+# Symlink tools/<plugin> into a temp HOME so ~/.config/naitv-mcp/tools/... resolves.
+python "$ROOT/testing/contract/run_contract.py" --use-repo-tools "$PLUGIN"
 L2_RC=$?
 set -e
 
 if [[ "$L2_RC" -eq 0 ]]; then
   echo "L2: all contract checks passed"
-  exit 0
-elif [[ "$L2_RC" -eq 2 ]]; then
-  echo "L2: unfinished / not implemented (see report above) — OK for draft plugins"
-  exit 0
 else
   echo "L2: contract failures (exit $L2_RC)" >&2
   exit "$L2_RC"
+fi
+
+if [[ -d "$ROOT/testing/golden/$PLUGIN" ]]; then
+  echo
+  echo "=== L3 golden ($PLUGIN) ==="
+  python "$ROOT/testing/golden/run_golden.py" "$PLUGIN"
 fi

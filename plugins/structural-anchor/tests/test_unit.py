@@ -68,8 +68,15 @@ def _run_main(tool: str, payload: str | dict, home: Path, monkeypatch: pytest.Mo
     monkeypatch.setenv("TOOL_NAME", tool)
     monkeypatch.setenv("HOME", str(home))
     if isinstance(payload, dict):
-        payload = json.dumps(payload) + "\n"
-    monkeypatch.setattr(sys, "stdin", io.StringIO(payload))
+        raw = (json.dumps(payload) + "\n").encode("utf-8")
+    else:
+        raw = payload.encode("utf-8") if isinstance(payload, str) else payload
+    stdin = io.BytesIO(raw)
+
+    class _Stdin:
+        buffer = stdin
+
+    monkeypatch.setattr(sys, "stdin", _Stdin())
     with pytest.raises(SystemExit) as exited:
         _impl.main()
     return int(exited.value.code)
@@ -279,3 +286,24 @@ def test_list_languages_empty_tree(
     result = list_languages(tmp_path, depth=1, skip_dirs=set())
     assert result["languages"] == []
     assert result["primary"] is None
+
+
+def test_validate_root_path_rejects_missing_and_traversal(tmp_path: Path) -> None:
+    with pytest.raises(SystemExit):
+        _impl.validate_root_path(str(tmp_path / "nope"))
+    with pytest.raises(SystemExit):
+        _impl.validate_root_path(str(tmp_path / "a" / ".." / ".." / "etc"))
+    assert _impl.validate_root_path(str(tmp_path)) == tmp_path.resolve()
+
+
+def test_main_rejects_oversized_input(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pad = "x" * (_impl.MAX_INPUT_BYTES + 1)
+    code = _run_main(
+        "get_project_map",
+        json.dumps({"root_path": str(tmp_path), "pad": pad}) + "\n",
+        tmp_path / "home",
+        monkeypatch,
+    )
+    assert code != 0
