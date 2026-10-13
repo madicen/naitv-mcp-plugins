@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/get_project_map.schema.json",
+  "title": "get_project_map",
+  "type": "object",
+  "required": ["packages", "languages", "statistics", "cached"],
+  "properties": {
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "symbols"],
+        "properties": {
+          "name": { "type": "string" },
+          "path": { "type": "string" },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "kind", "signature", "line"],
+              "properties": {
+                "name": { "type": "string" },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "function",
+                    "method",
+                    "class",
+                    "type",
+                    "interface",
+                    "const",
+                    "var"
+                  ]
+                },
+                "signature": { "type": "string" },
+                "line": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "statistics": {
+      "type": "object",
+      "required": [
+        "total_files",
+        "total_lines",
+        "complexity",
+        "packages",
+        "parse_errors",
+        "by_language"
+      ],
+      "properties": {
+        "total_files": { "type": "integer", "minimum": 0 },
+        "total_lines": { "type": "integer", "minimum": 0 },
+        "complexity": { "type": "number", "minimum": 0 },
+        "packages": { "type": "integer", "minimum": 0 },
+        "parse_errors": { "type": "integer", "minimum": 0 },
+        "by_language": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["files", "lines", "complexity"],
+            "properties": {
+              "files": { "type": "integer", "minimum": 0 },
+              "lines": { "type": "integer", "minimum": 0 },
+              "complexity": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cached": { "type": "boolean" },
+    "commit": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

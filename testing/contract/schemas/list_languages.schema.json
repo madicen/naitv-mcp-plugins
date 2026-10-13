@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/list_languages.schema.json",
+  "title": "list_languages",
+  "type": "object",
+  "required": ["languages", "primary", "cached"],
+  "properties": {
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file_count", "line_count"],
+        "properties": {
+          "id": { "type": "string" },
+          "file_count": { "type": "integer", "minimum": 0 },
+          "line_count": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "primary": {
+      "type": ["string", "null"]
+    },
+    "cached": { "type": "boolean" },
+    "commit": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}
