@@ -1,0 +1,10 @@
+{
+  "column": 6,
+  "file": "pkg/greeter/greeter.go",
+  "imports": [],
+  "line": 9,
+  "receivers": [],
+  "signature": "type Greeter struct{}",
+  "source": "ast",
+  "type": "type"
+}

@@ -23,7 +23,7 @@ Legacy `plugins/<name>.json` still loads for install, but **tests require**
 | Layer | Runner | Input it reads |
 |---|---|---|
 | L2 | `testing/contract/run_contract.py` | `plugin.json` + `testing/fixtures/inputs/<tool>/*.json` + `testing/contract/schemas/<tool>.schema.json` |
-| L3 golden | `testing/golden/run_golden.py` | `testing/golden/<plugin>/<tool>/<fixture>.json` |
+| L3 golden | `testing/golden/run_golden.py` | `harness.json` → `golden.queries` + `testing/golden/<plugin>/<tool>/<fixture>.json` |
 | L3 perf | `testing/perf/run_perf.py` | `harness.json` → `perf` targets |
 | L4 | `testing/integration/run_l4.py` | seeds tools from `plugin.json` |
 | L5 | `testing/eval/run_eval.py` | tasks under `testing/eval/tasks/…`; treatment plugins from `harness.json` |

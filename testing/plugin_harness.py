@@ -91,6 +91,7 @@ def load_harness(name: str) -> dict[str, Any]:
         "perf": raw.get("perf") or {},
         "l4": raw.get("l4") or {},
         "l5": raw.get("l5") or {},
+        "golden": raw.get("golden") or {},
         "tool_names": tool_names(manifest),
         "manifest": manifest,
     }

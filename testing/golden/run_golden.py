@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""L3 golden output tests for a plugin (stable fields only)."""
+"""L3 golden output tests for a plugin (stable fields only).
+
+Per-tool query extras and fixtures come from plugins/<name>/harness.json → golden.
+Absolute paths under the fixture root are rewritten to fixture-relative form.
+"""
 from __future__ import annotations
 
 import argparse
@@ -14,21 +18,20 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES_DIR = REPO_ROOT / "testing" / "fixtures"
 GOLDEN_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(REPO_ROOT / "testing"))
+
+from plugin_harness import load_harness, load_manifest  # noqa: E402
+
 MASK_KEYS = frozenset({"cached", "commit"})
-
-# Fixtures exercised per structural-anchor tool
 DEFAULT_FIXTURES = ("py-small", "go-small", "empty", "mixed-polyglot", "hostile")
-
-
-def load_plugin(plugin_name: str) -> dict[str, Any]:
-    path = REPO_ROOT / "plugins" / plugin_name / "plugin.json"
-    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def prepare_home(plugin_name: str, home: Path) -> None:
     src = REPO_ROOT / "tools" / plugin_name
     if not src.is_dir():
-        raise SystemExit(f"missing tools/{plugin_name}")
+        src = REPO_ROOT / "plugins" / plugin_name
+    if not src.is_dir():
+        raise SystemExit(f"missing tools/{plugin_name} (and plugins/{plugin_name})")
     dest_parent = home / ".config" / "naitv-mcp" / "tools"
     dest_parent.mkdir(parents=True, exist_ok=True)
     dest = dest_parent / plugin_name
@@ -43,19 +46,29 @@ def expand_exec(exec_str: str, home: Path) -> str:
 
 def mask(obj: Any) -> Any:
     if isinstance(obj, dict):
-        out = {}
-        for key, value in obj.items():
-            if key in MASK_KEYS:
-                continue
-            out[key] = mask(value)
-        return out
+        return {k: mask(v) for k, v in obj.items() if k not in MASK_KEYS}
     if isinstance(obj, list):
         return [mask(v) for v in obj]
     return obj
 
 
+def relativize(obj: Any, root: Path) -> Any:
+    """Rewrite absolute paths under fixture root to relative paths."""
+    root_s = str(root.resolve())
+    if isinstance(obj, str):
+        if obj == root_s or obj.startswith(root_s + os.sep):
+            rel = obj[len(root_s) :].lstrip("/\\")
+            return rel or "."
+        return obj
+    if isinstance(obj, list):
+        return [relativize(v, root) for v in obj]
+    if isinstance(obj, dict):
+        return {k: relativize(v, root) for k, v in obj.items()}
+    return obj
+
+
 def sort_payload(tool: str, obj: dict[str, Any]) -> dict[str, Any]:
-    """Stable ordering: packages by path, symbols by (line, name)."""
+    """Stable ordering for golden comparison."""
     data = json.loads(json.dumps(obj))  # deep copy via JSON
     if tool == "get_project_map" and isinstance(data.get("packages"), list):
         for pkg in data["packages"]:
@@ -72,17 +85,37 @@ def sort_payload(tool: str, obj: dict[str, Any]) -> dict[str, Any]:
         data["languages"] = sorted(
             data["languages"], key=lambda row: row.get("id", "")
         )
+    if tool == "search_by_pattern" and isinstance(data.get("results"), list):
+        data["results"] = sorted(
+            data["results"],
+            key=lambda r: (r.get("file", ""), r.get("line", 0), r.get("name", "")),
+        )
+    if tool == "find_symbol_definition" and isinstance(data.get("matches"), list):
+        data["matches"] = sorted(
+            data["matches"],
+            key=lambda m: (m.get("file", ""), m.get("line", 0), m.get("type", "")),
+        )
+    if tool == "get_symbol_references" and isinstance(data.get("references"), list):
+        data["references"] = sorted(
+            data["references"],
+            key=lambda r: (r.get("file", ""), r.get("line", 0), r.get("column", 0)),
+        )
     return data
 
 
-def run_tool(exec_str: str, root: Path, home: Path) -> dict[str, Any]:
+def run_tool(
+    exec_str: str,
+    root: Path,
+    home: Path,
+    query: dict[str, Any],
+) -> dict[str, Any]:
     env = os.environ.copy()
     env["HOME"] = str(home)
     env["XDG_CACHE_HOME"] = str(home / ".cache")
-    payload = json.dumps({"root_path": str(root), "depth": 3}) + "\n"
+    payload = {"depth": 3, **query, "root_path": str(root.resolve())}
     proc = subprocess.run(
         ["sh", "-c", expand_exec(exec_str, home)],
-        input=payload.encode("utf-8"),
+        input=(json.dumps(payload) + "\n").encode("utf-8"),
         capture_output=True,
         cwd=str(REPO_ROOT),
         env=env,
@@ -110,13 +143,21 @@ def main() -> int:
     )
     parser.add_argument(
         "--fixtures",
-        default=",".join(DEFAULT_FIXTURES),
-        help="comma-separated fixture names under testing/fixtures/",
+        default="",
+        help="comma-separated fixture names (default: harness.golden.fixtures or builtin)",
     )
     args = parser.parse_args()
-    fixtures = [f.strip() for f in args.fixtures.split(",") if f.strip()]
-    plugin = load_plugin(args.plugin)
-    tools = [e for e in plugin.get("entries", []) if e.get("kind") == "tool"]
+
+    harness = load_harness(args.plugin)
+    golden_cfg = harness.get("golden") or {}
+    if args.fixtures:
+        fixtures = [f.strip() for f in args.fixtures.split(",") if f.strip()]
+    else:
+        fixtures = list(golden_cfg.get("fixtures") or DEFAULT_FIXTURES)
+
+    queries: dict[str, dict[str, Any]] = golden_cfg.get("queries") or {}
+    manifest = load_manifest(args.plugin)
+    tools = [e for e in manifest.get("entries", []) if e.get("kind") == "tool"]
     failures = 0
     updated = 0
 
@@ -130,6 +171,7 @@ def main() -> int:
                 print(f"FAIL {name}: missing exec")
                 failures += 1
                 continue
+            query = dict(queries.get(name) or {})
             for fixture in fixtures:
                 root = FIXTURES_DIR / fixture
                 if not root.is_dir():
@@ -137,7 +179,8 @@ def main() -> int:
                     failures += 1
                     continue
                 try:
-                    actual = mask(sort_payload(name, run_tool(exec_str, root, home)))
+                    raw = run_tool(exec_str, root, home, query)
+                    actual = mask(sort_payload(name, relativize(raw, root)))
                 except Exception as exc:
                     print(f"FAIL {name}/{fixture}: {exc}")
                     failures += 1

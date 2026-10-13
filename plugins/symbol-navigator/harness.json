@@ -8,9 +8,17 @@
   "layers": {
     "l1": true,
     "l2": true,
-    "l3_golden": false,
+    "l3_golden": true,
     "l4": true,
     "l5": false
+  },
+  "golden": {
+    "fixtures": ["py-small", "go-small", "empty", "mixed-polyglot", "hostile"],
+    "queries": {
+      "find_symbol_definition": { "symbol": "Greeter", "depth": 3 },
+      "search_by_pattern": { "pattern": "Greet|Add|add", "depth": 3 },
+      "get_symbol_references": { "symbol": "Greeter", "depth": 3 }
+    }
   },
   "perf": {
     "enabled": false
