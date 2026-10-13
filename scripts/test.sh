@@ -42,14 +42,17 @@ elif [[ -f "$ROOT/tools/$PLUGIN/structural_anchor.py" ]]; then
   COV_DIR="$ROOT/tools/$PLUGIN"
 fi
 
+# Exclude nightly perf from the default L1 gate (opt in with RUN_PERF=1).
+PYTEST_MARK="not perf"
 if [[ -n "$COV_DIR" ]]; then
   "$ROOT/.venv/bin/pip" install -q pytest-cov >/dev/null
   PYTHONPATH="$COV_DIR${PYTHONPATH:+:$PYTHONPATH}" python -m pytest "${L1_ARGS[@]}" -q \
+    -m "$PYTEST_MARK" \
     --cov=structural_anchor --cov-report=term-missing:skip-covered \
     --cov-fail-under=80
 else
   echo "note: no implementation module found; running tests without coverage gate"
-  python -m pytest "${L1_ARGS[@]}" -q
+  python -m pytest "${L1_ARGS[@]}" -q -m "$PYTEST_MARK"
 fi
 
 echo
