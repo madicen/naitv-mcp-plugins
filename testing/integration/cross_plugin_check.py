@@ -11,17 +11,12 @@ PLUGINS = REPO / "plugins"
 
 
 def load_manifests() -> list[tuple[str, dict]]:
-    """Prefer plugins/<name>/plugin.json over legacy plugins/<name>.json."""
-    by_name: dict[str, tuple[str, dict]] = {}
-    for path in sorted(PLUGINS.glob("*.json")):
-        data = json.loads(path.read_text(encoding="utf-8"))
-        key = data.get("name") or path.stem
-        by_name[key] = (path.name, data)
+    """Load plugins/<name>/plugin.json only."""
+    out: list[tuple[str, dict]] = []
     for path in sorted(PLUGINS.glob("*/plugin.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
-        key = data.get("name") or path.parent.name
-        by_name[key] = (str(path.relative_to(REPO)), data)
-    return list(by_name.values())
+        out.append((str(path.relative_to(REPO)), data))
+    return out
 
 
 def main() -> int:

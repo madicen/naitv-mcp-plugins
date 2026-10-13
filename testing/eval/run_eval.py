@@ -57,8 +57,14 @@ def treatment_plugins_for(suite: str) -> list[str]:
 
 
 
-def load_tasks(suite: str, version: int) -> list[dict[str, Any]]:
-    directory = TASKS_ROOT / suite / f"v{version}"
+def task_dir(suite: str, version: int, *, held_out: bool = False) -> Path:
+    if held_out:
+        return TASKS_ROOT / suite / "held-out" / f"v{version}"
+    return TASKS_ROOT / suite / f"v{version}"
+
+
+def load_tasks(suite: str, version: int, *, held_out: bool = False) -> list[dict[str, Any]]:
+    directory = task_dir(suite, version, held_out=held_out)
     if not directory.is_dir():
         raise SystemExit(f"missing task suite: {directory}")
     return [
@@ -187,12 +193,17 @@ def main() -> int:
     parser.add_argument("--seeds", type=int, default=3)
     parser.add_argument("--seed-base", type=int, default=42)
     parser.add_argument("--label", default="")
+    parser.add_argument(
+        "--held-out",
+        action="store_true",
+        help="load tasks/<suite>/held-out/v<version>/ instead of tasks/<suite>/v<version>/",
+    )
     args = parser.parse_args()
 
     if args.condition == "treatment" and shutil.which("naitv-mcp") is None:
         raise SystemExit("naitv-mcp required on PATH for treatment condition")
 
-    tasks = load_tasks(args.suite, args.version)
+    tasks = load_tasks(args.suite, args.version, held_out=args.held_out)
     rng = random.Random(args.seed_base)
     order = list(tasks)
     rng.shuffle(order)
@@ -231,6 +242,8 @@ def main() -> int:
     summary = summarize(results)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     label = args.label or args.condition
+    if args.held_out:
+        label = f"heldout-{label}"
     out_dir = RUNS_ROOT / f"{args.suite}-v{args.version}-{label}-{stamp}"
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -246,6 +259,7 @@ def main() -> int:
         else None,
         "seeds": args.seeds,
         "seed_base": args.seed_base,
+        "held_out": args.held_out,
         "thresholds_preregistered": {
             "helps_success_pp": 10,
             "harmful_control_drop_pp": 2,
@@ -262,10 +276,15 @@ def main() -> int:
     (out_dir / "report.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8"
     )
-    latest = RUNS_ROOT / f"{args.suite}-v{args.version}-{args.condition}-latest.json"
+    latest_name = (
+        f"{args.suite}-v{args.version}-heldout-{args.condition}-latest.json"
+        if args.held_out
+        else f"{args.suite}-v{args.version}-{args.condition}-latest.json"
+    )
+    latest = RUNS_ROOT / latest_name
     latest.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
-    if args.condition == "baseline":
+    if args.condition == "baseline" and not args.held_out and args.suite == "navigation":
         pointer = RUNS_ROOT / "BASELINE_NAVIGATION_V1.json"
         pointer.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         snap = {
@@ -288,7 +307,7 @@ def main() -> int:
         print(f"Wrote baseline pointer {pointer}")
         print(f"Wrote committed snapshot {snap_path}")
 
-    if args.condition == "treatment":
+    if args.condition == "treatment" and not args.held_out and args.suite == "navigation":
         treat_ptr = RUNS_ROOT / "TREATMENT_NAVIGATION_V1.json"
         treat_ptr.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(f"Wrote treatment pointer {treat_ptr}")

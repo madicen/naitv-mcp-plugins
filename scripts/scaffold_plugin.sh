@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create plugins/<name>/ with plugin.json + harness.json stubs.
+# Create plugins/<name>/ with plugin.json + harness.json stubs (directory-only layout).
 # Usage: ./scripts/scaffold_plugin.sh <plugin-name> [json_tools|rules_only|mixed]
 set -euo pipefail
 
@@ -20,12 +20,7 @@ fi
 
 mkdir -p "$DIR/tests"
 
-# Prefer migrating a legacy flat manifest if present.
-if [[ -f "$ROOT/plugins/$NAME.json" ]]; then
-  cp "$ROOT/plugins/$NAME.json" "$DIR/plugin.json"
-  echo "copied plugins/$NAME.json -> plugins/$NAME/plugin.json"
-else
-  cat >"$DIR/plugin.json" <<EOF
+cat >"$DIR/plugin.json" <<EOF
 {
   "name": "$NAME",
   "version": "0.1.0",
@@ -35,7 +30,6 @@ else
   "entries": []
 }
 EOF
-fi
 
 case "$PROFILE" in
   rules_only)

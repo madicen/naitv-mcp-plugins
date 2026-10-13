@@ -1,0 +1,14 @@
+{
+  "id": "ho-001-where-is-add",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Where is the add function defined? Give file path and kind.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["add", "greeter.py", "function"]
+  },
+  "control": false
+}

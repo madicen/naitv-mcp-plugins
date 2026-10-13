@@ -3,7 +3,7 @@
     {
       "name": "loop-engineering-go",
       "description": "Loop Engineering for Go projects — rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
-      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go.json",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go/plugin.json",
       "tags": ["go", "loop-engineering", "verification"],
       "version": "1.1.0",
       "author": "madicen"
@@ -11,7 +11,7 @@
     {
       "name": "lazy-dev",
       "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) — YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
-      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lazy-dev.json",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lazy-dev/plugin.json",
       "tags": ["lazy-dev", "yagni", "minimalism", "code-quality"],
       "version": "1.0.0",
       "author": "madicen"
@@ -19,7 +19,7 @@
     {
       "name": "structural-anchor",
       "description": "Codebase structural map — packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
-      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/structural-anchor.json",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/structural-anchor/plugin.json",
       "tags": ["structural-anchor", "context", "codebase-map"],
       "version": "1.0.0",
       "author": "madicen"
@@ -27,7 +27,7 @@
     {
       "name": "symbol-navigator",
       "description": "AST-based symbol definition, pattern search, and heuristic references (Go + Python) for naitv-mcp agents.",
-      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/symbol-navigator.json",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/symbol-navigator/plugin.json",
       "tags": ["symbol-navigator", "context", "definitions", "references"],
       "version": "1.0.0",
       "author": "madicen"

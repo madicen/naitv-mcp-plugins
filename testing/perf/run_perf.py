@@ -28,6 +28,10 @@ from plugin_harness import load_harness, resolve_impl_paths  # noqa: E402
 SLACK = 0.10
 
 
+def runner_id() -> str | None:
+    return os.environ.get("PERF_RUNNER_ID") or None
+
+
 def percentile(sorted_vals: list[float], p: float) -> float:
     if not sorted_vals:
         return float("nan")
@@ -230,6 +234,7 @@ def main() -> int:
         "slack": SLACK,
         "measure": "in-process",
         "hardware": hardware_info(),
+        "runner_id": runner_id(),
         "started_at": datetime.now(timezone.utc).isoformat(),
         "modes": {},
     }

@@ -1,0 +1,14 @@
+{
+  "id": "str-002-primary-language",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "What is the primary language of this small project?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["Python"]
+  },
+  "control": false
+}

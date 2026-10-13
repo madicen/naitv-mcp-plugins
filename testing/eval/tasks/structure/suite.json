@@ -1,0 +1,5 @@
+{
+  "name": "structure",
+  "description": "Orientation / package-map uplift (structural-anchor)",
+  "treatment_plugins": ["structural-anchor"]
+}

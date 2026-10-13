@@ -7,16 +7,10 @@ This is how ~60 plugins scale without forking the harness.
 
 ```
 plugins/<name>/
-  plugin.json          # canonical manifest (preferred over plugins/<name>.json)
-  harness.json         # optional test profile (defaults apply if missing)
-  tests/               # L1 (pytest / go test / bats as needed)
-  README.md            # optional
-
-tools/<name>/          # optional implementation (JSON-tool plugins)
+  plugin.json          # sole installable manifest (registry + install_plugin URL)
+  harness.json         # optional test profile
+  tests/
 ```
-
-Legacy `plugins/<name>.json` still loads for install, but **tests require**
-`plugins/<name>/plugin.json`.
 
 ## What is shared (do not copy per plugin)
 
@@ -100,6 +94,12 @@ RUN_L4=1 ./scripts/test.sh my-plugin            # + L4
 ./scripts/eval.sh baseline|treatment            # L5 (configured plugins)
 ```
 
+## L5 extras
+
+- Held-out: `HELD_OUT=1 ./scripts/eval.sh baseline` (never default).
+- Ablation: `python3 testing/eval/run_ablation.py --suite navigation --seeds 1`
+- Structure suite: `SUITE=structure ./scripts/eval.sh baseline`
+
 ## Extensibility rules
 
 1. **Never** hardcode a plugin name inside a shared runner. Read `plugin.json` / `harness.json`.
@@ -107,3 +107,9 @@ RUN_L4=1 ./scripts/test.sh my-plugin            # + L4
 3. Goldens and L1 tests are keyed by **plugin name**.
 4. New fixture repos need a reason — prefer tagging an existing fixture.
 5. L5 tasks declare `plugins_expected` (optional) so suites can run against subsets.
+
+## CI
+
+- PR: `.github/workflows/pr.yml` → `./scripts/test_all.sh` + Go helper tests; soft L4.
+- Nightly: `.github/workflows/nightly.yml` → `./scripts/perf.sh` (50k) + stub eval + ablation.
+- Install URLs in `registry.json` point at `plugins/<name>/plugin.json`.

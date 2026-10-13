@@ -1,0 +1,66 @@
+name: pr
+
+on:
+  pull_request:
+  push:
+    branches: [main, "test/**"]
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Python deps
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install pytest pytest-cov
+      - name: Catalog L1–L3
+        run: |
+          . .venv/bin/activate
+          ./scripts/test_all.sh
+      - name: Go helpers
+        run: |
+          (cd tools/structural-anchor/go_symbols && go test ./...)
+          (cd tools/symbol-navigator/go_nav && go test ./...)
+      - name: Harness unit + cross-plugin
+        run: |
+          . .venv/bin/activate
+          python -m pytest testing/integration/test_manifest_layout.py testing/perf/tests testing/eval/tests -q
+          python testing/integration/cross_plugin_check.py
+
+  l4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Soft L4 via naitv-mcp
+        # Install from public module. If install fails or binary missing, exit 0.
+        # If binary is present, L4 failures fail the job.
+        run: |
+          set -euo pipefail
+          go install github.com/madicen/naitv-mcp/cmd/naitv-mcp@latest || {
+            echo "warn: go install naitv-mcp failed; skipping L4"
+            exit 0
+          }
+          export PATH="$(go env GOPATH)/bin:$PATH"
+          if ! command -v naitv-mcp >/dev/null 2>&1; then
+            echo "warn: naitv-mcp not on PATH after install; skipping L4"
+            exit 0
+          fi
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install pytest pytest-cov
+          RUN_L4=1 ./scripts/l4.sh structural-anchor
+          RUN_L4=1 ./scripts/l4.sh symbol-navigator

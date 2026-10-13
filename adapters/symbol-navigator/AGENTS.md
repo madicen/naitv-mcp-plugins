@@ -2,7 +2,7 @@
 
 <!-- Universal adapter for the symbol-navigator plugin. Copy this file into any project
      root (or your agent's global instructions) for agents that read AGENTS.md.
-     Keep this text aligned with plugins/symbol-navigator.json — the plugin JSON is
+     Keep this text aligned with plugins/symbol-navigator/plugin.json — the plugin JSON is
      the source of truth. -->
 
 After you have oriented (e.g. with structural-anchor's project map), use these tools for symbol-level navigation instead of broad grep:
