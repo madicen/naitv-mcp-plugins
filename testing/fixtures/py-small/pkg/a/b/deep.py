@@ -1,0 +1,2 @@
+def buried() -> None:
+    pass

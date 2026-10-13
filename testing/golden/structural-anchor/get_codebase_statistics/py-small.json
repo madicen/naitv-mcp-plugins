@@ -1,0 +1,14 @@
+{
+  "by_language": {
+    "python": {
+      "complexity": 1.4,
+      "files": 6,
+      "lines": 17
+    }
+  },
+  "complexity": 1.4,
+  "packages": 4,
+  "parse_errors": 1,
+  "total_files": 6,
+  "total_lines": 17
+}

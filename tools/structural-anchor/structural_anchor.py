@@ -435,17 +435,53 @@ def get_codebase_statistics(root: Path, depth: int, skip_dirs: set[str]) -> dict
     return result
 
 
+MAX_INPUT_BYTES = 1_000_000
+
+
+def _error(message: str, *, code: int = 1, as_json: bool = False) -> None:
+    if as_json:
+        print(json.dumps({"error": message}), file=sys.stderr)
+    else:
+        print(message, file=sys.stderr)
+    sys.exit(code)
+
+
+def validate_root_path(root: str) -> Path:
+    """Reject missing paths and `..` traversal; normalize to an absolute path."""
+    raw = Path(root)
+    if ".." in raw.parts:
+        _error(f"root_path must not contain '..': {root}", as_json=True)
+    path = raw.expanduser()
+    if not path.is_absolute():
+        path = (Path.cwd() / path).resolve()
+    else:
+        path = path.resolve()
+    # After resolve, refuse if the original still had traversal intent via symlink
+    # escape: require the path to exist as a directory.
+    if not path.exists():
+        _error(f"root_path does not exist: {root}", as_json=True)
+    if not path.is_dir():
+        _error(f"root_path is not a directory: {root}", as_json=True)
+    return path
+
+
 def main() -> None:
     tool = os.environ.get("TOOL_NAME", "").strip()
+    raw = sys.stdin.buffer.read(MAX_INPUT_BYTES + 1)
+    if len(raw) > MAX_INPUT_BYTES:
+        _error(f"input exceeds {MAX_INPUT_BYTES} bytes")
     try:
-        data = json.loads(sys.stdin.readline())
+        data = json.loads(raw.decode("utf-8"))
     except Exception as exc:
-        print(f"invalid JSON: {exc}", file=sys.stderr)
-        sys.exit(1)
+        _error(f"invalid JSON: {exc}")
+    if not isinstance(data, dict):
+        _error("input must be a JSON object")
     root = data.get("root_path")
     if not root:
-        print("root_path required", file=sys.stderr)
-        sys.exit(1)
+        _error("root_path required")
+    if not isinstance(root, str):
+        _error("root_path must be a string")
+    root_path = validate_root_path(root)
     depth = int(data.get("depth", 3))
     skip = normalize_skip_dirs(data.get("skip_dirs"))
     handlers = {
@@ -454,9 +490,8 @@ def main() -> None:
         "get_codebase_statistics": get_codebase_statistics,
     }
     if tool not in handlers:
-        print(f"unknown or missing TOOL_NAME: {tool!r}", file=sys.stderr)
-        sys.exit(1)
-    result = handlers[tool](Path(root), depth, skip)
+        _error(f"unknown or missing TOOL_NAME: {tool!r}")
+    result = handlers[tool](root_path, depth, skip)
     json.dump(result, sys.stdout)
     sys.stdout.write("\n")
 

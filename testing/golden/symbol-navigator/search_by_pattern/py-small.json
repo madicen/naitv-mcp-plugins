@@ -1,0 +1,18 @@
+{
+  "results": [
+    {
+      "file": "pkg/greeter.py",
+      "kind": "class",
+      "line": 1,
+      "name": "Greeter",
+      "signature": "class Greeter"
+    },
+    {
+      "file": "pkg/greeter.py",
+      "kind": "function",
+      "line": 6,
+      "name": "add",
+      "signature": "def add(a: int, b: int) -> int"
+    }
+  ]
+}

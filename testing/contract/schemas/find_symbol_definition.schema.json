@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/find_symbol_definition.schema.json",
+  "title": "find_symbol_definition",
+  "type": "object",
+  "required": ["cached"],
+  "properties": {
+    "cached": { "type": "boolean" },
+    "file": { "type": "string" },
+    "line": { "type": "integer", "minimum": 0 },
+    "column": { "type": "integer", "minimum": 0 },
+    "type": { "type": "string" },
+    "signature": { "type": "string" },
+    "receivers": { "type": "array", "items": { "type": "string" } },
+    "imports": { "type": "array", "items": { "type": "string" } },
+    "source": { "type": "string" },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "line", "column", "type", "signature", "source"],
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 0 },
+          "column": { "type": "integer", "minimum": 0 },
+          "type": { "type": "string" },
+          "signature": { "type": "string" },
+          "receivers": { "type": "array", "items": { "type": "string" } },
+          "imports": { "type": "array", "items": { "type": "string" } },
+          "source": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,6 @@
+{
+  "root_path": "$FIXTURE/py-small",
+  "depth": 3,
+  "symbol": "Greeter",
+  "extra_ignored": true
+}

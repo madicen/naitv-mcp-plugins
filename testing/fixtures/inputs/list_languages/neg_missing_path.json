@@ -1,0 +1,5 @@
+{
+  "_contract": {"expect": "error", "reason": "root_path_missing"},
+  "root_path": "$MISSING_PATH",
+  "depth": 2
+}

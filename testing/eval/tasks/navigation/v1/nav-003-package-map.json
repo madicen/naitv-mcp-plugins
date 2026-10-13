@@ -1,0 +1,14 @@
+{
+  "id": "nav-003-package-map",
+  "suite": "navigation",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "List the Go packages under this root and name one exported function from the greeter package.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["greeter", "Add"]
+  },
+  "control": false
+}

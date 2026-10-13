@@ -1,0 +1,14 @@
+{
+  "id": "nav-001-where-is-greeter",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "In this repo, where is the Greeter class defined? Name the file path and the symbol kind.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["Greeter", "greeter.py", "class"]
+  },
+  "control": false
+}

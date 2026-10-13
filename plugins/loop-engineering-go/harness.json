@@ -1,0 +1,13 @@
+{
+  "profile": "mixed",
+  "layers": {
+    "l1": true,
+    "l2": false,
+    "l3_golden": false,
+    "l4": false,
+    "l5": false
+  },
+  "coverage": {},
+  "perf": { "enabled": false },
+  "notes": "Tools are text-mode go wrappers (working_dir={project_root}), not JSON I/O — L2/L4 N/A until io_mode=json."
+}

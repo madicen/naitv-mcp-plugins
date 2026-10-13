@@ -1,0 +1,14 @@
+{
+  "id": "ctl-001-explain-add",
+  "suite": "navigation",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Open pkg/greeter.py and explain in one or two sentences what the add function does. Do not invent other symbols.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["add", "sum"]
+  },
+  "control": true
+}

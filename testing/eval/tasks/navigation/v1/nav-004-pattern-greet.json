@@ -1,0 +1,15 @@
+{
+  "id": "nav-004-pattern-greet",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Which symbols match the name pattern Greet? List each name and kind.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["Greeter", "class"]
+  },
+  "control": false,
+  "plugins_expected": ["symbol-navigator"]
+}

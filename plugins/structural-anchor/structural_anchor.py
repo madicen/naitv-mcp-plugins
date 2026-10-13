@@ -1,0 +1,1 @@
+../../tools/structural-anchor/structural_anchor.py

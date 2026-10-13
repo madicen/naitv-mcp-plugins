@@ -572,6 +572,31 @@ def get_symbol_references(
     }
 
 
+MAX_INPUT_BYTES = 1_000_000
+
+
+def _error(message: str, *, code: int = 1) -> None:
+    print(message, file=sys.stderr)
+    sys.exit(code)
+
+
+def validate_root_path(root: str) -> Path:
+    """Reject missing paths and `..` traversal; normalize to an absolute path."""
+    raw = Path(root)
+    if ".." in raw.parts:
+        _error(f"root_path must not contain '..': {root}")
+    path = raw.expanduser()
+    if not path.is_absolute():
+        path = (Path.cwd() / path).resolve()
+    else:
+        path = path.resolve()
+    if not path.exists():
+        _error(f"root_path does not exist: {root}")
+    if not path.is_dir():
+        _error(f"root_path is not a directory: {root}")
+    return path
+
+
 def main() -> None:
     tool = os.environ.get("TOOL_NAME", "").strip()
     handlers = {
@@ -580,19 +605,28 @@ def main() -> None:
         "get_symbol_references": get_symbol_references,
     }
     if tool not in handlers:
-        print(f"unknown or missing TOOL_NAME: {tool!r}", file=sys.stderr)
-        sys.exit(1)
+        _error(f"unknown or missing TOOL_NAME: {tool!r}")
+
+    raw = sys.stdin.buffer.read(MAX_INPUT_BYTES + 1)
+    if len(raw) > MAX_INPUT_BYTES:
+        _error(f"input exceeds {MAX_INPUT_BYTES} bytes")
+    try:
+        data = json.loads(raw.decode("utf-8"))
+    except Exception as exc:
+        _error(f"invalid JSON: {exc}")
+    if not isinstance(data, dict):
+        _error("input must be a JSON object")
+
+    root_raw = data.get("root_path")
+    if not root_raw:
+        _error("root_path required")
+    if not isinstance(root_raw, str):
+        _error("root_path must be a string")
+    root = validate_root_path(root_raw)
+    depth = int(data.get("depth", 3))
+    skip_dirs = normalize_skip_dirs(data.get("skip_dirs"))
 
     try:
-        data = json.loads(sys.stdin.readline())
-        root_path = data.get("root_path")
-        if not root_path:
-            raise ValueError("root_path required")
-        root = Path(root_path)
-        if not root.is_dir():
-            raise ValueError("root_path must be an existing directory")
-        depth = int(data.get("depth", 3))
-        skip_dirs = normalize_skip_dirs(data.get("skip_dirs"))
         if tool == "search_by_pattern":
             pattern = data.get("pattern")
             if not isinstance(pattern, str):
@@ -613,11 +647,9 @@ def main() -> None:
                     root, depth, skip_dirs, symbol, data.get("file_path"),
                 )
     except re.error as exc:
-        print(f"invalid regex: {exc}", file=sys.stderr)
-        sys.exit(1)
-    except (json.JSONDecodeError, TypeError, ValueError) as exc:
-        print(str(exc), file=sys.stderr)
-        sys.exit(1)
+        _error(f"invalid regex: {exc}")
+    except (TypeError, ValueError) as exc:
+        _error(str(exc))
 
     json.dump(result, sys.stdout)
     sys.stdout.write("\n")

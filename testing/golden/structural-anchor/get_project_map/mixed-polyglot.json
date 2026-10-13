@@ -1,0 +1,51 @@
+{
+  "languages": [
+    "go",
+    "python"
+  ],
+  "packages": [
+    {
+      "name": "hello",
+      "path": "go/hello",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 3,
+          "name": "Hi",
+          "signature": "func Hi() string"
+        }
+      ]
+    },
+    {
+      "name": "py",
+      "path": "py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 1,
+          "name": "main",
+          "signature": "def main() -> None"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "by_language": {
+      "go": {
+        "complexity": 1.0,
+        "files": 1,
+        "lines": 3
+      },
+      "python": {
+        "complexity": 1.0,
+        "files": 1,
+        "lines": 2
+      }
+    },
+    "complexity": 1.0,
+    "packages": 2,
+    "parse_errors": 0,
+    "total_files": 2,
+    "total_lines": 5
+  }
+}

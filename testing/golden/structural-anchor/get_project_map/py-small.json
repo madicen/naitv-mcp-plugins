@@ -1,0 +1,81 @@
+{
+  "languages": [
+    "python"
+  ],
+  "packages": [
+    {
+      "name": "pkg",
+      "path": "pkg",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 1,
+          "name": "Greeter",
+          "signature": "class Greeter"
+        },
+        {
+          "kind": "method",
+          "line": 2,
+          "name": "hello",
+          "signature": "def hello(self, name: str) -> str"
+        },
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "add",
+          "signature": "def add(a: int, b: int) -> int"
+        }
+      ]
+    },
+    {
+      "name": "b",
+      "path": "pkg/a/b",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 1,
+          "name": "buried",
+          "signature": "def buried() -> None"
+        }
+      ]
+    },
+    {
+      "name": "util",
+      "path": "pkg/util",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 1,
+          "name": "mul",
+          "signature": "def mul(a: int, b: int) -> int"
+        }
+      ]
+    },
+    {
+      "name": "skip_me",
+      "path": "skip_me",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 1,
+          "name": "should_skip",
+          "signature": "def should_skip() -> None"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "by_language": {
+      "python": {
+        "complexity": 1.4,
+        "files": 6,
+        "lines": 17
+      }
+    },
+    "complexity": 1.4,
+    "packages": 4,
+    "parse_errors": 1,
+    "total_files": 6,
+    "total_lines": 17
+  }
+}

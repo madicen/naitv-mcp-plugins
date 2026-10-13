@@ -1,0 +1,21 @@
+{
+  "definition": {
+    "column": 6,
+    "file": "pkg/greeter/greeter.go",
+    "imports": [],
+    "line": 9,
+    "receivers": [],
+    "signature": "type Greeter struct{}",
+    "source": "ast",
+    "type": "type"
+  },
+  "heuristic": true,
+  "references": [
+    {
+      "column": 9,
+      "context": "func (g Greeter) Hello(name string) string {",
+      "file": "pkg/greeter/greeter.go",
+      "line": 11
+    }
+  ]
+}

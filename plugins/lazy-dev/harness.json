@@ -1,0 +1,4 @@
+{
+  "profile": "rules_only",
+  "layers": { "l1": true, "l2": false, "l3_golden": false, "l4": false, "l5": false }
+}

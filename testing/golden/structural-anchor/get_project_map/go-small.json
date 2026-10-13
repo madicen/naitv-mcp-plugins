@@ -1,0 +1,69 @@
+{
+  "languages": [
+    "go"
+  ],
+  "packages": [
+    {
+      "name": "greeter",
+      "path": "pkg/greeter",
+      "symbols": [
+        {
+          "kind": "const",
+          "line": 3,
+          "name": "ExportedConst",
+          "signature": "const ExportedConst"
+        },
+        {
+          "kind": "interface",
+          "line": 3,
+          "name": "Helper",
+          "signature": "interface Helper"
+        },
+        {
+          "kind": "var",
+          "line": 6,
+          "name": "ExportedVar",
+          "signature": "var ExportedVar"
+        },
+        {
+          "kind": "type",
+          "line": 9,
+          "name": "Greeter",
+          "signature": "type Greeter"
+        },
+        {
+          "kind": "method",
+          "line": 11,
+          "name": "Hello",
+          "signature": "func (Greeter) Hello(name string) string"
+        },
+        {
+          "kind": "function",
+          "line": 15,
+          "name": "Add",
+          "signature": "func Add(a, b int) int"
+        },
+        {
+          "kind": "function",
+          "line": 19,
+          "name": "unexportedFn",
+          "signature": "func unexportedFn()"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "by_language": {
+      "go": {
+        "complexity": 1.0,
+        "files": 2,
+        "lines": 24
+      }
+    },
+    "complexity": 1.0,
+    "packages": 1,
+    "parse_errors": 0,
+    "total_files": 2,
+    "total_lines": 24
+  }
+}

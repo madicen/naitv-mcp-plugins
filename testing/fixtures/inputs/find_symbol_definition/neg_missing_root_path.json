@@ -1,0 +1,9 @@
+{
+  "_contract": {
+    "expect": "error",
+    "reason": "missing_required"
+  },
+  "depth": 2,
+  "symbol": "Greeter",
+  "pattern": "Greet"
+}

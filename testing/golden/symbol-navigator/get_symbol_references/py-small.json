@@ -1,0 +1,14 @@
+{
+  "definition": {
+    "column": 1,
+    "file": "pkg/greeter.py",
+    "imports": [],
+    "line": 1,
+    "receivers": [],
+    "signature": "class Greeter",
+    "source": "ast",
+    "type": "class"
+  },
+  "heuristic": true,
+  "references": []
+}
