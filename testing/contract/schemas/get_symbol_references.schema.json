@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/get_symbol_references.schema.json",
+  "title": "get_symbol_references",
+  "type": "object",
+  "required": ["definition", "references", "cached", "heuristic"],
+  "properties": {
+    "definition": {
+      "type": ["object", "null"],
+      "required": ["file", "line", "column", "type", "signature", "source"],
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 0 },
+        "column": { "type": "integer", "minimum": 0 },
+        "type": { "type": "string" },
+        "signature": { "type": "string" },
+        "receivers": { "type": "array", "items": { "type": "string" } },
+        "imports": { "type": "array", "items": { "type": "string" } },
+        "source": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "line", "column", "context"],
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 0 },
+          "column": { "type": "integer", "minimum": 0 },
+          "context": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cached": { "type": "boolean" },
+    "heuristic": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

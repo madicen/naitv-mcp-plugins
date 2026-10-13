@@ -1,0 +1,6 @@
+{
+  "_contract": {
+    "expect": "error",
+    "reason": "input_too_large"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/search_by_pattern.schema.json",
+  "title": "search_by_pattern",
+  "type": "object",
+  "required": ["results", "cached"],
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "file", "line", "signature"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "type": "string" },
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 0 },
+          "signature": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cached": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

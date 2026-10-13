@@ -10,3 +10,5 @@ testing/perf/results/
 testing/eval/runs/
 .coverage
 tools/structural-anchor/go_symbols/go_symbols
+.DS_Store
+**/.DS_Store

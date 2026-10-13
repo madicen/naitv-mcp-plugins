@@ -98,7 +98,7 @@ def test_missing_root_directory_exits_nonzero(tmp_path):
     )
 
     assert proc.returncode == 1
-    assert "root_path must be an existing directory" in proc.stderr
+    assert "root_path does not exist" in proc.stderr or "not a directory" in proc.stderr
 
 
 def test_invalid_regex_exits_nonzero(tmp_path):

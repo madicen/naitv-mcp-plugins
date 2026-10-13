@@ -35,20 +35,29 @@ if [[ "${LAYER_L1:-1}" == "1" ]]; then
   echo "=== L1 entry lint ($PLUGIN) ==="
   python "$ROOT/testing/contract/run_entry_lint.py" "$PLUGIN"
 
-    if [[ -d "$PLUGIN_DIR/tests" ]] && compgen -G "$PLUGIN_DIR/tests/test_*.py" >/dev/null; then
+    L1_ARGS=()
+  if [[ -d "$PLUGIN_DIR/tests" ]] && compgen -G "$PLUGIN_DIR/tests/test_*.py" >/dev/null; then
+    L1_ARGS+=("$PLUGIN_DIR/tests")
+  fi
+  # Prefer tools/<plugin>/tests when present (impl-adjacent L1).
+  if [[ -d "$ROOT/tools/$PLUGIN/tests" ]] && compgen -G "$ROOT/tools/$PLUGIN/tests/test_*.py" >/dev/null; then
+    L1_ARGS+=("$ROOT/tools/$PLUGIN/tests")
+  fi
+
+  if [[ ${#L1_ARGS[@]} -gt 0 ]]; then
     echo
     echo "=== L1 unit ($PLUGIN) ==="
     PYTEST_MARK="not perf"
     # Coverage only when the configured module file exists under COV_PATH.
     if [[ -n "${COV_MODULE:-}" && -n "${COV_PATH:-}" && -f "${COV_PATH}/${COV_MODULE}.py" ]]; then
       "$ROOT/.venv/bin/pip" install -q pytest-cov >/dev/null
-      PYTHONPATH="$COV_PATH${PYTHONPATH:+:$PYTHONPATH}" python -m pytest "$PLUGIN_DIR/tests" -q \
+      PYTHONPATH="$COV_PATH${PYTHONPATH:+:$PYTHONPATH}" python -m pytest "${L1_ARGS[@]}" -q \
         -m "$PYTEST_MARK" \
         --cov="$COV_MODULE" --cov-report=term-missing:skip-covered \
         --cov-fail-under="${COV_FAIL_UNDER:-80}"
     else
       echo "note: no coverage module on disk yet; running tests without coverage gate"
-      python -m pytest "$PLUGIN_DIR/tests" -q -m "$PYTEST_MARK"
+      python -m pytest "${L1_ARGS[@]}" -q -m "$PYTEST_MARK"
     fi
   elif [[ "$PROFILE" == "rules_only" ]]; then
     echo "note: rules_only — entry lint only (no pytest suite)"

@@ -1,0 +1,5 @@
+{
+  "root_path": "$FIXTURE/go-small",
+  "depth": 3,
+  "pattern": "^Greet|^Add"
+}
