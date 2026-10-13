@@ -1,0 +1,14 @@
+{
+  "id": "str-001-list-packages",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "List the top-level Go packages visible under this root.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["greeter"]
+  },
+  "control": false
+}

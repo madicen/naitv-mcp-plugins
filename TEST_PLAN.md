@@ -276,6 +276,13 @@ Certification is per plugin **and** per plugin set. A plugin can be Verified but
 | Release candidate | L5 eval suite and held-out suite; ablation; full L4 across all plugins |
 | Phase exit | Full L1 to L5 on everything built in that phase |
 
+Workflows (this repo):
+
+| File | Cadence |
+|---|---|
+| `.github/workflows/pr.yml` | Every PR / push to `main` and `test/**` — catalog `test_all` + Go helper tests; soft L4 |
+| `.github/workflows/nightly.yml` | Cron `0 6 * * *` UTC + `workflow_dispatch` — 50k perf + stub L5 + ablation |
+
 Results from each run are stored with the naitv-mcp version, plugin versions, model identifier and quantization, and hardware. A result that cannot be reproduced from those fields is not admissible for certification.
 
 ---

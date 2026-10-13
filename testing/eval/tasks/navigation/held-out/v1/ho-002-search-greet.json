@@ -1,0 +1,14 @@
+{
+  "id": "ho-002-search-greet",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Which symbols match the pattern greet? List at least one name.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["Greet"]
+  },
+  "control": false
+}

@@ -2,7 +2,7 @@
 
 <!-- Universal adapter for the structural-anchor plugin. Copy this file into any project
      root (or your agent's global instructions) for agents that read AGENTS.md.
-     Keep this text aligned with plugins/structural-anchor.json — the plugin JSON is
+     Keep this text aligned with plugins/structural-anchor/plugin.json — the plugin JSON is
      the source of truth. -->
 
 Before broad greps or opening many files to learn a repo, build a structural map first.

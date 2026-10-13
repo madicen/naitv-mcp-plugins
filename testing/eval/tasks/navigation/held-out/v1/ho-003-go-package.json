@@ -1,0 +1,14 @@
+{
+  "id": "ho-003-go-package",
+  "suite": "navigation",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "Name one Go package under this root and one exported symbol from it.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["greeter"]
+  },
+  "control": false
+}

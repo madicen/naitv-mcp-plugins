@@ -22,7 +22,7 @@ In ponytail, the canonical content is `skills/*/SKILL.md` (the full behavior) an
 `AGENTS.md` (a compact distillation). A CI script (`check-rule-copies.js`) fails
 the build if any host-specific copy drifts from the canonical text.
 
-In this repo, the canonical content is the plugin JSON (`plugins/lazy-dev.json`).
+In this repo, the canonical content is the plugin JSON (`plugins/lazy-dev/plugin.json`).
 The `adapters/lazy-dev/AGENTS.md` file is a distillation of its `init` rules; if
 you change one, change both. (At two copies, a manual rule is fine. If adapters
 multiply, write the drift-check script — but not before. YAGNI.)
@@ -82,7 +82,7 @@ connected) — that's what the `adapters/` directory covers: a copy-in `AGENTS.m
 per plugin, the universal fallback that nearly every modern agent reads.
 
 ```
-plugins/lazy-dev.json          ← source of truth (any MCP agent, via naitv-mcp)
+plugins/lazy-dev/plugin.json          ← source of truth (any MCP agent, via naitv-mcp)
 adapters/lazy-dev/AGENTS.md    ← universal fallback (any agent that reads AGENTS.md)
 ```
 

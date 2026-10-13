@@ -1,0 +1,71 @@
+name: nightly
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  perf:
+    runs-on: ${{ vars.PERF_RUNS_ON != '' && vars.PERF_RUNS_ON || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Python deps
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install pytest pytest-cov
+      - name: Perf 50k
+        env:
+          PERF_RUNNER_ID: ${{ vars.PERF_RUNNER_ID != '' && vars.PERF_RUNNER_ID || format('runner-{0}', runner.name) }}
+        run: |
+          . .venv/bin/activate
+          ./scripts/perf.sh structural-anchor
+          ./scripts/perf.sh symbol-navigator
+      - uses: actions/upload-artifact@v4
+        with:
+          name: perf-latest
+          path: testing/perf/results/*-latest.json
+
+  eval-stub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Soft install naitv-mcp
+        run: |
+          set -euo pipefail
+          go install github.com/madicen/naitv-mcp/cmd/naitv-mcp@latest || true
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Stub L5 + ablation
+        run: |
+          set -euo pipefail
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install pytest pytest-cov
+          if ! command -v naitv-mcp >/dev/null 2>&1; then
+            echo "::warning::naitv-mcp missing; running baseline only (treatment/ablation skipped)"
+            SEEDS=1 ./scripts/eval.sh baseline
+            exit 0
+          fi
+          SEEDS=1 ./scripts/eval.sh baseline
+          SEEDS=1 ./scripts/eval.sh treatment
+          python3 testing/eval/run_ablation.py --suite navigation --seeds 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-runs
+          path: |
+            testing/eval/runs/*-latest.json
+            testing/eval/runs/ablation-*-latest.json

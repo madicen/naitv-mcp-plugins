@@ -13,10 +13,10 @@ Use the `install_plugin` MCP tool from naitv-mcp, passing either the plugin name
 install_plugin(name="loop-engineering-go")
 
 # By URL
-install_plugin(source="https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go.json")
+install_plugin(source="https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go/plugin.json")
 
 # By local path (useful during development)
-install_plugin(source="/path/to/my-plugin.json")
+install_plugin(source="/path/to/my-plugin/plugin.json")
 ```
 
 All entries in a plugin are installed as `pending` proposals — you review and approve them in the **Review** tab of the TUI before they go live.
@@ -25,10 +25,10 @@ All entries in a plugin are installed as `pending` proposals — you review and 
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [`loop-engineering-go`](plugins/loop-engineering-go.json) | Loop-engineering rules, workflows, and Go verification tools (build, vet, test, lint) for use with Continue/Cursor | 1.1.0 |
-| [`lazy-dev`](plugins/lazy-dev.json) | Lazy senior dev mode (à la [ponytail](https://github.com/DietrichGebert/ponytail)) — YAGNI ladder, stdlib first, review/audit workflows. Universal [AGENTS.md adapter](adapters/lazy-dev/AGENTS.md) for non-MCP agents | 1.0.0 |
-| [`structural-anchor`](plugins/structural-anchor.json) | Codebase structural map — packages, symbols, languages, and stats (Python + Go). Universal [AGENTS.md adapter](adapters/structural-anchor/AGENTS.md) for non-MCP agents | 1.0.0 |
-| [`symbol-navigator`](plugins/symbol-navigator.json) | AST symbol definitions, regex pattern search, and heuristic references (Go + Python). Universal [AGENTS.md adapter](adapters/symbol-navigator/AGENTS.md) for non-MCP agents | 1.0.0 |
+| [`loop-engineering-go`](plugins/loop-engineering-go/plugin.json) | Loop-engineering rules, workflows, and Go verification tools (build, vet, test, lint) for use with Continue/Cursor | 1.1.0 |
+| [`lazy-dev`](plugins/lazy-dev/plugin.json) | Lazy senior dev mode (à la [ponytail](https://github.com/DietrichGebert/ponytail)) — YAGNI ladder, stdlib first, review/audit workflows. Universal [AGENTS.md adapter](adapters/lazy-dev/AGENTS.md) for non-MCP agents | 1.0.0 |
+| [`structural-anchor`](plugins/structural-anchor/plugin.json) | Codebase structural map — packages, symbols, languages, and stats (Python + Go). Universal [AGENTS.md adapter](adapters/structural-anchor/AGENTS.md) for non-MCP agents | 1.0.0 |
+| [`symbol-navigator`](plugins/symbol-navigator/plugin.json) | AST symbol definitions, regex pattern search, and heuristic references (Go + Python). Universal [AGENTS.md adapter](adapters/symbol-navigator/AGENTS.md) for non-MCP agents | 1.0.0 |
 
 ## Using a plugin without naitv-mcp (any agent)
 
@@ -86,21 +86,21 @@ Entries with `kind: tool` and an `exec` field in `fields` are runnable directly 
 
 ## Adding a plugin
 
-1. Create `plugins/<your-plugin-name>.json` following the format above.
+1. Create `plugins/<your-plugin-name>/plugin.json` following the format above (prefer `./scripts/scaffold_plugin.sh <your-plugin-name>`).
 2. Add an entry to `registry.json`:
 
 ```json
 {
   "name": "your-plugin-name",
   "description": "One-line description.",
-  "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/your-plugin-name.json",
+  "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/your-plugin-name/plugin.json",
   "tags": ["relevant", "tags"],
   "version": "1.0.0",
   "author": "your-github-handle"
 }
 ```
 
-3. Open a PR. The registry is intentionally minimal — no CI gate, no schema validator yet.
+3. Open a PR. The catalog is validated locally by `./scripts/test_all.sh`; GitHub Actions runs the same via `.github/workflows/pr.yml`.
 
 ## Updating a plugin
 
