@@ -6,6 +6,7 @@ Shared L2/L3 harness, frozen fixtures, and golden outputs.
 - `golden/run_golden.py` — L3 golden compare (`--update-golden` to refresh)
 - `perf/run_perf.py` — L3 perf (cold/warm p50/p95 on generated-50k; nightly)
 - `integration/` — L4 MCP tests via `naitv-mcp serve` (stdio JSON-RPC)
+- `eval/` — L5 uplift eval (tasks, graders, runner); `runs/` gitignored
 - `fixtures/` — small frozen repos and per-tool input cases
 - `fixtures/generate.py` — synthetic repo builder (output not committed)
 
@@ -15,3 +16,5 @@ Run `./scripts/perf.sh structural-anchor` for the nightly 50k perf gate
 (or `RUN_PERF=1 pytest -m perf` for a small smoke).
 Run `./scripts/l4.sh structural-anchor` (or `RUN_L4=1 ./scripts/test.sh …`) for MCP
 integration; requires `naitv-mcp` on PATH.
+L5: `./scripts/eval.sh baseline` **before** any treatment run; then
+`./scripts/eval.sh treatment`. Use `AGENT=ollama OLLAMA_MODEL=…` for a real model.

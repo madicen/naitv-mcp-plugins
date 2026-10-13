@@ -1,0 +1,14 @@
+{
+  "id": "nav-002-primary-language",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "mixed-polyglot",
+  "request": "What programming languages are present under this project root, and which is the primary language by file count?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["python", "go"]
+  },
+  "control": false
+}
