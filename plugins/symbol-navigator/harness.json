@@ -1,0 +1,20 @@
+{
+  "profile": "json_tools",
+  "coverage": {},
+  "layers": {
+    "l1": true,
+    "l2": false,
+    "l3_golden": false,
+    "l4": false,
+    "l5": false
+  },
+  "perf": { "enabled": false },
+  "l5": {
+    "treatment_plugins": ["symbol-navigator"],
+    "tool_names": [
+      "find_symbol_definition",
+      "search_by_pattern",
+      "get_symbol_references"
+    ]
+  }
+}

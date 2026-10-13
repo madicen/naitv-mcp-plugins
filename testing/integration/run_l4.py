@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""L4: drive structural-anchor tools through a real naitv-mcp serve (stdio MCP)."""
+"""L4: drive plugin tools through a real naitv-mcp serve (stdio MCP).
+
+Smoke expectations come from plugins/<name>/harness.json → l4.
+"""
 from __future__ import annotations
 
 import argparse
@@ -16,6 +19,9 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = REPO_ROOT / "testing" / "fixtures"
+sys.path.insert(0, str(REPO_ROOT / "testing"))
+
+from plugin_harness import load_harness  # noqa: E402
 
 
 class MCPClient:
@@ -25,7 +31,7 @@ class MCPClient:
 
     def request(self, method: str, params: dict[str, Any] | None = None) -> Any:
         self._id += 1
-        msg = {"jsonrpc": "2.0", "id": self._id, "method": method}
+        msg: dict[str, Any] = {"jsonrpc": "2.0", "id": self._id, "method": method}
         if params is not None:
             msg["params"] = params
         assert self.proc.stdin and self.proc.stdout
@@ -53,10 +59,18 @@ def ulidish(n: int) -> str:
     return f"01L4TEST{n:016d}"
 
 
+def resolve_fixture_args(args: dict[str, Any]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for k, v in args.items():
+        if isinstance(v, str) and v.startswith("FIXTURE:"):
+            out[k] = str(FIXTURES / v.split(":", 1)[1])
+        else:
+            out[k] = v
+    return out
+
+
 def build_seed(plugin: str, home: Path, *, include_slow: bool) -> Path:
-    manifest = json.loads(
-        (REPO_ROOT / "plugins" / plugin / "plugin.json").read_text(encoding="utf-8")
-    )
+    manifest = load_harness(plugin)["manifest"]
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     entries: list[dict[str, Any]] = []
     i = 1
@@ -116,6 +130,8 @@ def build_seed(plugin: str, home: Path, *, include_slow: bool) -> Path:
 
 def prepare_home(plugin: str, home: Path) -> None:
     src = REPO_ROOT / "tools" / plugin
+    if not src.is_dir():
+        src = REPO_ROOT / "plugins" / plugin
     dest_parent = home / ".config" / "naitv-mcp" / "tools"
     dest_parent.mkdir(parents=True, exist_ok=True)
     dest = dest_parent / plugin
@@ -149,12 +165,26 @@ def tool_text(result: dict[str, Any]) -> tuple[str, bool]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("plugin", nargs="?", default="structural-anchor")
+    parser.add_argument("plugin")
     args = parser.parse_args()
 
     if shutil.which("naitv-mcp") is None:
         print("FAIL: naitv-mcp binary not on PATH", file=sys.stderr)
         return 2
+
+    harness = load_harness(args.plugin)
+    if harness["profile"] == "rules_only":
+        print("SKIP L4: rules_only profile")
+        return 0
+
+    tool_names = harness["tool_names"]
+    l4 = harness.get("l4") or {}
+    smoke_args = resolve_fixture_args(l4.get("smoke_args") or {})
+    expect_keys: dict[str, list[str]] = l4.get("expect_keys") or {}
+    invalid_tool = l4.get("invalid_tool")
+    invalid_args = l4.get("invalid_args") or {}
+    post_tool = l4.get("post_timeout_tool")
+    post_args = resolve_fixture_args(l4.get("post_timeout_args") or {})
 
     failures = 0
     with tempfile.TemporaryDirectory(prefix="naitv-l4-") as tmp:
@@ -187,12 +217,7 @@ def main() -> int:
 
             listed = client.request("tools/list")
             names = {t["name"] for t in listed.get("tools", [])}
-            for want in (
-                "get_project_map",
-                "list_languages",
-                "get_codebase_statistics",
-                "slow_sleep",
-            ):
+            for want in [*tool_names, "slow_sleep"]:
                 if want not in names:
                     print(f"FAIL tools/list missing {want}: {sorted(names)}")
                     failures += 1
@@ -200,78 +225,62 @@ def main() -> int:
                     print(f"PASS tools/list has {want}")
 
             for tool in listed.get("tools", []):
-                if tool["name"] in {
-                    "get_project_map",
-                    "list_languages",
-                    "get_codebase_statistics",
-                }:
-                    if not (tool.get("description") or "").strip():
-                        print(f"FAIL {tool['name']}: empty description")
-                        failures += 1
-                    if tool.get("inputSchema") is None:
-                        print(f"FAIL {tool['name']}: missing inputSchema")
-                        failures += 1
+                if tool["name"] not in tool_names:
+                    continue
+                if not (tool.get("description") or "").strip():
+                    print(f"FAIL {tool['name']}: empty description")
+                    failures += 1
+                if tool.get("inputSchema") is None:
+                    print(f"FAIL {tool['name']}: missing inputSchema")
+                    failures += 1
 
-            fixture = str(FIXTURES / "py-small")
-            for name in (
-                "get_project_map",
-                "list_languages",
-                "get_codebase_statistics",
-            ):
+            if smoke_args:
+                for name in tool_names:
+                    result = client.request(
+                        "tools/call",
+                        {"name": name, "arguments": smoke_args},
+                    )
+                    text, is_err = tool_text(result)
+                    if is_err:
+                        print(f"FAIL {name} happy path error: {text[:300]}")
+                        failures += 1
+                        continue
+                    try:
+                        payload = json.loads(text)
+                    except json.JSONDecodeError as exc:
+                        print(f"FAIL {name} not JSON: {exc} ({text[:200]})")
+                        failures += 1
+                        continue
+                    keys = expect_keys.get(name) or []
+                    missing = [k for k in keys if k not in payload]
+                    if missing:
+                        print(f"FAIL {name} missing keys {missing}: {payload}")
+                        failures += 1
+                    else:
+                        print(f"PASS {name} happy path")
+
+            if invalid_tool:
                 result = client.request(
                     "tools/call",
-                    {
-                        "name": name,
-                        "arguments": {"root_path": fixture, "depth": 3},
-                    },
+                    {"name": invalid_tool, "arguments": invalid_args},
                 )
                 text, is_err = tool_text(result)
-                if is_err:
-                    print(f"FAIL {name} happy path error: {text[:300]}")
-                    failures += 1
-                    continue
-                try:
-                    payload = json.loads(text)
-                except json.JSONDecodeError as exc:
-                    print(f"FAIL {name} not JSON: {exc} ({text[:200]})")
-                    failures += 1
-                    continue
-                ok = True
-                if name == "get_project_map" and "packages" not in payload:
-                    ok = False
-                if name == "list_languages" and "languages" not in payload:
-                    ok = False
-                if name == "get_codebase_statistics" and "total_files" not in payload:
-                    ok = False
-                if ok:
-                    print(f"PASS {name} happy path")
-                else:
-                    print(f"FAIL {name} shape: {payload}")
-                    failures += 1
-
-            # Invalid input → structured error, not a crash
-            result = client.request(
-                "tools/call",
-                {"name": "get_project_map", "arguments": {"depth": 1}},
-            )
-            text, is_err = tool_text(result)
-            if not is_err:
-                print(f"FAIL invalid input should error: {text[:200]}")
-                failures += 1
-            else:
-                try:
-                    err_obj = json.loads(text)
-                except json.JSONDecodeError:
-                    print(f"FAIL invalid input error not JSON: {text[:200]}")
+                if not is_err:
+                    print(f"FAIL invalid input should error: {text[:200]}")
                     failures += 1
                 else:
-                    if err_obj.get("ok") is False:
-                        print("PASS invalid input structured error")
-                    else:
-                        print(f"FAIL error payload missing ok:false: {err_obj}")
+                    try:
+                        err_obj = json.loads(text)
+                    except json.JSONDecodeError:
+                        print(f"FAIL invalid input error not JSON: {text[:200]}")
                         failures += 1
+                    else:
+                        if err_obj.get("ok") is False:
+                            print("PASS invalid input structured error")
+                        else:
+                            print(f"FAIL error payload missing ok:false: {err_obj}")
+                            failures += 1
 
-            # Timeout then prove server still responds
             t0 = time.perf_counter()
             result = client.request("tools/call", {"name": "slow_sleep", "arguments": {}})
             elapsed = time.perf_counter() - t0
@@ -285,22 +294,17 @@ def main() -> int:
             else:
                 print(f"PASS timeout reported ({elapsed:.2f}s)")
 
-            result = client.request(
-                "tools/call",
-                {
-                    "name": "list_languages",
-                    "arguments": {
-                        "root_path": str(FIXTURES / "empty"),
-                        "depth": 1,
-                    },
-                },
-            )
-            text, is_err = tool_text(result)
-            if is_err:
-                print(f"FAIL server unresponsive after timeout: {text[:200]}")
-                failures += 1
-            else:
-                print("PASS server responsive after timeout")
+            if post_tool and post_args:
+                result = client.request(
+                    "tools/call",
+                    {"name": post_tool, "arguments": post_args},
+                )
+                text, is_err = tool_text(result)
+                if is_err:
+                    print(f"FAIL server unresponsive after timeout: {text[:200]}")
+                    failures += 1
+                else:
+                    print("PASS server responsive after timeout")
         finally:
             proc.kill()
             try:

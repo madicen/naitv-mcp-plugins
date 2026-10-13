@@ -9,7 +9,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from mcp_session import MCPClient, PLUGIN_TOOL_NAMES, list_plugin_tools
+from mcp_session import MCPClient, list_plugin_tools, plugin_tool_names
 
 FIXTURES = Path(__file__).resolve().parents[2] / "testing" / "fixtures"
 MAX_TURNS = 4
@@ -50,11 +50,14 @@ def toolstub_with_mcp(
     task: dict[str, Any],
     *,
     condition: str,
+    plugins: list[str] | None = None,
 ) -> dict[str, Any]:
-    """Deterministic agent that uses structural-anchor tools when available."""
+    """Deterministic agent that uses seeded plugin tools when available."""
     fixture_root = str((FIXTURES / task["fixture"]).resolve())
     calls: list[dict[str, Any]] = []
-    available = {t["name"] for t in list_plugin_tools(client)}
+    available = {
+        t["name"] for t in list_plugin_tools(client, plugins=plugins or None)
+    }
 
     if task.get("control"):
         text = (
@@ -166,14 +169,16 @@ def ollama_with_mcp(
     *,
     condition: str,
     seed: int,
+    plugins: list[str] | None = None,
 ) -> dict[str, Any]:
     model = os.environ.get("OLLAMA_MODEL", "qwen3:8b")
     host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434")
     fixture_root = str((FIXTURES / task["fixture"]).resolve())
+    allow = plugin_tool_names(plugins or [])
 
     tools_mcp: list[dict[str, Any]] = []
     if client is not None and condition == "treatment":
-        tools_mcp = list_plugin_tools(client)
+        tools_mcp = list_plugin_tools(client, plugins=plugins or None)
         rng = random.Random(seed)
         rng.shuffle(tools_mcp)  # plan: randomize tool order per run
 
@@ -231,7 +236,7 @@ def ollama_with_mcp(
                     else:
                         args = dict(raw_args)
                     # Force fixture root if model omits/wrong path.
-                    if name in PLUGIN_TOOL_NAMES and "root_path" not in args:
+                    if name in allow and "root_path" not in args:
                         args["root_path"] = fixture_root
                     text, is_err = client.call_tool(name, args)
                     calls.append(

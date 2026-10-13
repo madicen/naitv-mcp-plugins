@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import sys
 import tempfile
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -11,6 +12,9 @@ from pathlib import Path
 from typing import Any, Iterator
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT / "testing"))
+
+from plugin_harness import load_harness, load_manifest, tool_names  # noqa: E402
 
 
 class MCPClient:
@@ -44,9 +48,7 @@ class MCPClient:
         self.proc.stdin.flush()
 
     def call_tool(self, name: str, arguments: dict[str, Any]) -> tuple[str, bool]:
-        result = self.request(
-            "tools/call", {"name": name, "arguments": arguments}
-        )
+        result = self.request("tools/call", {"name": name, "arguments": arguments})
         is_error = bool(result.get("isError"))
         content = result.get("content") or []
         text = str(content[0].get("text", "")) if content else ""
@@ -57,35 +59,49 @@ def _ulidish(n: int) -> str:
     return f"01L5EVAL{n:016d}"
 
 
-def build_plugin_seed(plugin: str, path: Path) -> None:
-    manifest = json.loads(
-        (REPO_ROOT / "plugins" / plugin / "plugin.json").read_text(encoding="utf-8")
-    )
+def plugin_tool_names(plugins: list[str]) -> frozenset[str]:
+    names: set[str] = set()
+    for plugin in plugins:
+        try:
+            h = load_harness(plugin)
+        except FileNotFoundError:
+            continue
+        configured = (h.get("l5") or {}).get("tool_names")
+        if configured:
+            names.update(configured)
+        else:
+            names.update(h["tool_names"])
+    return frozenset(names)
+
+
+def build_plugin_seed(plugins: list[str], path: Path) -> None:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     entries: list[dict[str, Any]] = []
     i = 1
-    for raw in manifest.get("entries", []):
-        if raw.get("kind") != "tool":
-            continue
-        entries.append(
-            {
-                "id": _ulidish(i),
-                "kind": "tool",
-                "name": raw["name"],
-                "group": "",
-                "body": raw.get("body", ""),
-                "tags": raw.get("tags") or [],
-                "fields": raw.get("fields") or {},
-                "status": "active",
-                "delivery": raw.get("delivery") or "on-demand",
-                "proposed_by": "l5",
-                "proposed_at": None,
-                "target_id": "",
-                "created_at": now,
-                "updated_at": now,
-            }
-        )
-        i += 1
+    for plugin in plugins:
+        manifest = load_manifest(plugin)
+        for raw in manifest.get("entries", []):
+            if raw.get("kind") != "tool":
+                continue
+            entries.append(
+                {
+                    "id": _ulidish(i),
+                    "kind": "tool",
+                    "name": raw["name"],
+                    "group": "",
+                    "body": raw.get("body", ""),
+                    "tags": raw.get("tags") or [],
+                    "fields": raw.get("fields") or {},
+                    "status": "active",
+                    "delivery": raw.get("delivery") or "on-demand",
+                    "proposed_by": "l5",
+                    "proposed_at": None,
+                    "target_id": "",
+                    "created_at": now,
+                    "updated_at": now,
+                }
+            )
+            i += 1
     path.write_text(
         json.dumps({"schema_version": 1, "exported_at": now, "entries": entries}, indent=2)
         + "\n",
@@ -95,6 +111,8 @@ def build_plugin_seed(plugin: str, path: Path) -> None:
 
 def prepare_tools_home(plugin: str, home: Path) -> None:
     src = REPO_ROOT / "tools" / plugin
+    if not src.is_dir():
+        src = REPO_ROOT / "plugins" / plugin
     dest_parent = home / ".config" / "naitv-mcp" / "tools"
     dest_parent.mkdir(parents=True, exist_ok=True)
     dest = dest_parent / plugin
@@ -113,11 +131,7 @@ def mcp_session(*, plugins: list[str]) -> Iterator[MCPClient]:
             prepare_tools_home(plugin, home)
         seed = home / "seed.json"
         if plugins:
-            # Only one plugin manifest supported for now; merge later if needed.
-            build_plugin_seed(plugins[0], seed)
-            if len(plugins) > 1:
-                # lazy: first plugin only — extend when multi-plugin treatment lands
-                pass
+            build_plugin_seed(plugins, seed)
         else:
             seed.write_text(
                 json.dumps(
@@ -170,13 +184,20 @@ def mcp_session(*, plugins: list[str]) -> Iterator[MCPClient]:
                 proc.terminate()
 
 
-PLUGIN_TOOL_NAMES = frozenset(
-    {"get_project_map", "list_languages", "get_codebase_statistics"}
-)
-
-
-def list_plugin_tools(client: MCPClient) -> list[dict[str, Any]]:
+def list_plugin_tools(
+    client: MCPClient, *, plugins: list[str] | None = None
+) -> list[dict[str, Any]]:
     listed = client.request("tools/list")
     tools = listed.get("tools") or []
-    plugin = [t for t in tools if t.get("name") in PLUGIN_TOOL_NAMES]
-    return plugin
+    if plugins is None:
+        return tools
+    allow = plugin_tool_names(plugins)
+    return [t for t in tools if t.get("name") in allow]
+
+
+# Back-compat for imports that still expect a constant; prefer plugin_tool_names().
+PLUGIN_TOOL_NAMES = frozenset(
+    tool_names(load_manifest("structural-anchor"))
+    if (REPO_ROOT / "plugins" / "structural-anchor" / "plugin.json").is_file()
+    else ()
+)

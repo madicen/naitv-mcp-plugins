@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 # L4: MCP integration through a real naitv-mcp serve (stdio).
-# Usage: ./scripts/l4.sh [plugin-name]
+# Usage: ./scripts/l4.sh <plugin-name>
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-PLUGIN="${1:-structural-anchor}"
+PLUGIN="${1:-}"
+if [[ -z "$PLUGIN" ]]; then
+  echo "usage: $0 <plugin-name>" >&2
+  exit 2
+fi
 
 if ! command -v naitv-mcp >/dev/null 2>&1; then
   echo "error: naitv-mcp not on PATH" >&2

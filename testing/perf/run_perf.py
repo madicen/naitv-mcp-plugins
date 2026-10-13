@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""L3 performance runner: cold/warm p50/p95 for structural-anchor get_project_map.
-
-Measures in-process tool time (matches design targets). Nightly / release gate —
-not part of the default ./scripts/test.sh path.
-"""
+"""L3 performance runner driven by plugins/<name>/harness.json → perf."""
 from __future__ import annotations
 
 import argparse
@@ -25,15 +21,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES_DIR = REPO_ROOT / "testing" / "fixtures"
 GENERATE = FIXTURES_DIR / "generate.py"
 RESULTS_DIR = REPO_ROOT / "testing" / "perf" / "results"
+sys.path.insert(0, str(REPO_ROOT / "testing"))
 
-# Targets from TEST_PLAN / design (seconds). Fail if p95 > target * (1 + slack).
-TARGETS = {
-    "get_project_map": {
-        "cold": 2.0,  # map build on ~50k (Go bin already present)
-        "warm": 0.1,  # cache hit
-        "cold_start": 30.0,  # first call including Go helper compile
-    }
-}
+from plugin_harness import load_harness, resolve_impl_paths  # noqa: E402
+
 SLACK = 0.10
 
 
@@ -75,18 +66,18 @@ def ensure_fixture(files: int, seed: int, out: Path) -> Path:
     return out
 
 
-def load_tool(plugin_name: str) -> Any:
-    tools = REPO_ROOT / "tools" / plugin_name
-    if str(tools) not in sys.path:
-        sys.path.insert(0, str(tools))
-    # Fresh import each process; module may already be loaded in pytest.
-    if "structural_anchor" in sys.modules:
-        return importlib.reload(sys.modules["structural_anchor"])
-    return importlib.import_module("structural_anchor")
+def load_module(plugin_name: str, module_name: str) -> Any:
+    paths = resolve_impl_paths(plugin_name, load_harness(plugin_name))
+    for p in paths:
+        if str(p) not in sys.path:
+            sys.path.insert(0, str(p))
+    if module_name in sys.modules:
+        return importlib.reload(sys.modules[module_name])
+    return importlib.import_module(module_name)
 
 
-def clear_map_cache(home: Path) -> None:
-    d = home / ".cache" / "naitv-mcp" / "structural-anchor"
+def clear_subdir(home: Path, subdir: str) -> None:
+    d = home / ".cache" / "naitv-mcp" / subdir
     if d.is_dir():
         shutil.rmtree(d)
 
@@ -97,8 +88,10 @@ def clear_go_bin(home: Path) -> None:
         shutil.rmtree(d)
 
 
-def call_map(mod: Any, root: Path) -> dict[str, Any]:
-    return mod.get_project_map(root, 3, set(mod.DEFAULT_SKIP_DIRS))
+def call_hot(mod: Any, call_name: str, root: Path) -> dict[str, Any]:
+    fn = getattr(mod, call_name)
+    skip = set(getattr(mod, "DEFAULT_SKIP_DIRS", set()))
+    return fn(root, 3, skip)
 
 
 def timed(fn: Callable[[], Any]) -> float:
@@ -109,8 +102,10 @@ def timed(fn: Callable[[], Any]) -> float:
 
 def measure_series(
     mod: Any,
+    call_name: str,
     root: Path,
     home: Path,
+    cache_subdir: str,
     *,
     mode: str,
     runs: int,
@@ -118,17 +113,20 @@ def measure_series(
 ) -> list[float]:
     os.environ["HOME"] = str(home)
 
+    def once() -> None:
+        call_hot(mod, call_name, root)
+
     if mode == "warm":
-        clear_map_cache(home)
-        call_map(mod, root)
+        clear_subdir(home, cache_subdir)
+        once()
         for _ in range(warmups):
-            call_map(mod, root)
-        return [timed(lambda: call_map(mod, root)) for _ in range(runs)]
+            once()
+        return [timed(once) for _ in range(runs)]
 
     samples: list[float] = []
     for i in range(warmups + runs):
-        clear_map_cache(home)
-        elapsed = timed(lambda: call_map(mod, root))
+        clear_subdir(home, cache_subdir)
+        elapsed = timed(once)
         if i >= warmups:
             samples.append(elapsed)
     return samples
@@ -166,8 +164,8 @@ def hardware_info() -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("plugin", nargs="?", default="structural-anchor")
-    parser.add_argument("--tool", default="get_project_map")
+    parser.add_argument("plugin")
+    parser.add_argument("--tool", default="")
     parser.add_argument("--files", type=int, default=50_000)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--runs", type=int, default=10)
@@ -185,12 +183,19 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.tool != "get_project_map":
-        raise SystemExit("only get_project_map is supported in this runner")
-    if args.plugin != "structural-anchor":
-        raise SystemExit("only structural-anchor is supported in this runner")
+    harness = load_harness(args.plugin)
+    perf = harness.get("perf") or {}
+    if not perf.get("enabled", False):
+        print(f"SKIP: harness.perf.enabled is false for {args.plugin}")
+        return 0
 
-    targets = TARGETS[args.tool]
+    tool = args.tool or perf.get("tool") or ""
+    module_name = perf.get("module") or ""
+    call_name = perf.get("call") or tool
+    cache_subdir = perf.get("cache_subdir") or args.plugin
+    targets = perf.get("targets_seconds") or {}
+    if not tool or not module_name or not call_name:
+        raise SystemExit("harness.perf requires tool, module, and call")
 
     if args.skip_generate:
         root = args.out
@@ -203,7 +208,7 @@ def main() -> int:
     failures = 0
     report: dict[str, Any] = {
         "plugin": args.plugin,
-        "tool": args.tool,
+        "tool": tool,
         "files": args.files,
         "seed": args.seed,
         "runs": args.runs,
@@ -219,55 +224,72 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="naitv-perf-") as tmp:
         home = Path(tmp)
         os.environ["HOME"] = str(home)
-        mod = load_tool(args.plugin)
+        mod = load_module(args.plugin, module_name)
 
-        print("\n=== cold_start (Go helper compile + first map) ===")
-        clear_map_cache(home)
-        clear_go_bin(home)
-        try:
-            cold_start = timed(lambda: call_map(mod, root))
-        except Exception as exc:
-            print(f"  FAIL cold_start: {exc}")
-            failures += 1
-            cold_start = float("nan")
-        else:
-            report["modes"]["cold_start"] = {"seconds": cold_start}
-            if not check_target("cold_start", cold_start, targets["cold_start"]):
+        if "cold_start" in targets:
+            print("\n=== cold_start (helper compile + first call) ===")
+            clear_subdir(home, cache_subdir)
+            clear_go_bin(home)
+            try:
+                cold_start = timed(lambda: call_hot(mod, call_name, root))
+            except Exception as exc:
+                print(f"  FAIL cold_start: {exc}")
+                failures += 1
+                cold_start = float("nan")
+            else:
+                report["modes"]["cold_start"] = {"seconds": cold_start}
+                if not check_target("cold_start", cold_start, float(targets["cold_start"])):
+                    failures += 1
+
+        if "cold" in targets:
+            print("\n=== cold (empty cache, helpers kept) ===")
+            cold_samples = measure_series(
+                mod,
+                call_name,
+                root,
+                home,
+                cache_subdir,
+                mode="cold",
+                runs=args.runs,
+                warmups=args.warmups,
+            )
+            cold_stats = summarize(cold_samples)
+            report["modes"]["cold"] = {"samples": cold_samples, **cold_stats}
+            print(
+                f"  samples p50={cold_stats['p50']:.4f}s p95={cold_stats['p95']:.4f}s "
+                f"mean={cold_stats['mean']:.4f}s"
+            )
+            if not check_target("cold", cold_stats["p95"], float(targets["cold"])):
                 failures += 1
 
-        print("\n=== cold (empty map cache, Go bin kept) ===")
-        cold_samples = measure_series(
-            mod, root, home, mode="cold", runs=args.runs, warmups=args.warmups
-        )
-        cold_stats = summarize(cold_samples)
-        report["modes"]["cold"] = {"samples": cold_samples, **cold_stats}
-        print(
-            f"  samples p50={cold_stats['p50']:.4f}s p95={cold_stats['p95']:.4f}s "
-            f"mean={cold_stats['mean']:.4f}s"
-        )
-        if not check_target("cold", cold_stats["p95"], targets["cold"]):
-            failures += 1
-
-        print("\n=== warm (populated cache) ===")
-        warm_samples = measure_series(
-            mod, root, home, mode="warm", runs=args.runs, warmups=args.warmups
-        )
-        warm_stats = summarize(warm_samples)
-        report["modes"]["warm"] = {"samples": warm_samples, **warm_stats}
-        print(
-            f"  samples p50={warm_stats['p50']:.4f}s p95={warm_stats['p95']:.4f}s "
-            f"mean={warm_stats['mean']:.4f}s"
-        )
-        if not check_target("warm", warm_stats["p95"], targets["warm"]):
-            failures += 1
+        if "warm" in targets:
+            print("\n=== warm (populated cache) ===")
+            warm_samples = measure_series(
+                mod,
+                call_name,
+                root,
+                home,
+                cache_subdir,
+                mode="warm",
+                runs=args.runs,
+                warmups=args.warmups,
+            )
+            warm_stats = summarize(warm_samples)
+            report["modes"]["warm"] = {"samples": warm_samples, **warm_stats}
+            print(
+                f"  samples p50={warm_stats['p50']:.4f}s p95={warm_stats['p95']:.4f}s "
+                f"mean={warm_stats['mean']:.4f}s"
+            )
+            if not check_target("warm", warm_stats["p95"], float(targets["warm"])):
+                failures += 1
 
     report["finished_at"] = datetime.now(timezone.utc).isoformat()
     report["failures"] = failures
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    out_path = RESULTS_DIR / f"{args.plugin}-{args.tool}-{stamp}.json"
+    out_path = RESULTS_DIR / f"{args.plugin}-{tool}-{stamp}.json"
     out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    latest = RESULTS_DIR / f"{args.plugin}-{args.tool}-latest.json"
+    latest = RESULTS_DIR / f"{args.plugin}-{tool}-latest.json"
     latest.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"\nWrote {out_path}")
     print(f"Summary: failures={failures}")

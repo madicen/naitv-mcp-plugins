@@ -1,0 +1,53 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "structural_anchor",
+    "search_paths": ["tools/structural-anchor", "plugins/structural-anchor"],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "perf": {
+    "enabled": true,
+    "tool": "get_project_map",
+    "module": "structural_anchor",
+    "cache_subdir": "structural-anchor",
+    "call": "get_project_map",
+    "targets_seconds": {
+      "cold": 2.0,
+      "warm": 0.1,
+      "cold_start": 30.0
+    }
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:py-small",
+      "depth": 3
+    },
+    "expect_keys": {
+      "get_project_map": ["packages"],
+      "list_languages": ["languages"],
+      "get_codebase_statistics": ["total_files"]
+    },
+    "invalid_tool": "get_project_map",
+    "invalid_args": { "depth": 1 },
+    "post_timeout_tool": "list_languages",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "depth": 1
+    }
+  },
+  "l5": {
+    "treatment_plugins": ["structural-anchor"],
+    "tool_names": [
+      "get_project_map",
+      "list_languages",
+      "get_codebase_statistics"
+    ]
+  }
+}

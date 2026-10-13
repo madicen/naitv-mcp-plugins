@@ -34,6 +34,23 @@ from graders.hallucination import grade_hallucination  # noqa: E402
 from mcp_session import mcp_session  # noqa: E402
 from tool_loop import ollama_with_mcp, toolstub_with_mcp  # noqa: E402
 
+sys.path.insert(0, str(REPO_ROOT / "testing"))
+from plugin_harness import load_harness  # noqa: E402
+
+
+def treatment_plugins_for(suite: str) -> list[str]:
+    """Resolve treatment plugins from harness.json (suite → primary plugin)."""
+    # lazy: suite name maps to a primary plugin; extend via env or suite meta later
+    primary = {
+        "navigation": "structural-anchor",
+    }.get(suite, "structural-anchor")
+    try:
+        h = load_harness(primary)
+    except FileNotFoundError:
+        return [primary]
+    return list((h.get("l5") or {}).get("treatment_plugins") or [primary])
+
+
 
 def load_tasks(suite: str, version: int) -> list[dict[str, Any]]:
     directory = TASKS_ROOT / suite / f"v{version}"
@@ -82,13 +99,16 @@ def run_task(
     agent: str,
     seed: int,
     client: Any,
+    plugins: list[str] | None = None,
 ) -> dict[str, Any]:
     import time
 
     t0 = time.perf_counter()
     if agent == "stub":
         if condition == "treatment":
-            trajectory = toolstub_with_mcp(client, task, condition=condition)
+            trajectory = toolstub_with_mcp(
+                client, task, condition=condition, plugins=plugins or []
+            )
         else:
             trajectory = stub_baseline(task)
     elif agent == "ollama":
@@ -97,6 +117,7 @@ def run_task(
             task,
             condition=condition,
             seed=seed,
+            plugins=plugins or [],
         )
     else:
         raise SystemExit(f"unknown agent {agent!r}")
@@ -169,7 +190,7 @@ def main() -> int:
     order = list(tasks)
     rng.shuffle(order)
 
-    plugins = ["structural-anchor"] if args.condition == "treatment" else []
+    plugins = treatment_plugins_for(args.suite) if args.condition == "treatment" else []
     results: list[dict[str, Any]] = []
 
     # One MCP server for the whole run (treatment); baseline needs no plugin server.
@@ -184,6 +205,7 @@ def main() -> int:
                             agent=args.agent,
                             seed=args.seed_base + i,
                             client=client,
+                            plugins=plugins,
                         )
                     )
     else:
