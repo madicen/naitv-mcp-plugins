@@ -46,21 +46,27 @@ jobs:
         with:
           go-version: "stable"
       - name: Soft L4 via naitv-mcp
-        # Install from public module. If install fails or binary missing, exit 0.
-        # If binary is present, L4 failures fail the job.
+        # Best-effort: missing install OR L4 failures warn and exit 0 so catalog
+        # remains the merge gate. Known gap: naitv-mcp@latest may not kill
+        # exec tools within the declared timeout (slow_sleep probe).
         run: |
           set -euo pipefail
           go install github.com/madicen/naitv-mcp/cmd/naitv-mcp@latest || {
-            echo "warn: go install naitv-mcp failed; skipping L4"
+            echo "::warning::go install naitv-mcp failed; skipping L4"
             exit 0
           }
           export PATH="$(go env GOPATH)/bin:$PATH"
           if ! command -v naitv-mcp >/dev/null 2>&1; then
-            echo "warn: naitv-mcp not on PATH after install; skipping L4"
+            echo "::warning::naitv-mcp not on PATH after install; skipping L4"
             exit 0
           fi
           python -m venv .venv
           . .venv/bin/activate
           pip install pytest pytest-cov
-          RUN_L4=1 ./scripts/l4.sh structural-anchor
-          RUN_L4=1 ./scripts/l4.sh symbol-navigator
+          failed=0
+          RUN_L4=1 ./scripts/l4.sh structural-anchor || failed=1
+          RUN_L4=1 ./scripts/l4.sh symbol-navigator || failed=1
+          if [[ "$failed" -ne 0 ]]; then
+            echo "::warning::L4 failed against naitv-mcp@latest (soft; catalog remains the merge gate)"
+          fi
+          exit 0
