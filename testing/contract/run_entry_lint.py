@@ -51,9 +51,11 @@ def lint(name: str) -> int:
             if not fields.get("exec"):
                 print(f"FAIL {label}: tool missing fields.exec")
                 failures += 1
-            if not fields.get("io_mode"):
-                print(f"FAIL {label}: tool missing fields.io_mode")
+            io_mode = fields.get("io_mode") or "text"
+            if io_mode not in ("json", "JSON", "text", "TEXT"):
+                print(f"FAIL {label}: bad io_mode {io_mode!r}")
                 failures += 1
+            # JSON tools need schemas later (L2); text tools use working_dir / stdout text.
         body = entry.get("body")
         if body is None or (isinstance(body, str) and not body.strip()):
             print(f"FAIL {label}: empty body")

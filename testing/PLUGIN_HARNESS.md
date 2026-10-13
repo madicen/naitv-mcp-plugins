@@ -55,7 +55,8 @@ Examples: `lazy-dev`. No subprocess contract.
 
 ### Mixed plugins
 
-`"profile": "mixed"` — L2 runs for tool entries only; rules still get entry lint.
+`"profile": "mixed"` — rules get entry lint; set `layers.l2/l4` only for JSON I/O tools.
+Text-mode tools (`working_dir`, no `io_mode=json`) skip L2/L4 (see `loop-engineering-go`).
 
 ## `harness.json` schema (optional)
 
