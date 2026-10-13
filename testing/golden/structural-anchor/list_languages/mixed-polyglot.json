@@ -1,0 +1,15 @@
+{
+  "languages": [
+    {
+      "file_count": 1,
+      "id": "go",
+      "line_count": 3
+    },
+    {
+      "file_count": 1,
+      "id": "python",
+      "line_count": 2
+    }
+  ],
+  "primary": "go"
+}
