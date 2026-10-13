@@ -75,3 +75,8 @@ if [[ -d "$ROOT/testing/golden/$PLUGIN" ]]; then
   echo "=== L3 golden ($PLUGIN) ==="
   python "$ROOT/testing/golden/run_golden.py" "$PLUGIN"
 fi
+
+if [[ "${RUN_L4:-}" == "1" ]]; then
+  echo
+  "$ROOT/scripts/l4.sh" "$PLUGIN"
+fi
