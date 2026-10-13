@@ -43,7 +43,7 @@ def percentile(sorted_vals: list[float], p: float) -> float:
 
 def ensure_fixture(files: int, seed: int, out: Path) -> Path:
     marker = out / ".generated"
-    expected = f"files={files} seed={seed}\n"
+    expected = f"files={files} seed={seed} v=2\n"  # v=2: PerfAnchor planted
     if marker.is_file() and marker.read_text(encoding="utf-8") == expected:
         return out
     if out.exists():
@@ -88,10 +88,17 @@ def clear_go_bin(home: Path) -> None:
         shutil.rmtree(d)
 
 
-def call_hot(mod: Any, call_name: str, root: Path) -> dict[str, Any]:
+def call_hot(
+    mod: Any,
+    call_name: str,
+    root: Path,
+    call_args: list[Any] | None = None,
+    call_kwargs: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     fn = getattr(mod, call_name)
     skip = set(getattr(mod, "DEFAULT_SKIP_DIRS", set()))
-    return fn(root, 3, skip)
+    # lazy: (root, depth, skip_dirs, *call_args) matches structural-anchor + symbol-navigator
+    return fn(root, 3, skip, *(call_args or []), **(call_kwargs or {}))
 
 
 def timed(fn: Callable[[], Any]) -> float:
@@ -110,11 +117,13 @@ def measure_series(
     mode: str,
     runs: int,
     warmups: int,
+    call_args: list[Any] | None = None,
+    call_kwargs: dict[str, Any] | None = None,
 ) -> list[float]:
     os.environ["HOME"] = str(home)
 
     def once() -> None:
-        call_hot(mod, call_name, root)
+        call_hot(mod, call_name, root, call_args, call_kwargs)
 
     if mode == "warm":
         clear_subdir(home, cache_subdir)
@@ -193,6 +202,8 @@ def main() -> int:
     module_name = perf.get("module") or ""
     call_name = perf.get("call") or tool
     cache_subdir = perf.get("cache_subdir") or args.plugin
+    call_args = list(perf.get("call_args") or [])
+    call_kwargs = dict(perf.get("call_kwargs") or {})
     targets = perf.get("targets_seconds") or {}
     if not tool or not module_name or not call_name:
         raise SystemExit("harness.perf requires tool, module, and call")
@@ -213,6 +224,8 @@ def main() -> int:
         "seed": args.seed,
         "runs": args.runs,
         "warmups": args.warmups,
+        "call_args": call_args,
+        "call_kwargs": call_kwargs,
         "targets": targets,
         "slack": SLACK,
         "measure": "in-process",
@@ -231,7 +244,9 @@ def main() -> int:
             clear_subdir(home, cache_subdir)
             clear_go_bin(home)
             try:
-                cold_start = timed(lambda: call_hot(mod, call_name, root))
+                cold_start = timed(
+                    lambda: call_hot(mod, call_name, root, call_args, call_kwargs)
+                )
             except Exception as exc:
                 print(f"  FAIL cold_start: {exc}")
                 failures += 1
@@ -252,6 +267,8 @@ def main() -> int:
                 mode="cold",
                 runs=args.runs,
                 warmups=args.warmups,
+                call_args=call_args,
+                call_kwargs=call_kwargs,
             )
             cold_stats = summarize(cold_samples)
             report["modes"]["cold"] = {"samples": cold_samples, **cold_stats}
@@ -273,6 +290,8 @@ def main() -> int:
                 mode="warm",
                 runs=args.runs,
                 warmups=args.warmups,
+                call_args=call_args,
+                call_kwargs=call_kwargs,
             )
             warm_stats = summarize(warm_samples)
             report["modes"]["warm"] = {"samples": warm_samples, **warm_stats}

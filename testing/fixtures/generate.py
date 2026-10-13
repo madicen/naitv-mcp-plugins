@@ -60,7 +60,11 @@ def main() -> int:
         pkg = f"pkg{pkg_idx:02d}"
         if lang == "py":
             path = out / "python" / pkg / f"mod_{i}.py"
-            write_file(path, gen_python(pkg, f"m{i}", rng))
+            body = gen_python(pkg, f"m{i}", rng)
+            # Stable symbol for L3 perf lookups (symbol-navigator warm gate).
+            if i == 0:
+                body = 'class PerfAnchor:\n    """perf harness target"""\n\n    def ping(self) -> str:\n        return "ok"\n\n' + body
+            write_file(path, body)
         else:
             path = out / "go" / pkg / f"mod_{i}.go"
             write_file(path, gen_go(pkg, f"m{i}", rng))

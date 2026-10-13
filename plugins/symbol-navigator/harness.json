@@ -21,7 +21,17 @@
     }
   },
   "perf": {
-    "enabled": false
+    "enabled": true,
+    "tool": "find_symbol_definition",
+    "module": "symbol_navigator",
+    "cache_subdir": "symbol-navigator",
+    "call": "find_symbol_definition",
+    "call_args": ["PerfAnchor"],
+    "targets_seconds": {
+      "warm": 0.1,
+      "cold": 30.0,
+      "cold_start": 60.0
+    }
   },
   "l4": {
     "smoke_args": {
