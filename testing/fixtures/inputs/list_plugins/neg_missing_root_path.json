@@ -1,0 +1,4 @@
+{
+  "_contract": {"expect": "error", "reason": "missing_required"},
+  "depth": 1
+}

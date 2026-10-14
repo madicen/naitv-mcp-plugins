@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/list_plugins.schema.json",
+  "title": "list_plugins",
+  "type": "object",
+  "required": ["plugins", "count"],
+  "properties": {
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "version", "path", "entry_count", "tool_count"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": "string" },
+          "path": { "type": "string" },
+          "entry_count": { "type": "integer", "minimum": 0 },
+          "tool_count": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "count": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

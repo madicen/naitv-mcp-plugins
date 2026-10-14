@@ -1,0 +1,12 @@
+{
+  "count": 1,
+  "plugins": [
+    {
+      "entry_count": 1,
+      "name": "sample",
+      "path": "plugins/sample/plugin.json",
+      "tool_count": 0,
+      "version": "0.1.0"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "errors": [
+    "plugin not found: sample"
+  ],
+  "ok": false,
+  "path": "",
+  "plugin": "sample",
+  "warnings": []
+}

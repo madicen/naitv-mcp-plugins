@@ -1,0 +1,5 @@
+{
+  "root_path": "$FIXTURE/empty",
+  "plugin": "sample",
+  "layers": "lint"
+}

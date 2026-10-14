@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/validate_plugin.schema.json",
+  "title": "validate_plugin",
+  "type": "object",
+  "required": ["ok", "plugin", "path", "errors", "warnings"],
+  "properties": {
+    "ok": { "type": "boolean" },
+    "plugin": { "type": "string" },
+    "path": { "type": "string" },
+    "errors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

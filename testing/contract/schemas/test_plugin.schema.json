@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/test_plugin.schema.json",
+  "title": "test_plugin",
+  "type": "object",
+  "required": ["ok", "plugin", "layers", "errors", "output"],
+  "properties": {
+    "ok": { "type": "boolean" },
+    "plugin": { "type": "string" },
+    "layers": { "type": "string", "enum": ["lint", "l2"] },
+    "errors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "output": { "type": "string" }
+  },
+  "additionalProperties": false
+}
