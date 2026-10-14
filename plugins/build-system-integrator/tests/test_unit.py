@@ -24,7 +24,14 @@ class _FakeStdin:
 def test_detect_make() -> None:
     out = bsi.detect_build_tool(FIXTURES / "build-mini")
     assert out["tool"] == "make"
-    assert "Makefile" in out["config_files"]
+    assert out["config_files"] == ["Makefile"]
+
+
+def test_detect_make_no_case_duplicate(tmp_path: Path) -> None:
+    # One real file; probing alternate case must not invent a second path.
+    (tmp_path / "Makefile").write_text("all:\n\t@true\n", encoding="utf-8")
+    out = bsi.detect_build_tool(tmp_path)
+    assert out["config_files"] == ["Makefile"]
 
 
 def test_detect_go() -> None:

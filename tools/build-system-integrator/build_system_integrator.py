@@ -60,7 +60,11 @@ def validate_root_path(root: str) -> Path:
 
 
 def _scan_markers(root: Path) -> list[tuple[str, str]]:
-    """Return (tool, relative config path) pairs, deterministic order."""
+    """Return (tool, relative config path) pairs, deterministic order.
+
+    Match marker names against real directory entries (exact case) so
+    case-insensitive filesystems do not report Makefile and makefile twice.
+    """
     found: list[tuple[str, str]] = []
     seen_files: set[str] = set()
     search_dirs = [root]
@@ -72,17 +76,25 @@ def _scan_markers(root: Path) -> list[tuple[str, str]]:
                 search_dirs.append(Path(ent.path))
     except OSError:
         pass
+    marker_to_tool = {name: tool for tool, names in ROOT_MARKERS for name in names}
     for directory in search_dirs:
-        for tool, names in ROOT_MARKERS:
-            for name in names:
-                path = directory / name
-                if not path.is_file():
-                    continue
-                rel = str(path.relative_to(root))
-                if rel in seen_files:
-                    continue
-                seen_files.add(rel)
-                found.append((tool, rel))
+        try:
+            entries = [
+                ent
+                for ent in os.scandir(directory)
+                if ent.is_file(follow_symlinks=False)
+            ]
+        except OSError:
+            continue
+        for ent in sorted(entries, key=lambda e: e.name):
+            tool = marker_to_tool.get(ent.name)
+            if tool is None:
+                continue
+            rel = str(Path(ent.path).relative_to(root))
+            if rel in seen_files:
+                continue
+            seen_files.add(rel)
+            found.append((tool, rel))
     return found
 
 
