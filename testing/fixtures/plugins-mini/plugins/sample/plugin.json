@@ -1,0 +1,16 @@
+{
+  "name": "sample",
+  "version": "0.1.0",
+  "description": "Minimal fixture plugin for plugin-manager tests.",
+  "author": "madicen",
+  "tags": ["fixture", "sample"],
+  "entries": [
+    {
+      "kind": "rule",
+      "name": "sample-rule",
+      "delivery": "init",
+      "tags": ["sample"],
+      "body": "Fixture rule used only by plugin-manager harness tests."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "plugin-manager",
+  "version": "0.1.0",
+  "description": "List, validate, and test naitv-mcp plugin manifests under a filesystem root (developer tooling).",
+  "author": "madicen",
+  "tags": ["plugin-manager", "developer-tools"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "list_plugins",
+      "delivery": "on-demand",
+      "tags": ["plugin-manager"],
+      "body": "List plugin manifests under root_path (plugins/*/plugin.json or */plugin.json). Filesystem discovery only — not the installed-store list from naitv-mcp core.",
+      "fields": {
+        "exec": "TOOL_NAME=list_plugins python3 ~/.config/naitv-mcp/tools/plugin-manager/plugin_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to a plugins repo or plugins directory\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_plugin",
+      "delivery": "on-demand",
+      "tags": ["plugin-manager"],
+      "body": "Validate one plugin manifest under root_path (entry kinds, delivery, tool fields, bodies).",
+      "fields": {
+        "exec": "TOOL_NAME=validate_plugin python3 ~/.config/naitv-mcp/tools/plugin-manager/plugin_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to a plugins repo or plugins directory\",\"required\":true},{\"name\":\"plugin\",\"description\":\"Plugin directory name\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "test_plugin",
+      "delivery": "on-demand",
+      "tags": ["plugin-manager"],
+      "body": "Test a plugin: layers=lint (default, in-process) or layers=l2 (contract runner when root_path is this repo).",
+      "fields": {
+        "exec": "TOOL_NAME=test_plugin python3 ~/.config/naitv-mcp/tools/plugin-manager/plugin_manager.py",
+        "io_mode": "json",
+        "timeout": "120s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to a plugins repo or plugins directory\",\"required\":true},{\"name\":\"plugin\",\"description\":\"Plugin directory name\",\"required\":true},{\"name\":\"layers\",\"description\":\"lint (default) or l2\",\"required\":false}]"
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "root_path": "$FIXTURE/plugins-mini",
+  "plugin": "sample",
+  "layers": "lint"
+}

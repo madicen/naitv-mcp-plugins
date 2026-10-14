@@ -1,0 +1,5 @@
+{
+  "_contract": {"expect": "error", "reason": "missing_path"},
+  "root_path": "$MISSING_PATH",
+  "plugin": "sample"
+}

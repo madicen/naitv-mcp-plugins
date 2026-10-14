@@ -72,7 +72,7 @@
     {
       "name": "plugin-manager",
       "phase": 1,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -83,7 +83,7 @@
       "depends_on": [],
       "eval_category": null,
       "l5": "not-applicable",
-      "notes": "Developer tool, not a model-facing capability. Check first whether naitv-mcp core already ships an equivalent before building.",
+      "notes": "Developer tool. Core already has installed-store list_plugins; this plugin's list_plugins lists filesystem manifests (name collision if both active). validate_plugin + test_plugin are new. L1–L4 green; L5 not-applicable.",
       "tool_count": 3,
       "implementation": "Python",
       "perf": "< 1s",

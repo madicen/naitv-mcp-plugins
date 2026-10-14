@@ -31,6 +31,14 @@
       "tags": ["symbol-navigator", "context", "definitions", "references"],
       "version": "1.0.0",
       "author": "madicen"
+    },
+    {
+      "name": "plugin-manager",
+      "description": "List, validate, and test naitv-mcp plugin manifests under a filesystem root (developer tooling).",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/plugin-manager/plugin.json",
+      "tags": ["plugin-manager", "developer-tools"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

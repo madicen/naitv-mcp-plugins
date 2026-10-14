@@ -1,0 +1,9 @@
+{
+  "errors": [
+    "plugin not found: sample"
+  ],
+  "layers": "lint",
+  "ok": false,
+  "output": "",
+  "plugin": "sample"
+}
