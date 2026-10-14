@@ -1,0 +1,1800 @@
+{
+  "_note": "Source of truth for the build cycle. Built from PLUGIN_REFERENCE_MATRIX.md (64 plugin rows; the matrix also lists naitv-mcp-core and three templates, which are excluded: core is naitv-mcp itself, and templates are replaced by scripts/scaffold_plugin.sh). Plus two repo plugins that predate the matrix (lazy-dev, loop-engineering-go). Order = build order. status: exists | planned | needs-spec | blocked. Only planned entries with a complete tools list are built. needs-spec entries get a spec first (see CYCLE_PROMPT.md step 2b). Do not invent tool names. l5 is the gated uplift result: pending | measured-helpful | measured-no-uplift | not-applicable.",
+  "plugins": [
+    {
+      "name": "lazy-dev",
+      "phase": 0,
+      "status": "exists",
+      "profile": "rules_only",
+      "language": "markdown",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": null,
+      "l5": "not-applicable",
+      "notes": "Rules/workflows only. Shipped before the numbered plan.",
+      "tool_count": null,
+      "order": 1
+    },
+    {
+      "name": "loop-engineering-go",
+      "phase": 0,
+      "status": "exists",
+      "profile": "mixed",
+      "language": "go",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": "fix-with-tests",
+      "l5": "pending",
+      "notes": "Text-mode tools (no io_mode=json) skip L2/L4 per PLUGIN_HARNESS.md.",
+      "tool_count": null,
+      "order": 2
+    },
+    {
+      "name": "structural-anchor",
+      "phase": 2,
+      "status": "exists",
+      "profile": "json_tools",
+      "language": "python+go",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Tools in plugins/structural-anchor/plugin.json. Perf: get_project_map cold < 2s, warm < 0.1s (harness.json). Its navigation L5 numbers so far came from the stub agent and are not evidence.",
+      "tool_count": 3,
+      "implementation": "Python/Go AST",
+      "perf": "< 2s (50K files)",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "Plugin framework",
+      "order": 3
+    },
+    {
+      "name": "symbol-navigator",
+      "phase": 2,
+      "status": "exists",
+      "profile": "json_tools",
+      "language": "python+go",
+      "tools": null,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Tools in plugins/symbol-navigator/plugin.json. Warm lookup perf wired. L5 result so far is stub-only.",
+      "tool_count": 3,
+      "implementation": "LSP + AST",
+      "perf": "< 100ms",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "structural-anchor",
+      "order": 4
+    },
+    {
+      "name": "plugin-manager",
+      "phase": 1,
+      "status": "planned",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": [
+        "list_plugins",
+        "validate_plugin",
+        "test_plugin"
+      ],
+      "depends_on": [],
+      "eval_category": null,
+      "l5": "not-applicable",
+      "notes": "Developer tool, not a model-facing capability. Check first whether naitv-mcp core already ships an equivalent before building.",
+      "tool_count": 3,
+      "implementation": "Python",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": null,
+      "order": 5
+    },
+    {
+      "name": "build-system-integrator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Build wrappers",
+      "perf": "< 5s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on": [],
+      "depends_on_raw": "Plugin framework",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 6,
+      "draft_tools": [
+        "detect_build_tool",
+        "list_build_targets",
+        "run_build_target",
+        "parse_build_errors"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-build-system-integrator-design.md"
+    },
+    {
+      "name": "workspace-search",
+      "phase": 4,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Known tool: semantic_search (< 500ms target). Full tool list needed.",
+      "tool_count": 3,
+      "implementation": "ripgrep + ranking",
+      "perf": "< 500ms",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "Plugin framework",
+      "order": 7,
+      "draft_tools": [
+        "semantic_search",
+        "text_search",
+        "rank_results"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-workspace-search-design.md"
+    },
+    {
+      "name": "context-injector",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "eval_category": "multi-file",
+      "l5": "pending",
+      "notes": "Known tool: get_code_slice (< 50ms target). Full tool list needed.",
+      "tool_count": 3,
+      "implementation": "Python/Go AST",
+      "perf": "< 50ms",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "symbol-navigator",
+      "order": 8,
+      "draft_tools": [
+        "get_code_slice",
+        "find_relevant_snippets",
+        "get_file_outline"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-context-injector-design.md"
+    },
+    {
+      "name": "dependency-graph-analyzer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Import analysis",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "depends_on_raw": "structural-anchor",
+      "eval_category": "navigation",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 9,
+      "draft_tools": [
+        "build_import_graph",
+        "query_dependencies",
+        "find_hubs",
+        "export_graph"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-dependency-graph-analyzer-design.md"
+    },
+    {
+      "name": "cache-manager",
+      "phase": 4,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": null,
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "In-memory + SQLite",
+      "perf": "< 100ms",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "Plugin framework",
+      "order": 10,
+      "draft_tools": [
+        "cache_get",
+        "cache_put",
+        "cache_stats",
+        "cache_prune"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-cache-manager-design.md"
+    },
+    {
+      "name": "mistake-tracker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Git mining + ML",
+      "perf": "< 3s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "cache-manager"
+      ],
+      "depends_on_raw": "cache-manager",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 11,
+      "draft_tools": [
+        "record_mistake",
+        "search_mistakes",
+        "list_recurring_mistakes",
+        "mistake_stats"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-mistake-tracker-design.md"
+    },
+    {
+      "name": "specification-enforcer",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "eval_category": "structure",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "Python/Go AST",
+      "perf": "< 500ms",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "symbol-navigator",
+      "order": 12,
+      "draft_tools": [
+        "load_spec",
+        "extract_requirements",
+        "check_coverage",
+        "report_violations"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-specification-enforcer-design.md"
+    },
+    {
+      "name": "pattern-recognizer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Code search + ML",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "workspace-search"
+      ],
+      "depends_on_raw": "workspace-search",
+      "eval_category": "multi-file",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 13,
+      "draft_tools": [
+        "find_pattern_instances",
+        "detect_repeated_patterns",
+        "rank_examples",
+        "pattern_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-pattern-recognizer-design.md"
+    },
+    {
+      "name": "error-matcher",
+      "phase": 4,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "mistake-tracker"
+      ],
+      "eval_category": "fix-with-tests",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 3,
+      "implementation": "Similarity matching",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "mistake-tracker",
+      "order": 14,
+      "draft_tools": [
+        "match_error",
+        "add_error_signature",
+        "list_known_errors"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-error-matcher-design.md"
+    },
+    {
+      "name": "golden-example-injector",
+      "phase": 5,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "workspace-search"
+      ],
+      "eval_category": "multi-file",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 3,
+      "implementation": "Code search + rank",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "workspace-search",
+      "order": 15,
+      "draft_tools": [
+        "find_golden_examples",
+        "rank_examples",
+        "inject_example"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-golden-example-injector-design.md"
+    },
+    {
+      "name": "decision-log-runner",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "workspace-search"
+      ],
+      "eval_category": "structure",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "Markdown parsing",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on_raw": "semantic-search",
+      "order": 16,
+      "draft_tools": [
+        "parse_decision_log",
+        "search_decisions",
+        "check_decision_conflicts",
+        "summarize_decisions"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-decision-log-runner-design.md"
+    },
+    {
+      "name": "task-decomposer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "Structured prompt",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "depends_on_raw": "structural-anchor",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 17,
+      "draft_tools": [
+        "decompose_task",
+        "estimate_steps",
+        "order_subtasks",
+        "validate_plan"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-task-decomposer-design.md"
+    },
+    {
+      "name": "think-before-write",
+      "phase": 5,
+      "status": "needs-spec",
+      "profile": "rules_only",
+      "language": "markdown",
+      "tools": null,
+      "depends_on": [
+        "task-decomposer"
+      ],
+      "eval_category": "structure",
+      "l5": "pending",
+      "notes": "Tool list or rule set needed.",
+      "tool_count": 3,
+      "implementation": "Prompt structure",
+      "perf": "< 2s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "task-decomposer",
+      "order": 18,
+      "draft_tools": [
+        "plan_checklist",
+        "check_assumptions",
+        "render_pre_write_prompt"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-think-before-write-design.md"
+    },
+    {
+      "name": "validate-and-test",
+      "phase": 3,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "build-system-integrator"
+      ],
+      "eval_category": "fix-with-tests",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 3,
+      "implementation": "Build tools",
+      "perf": "< 5s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "build-system",
+      "order": 19,
+      "draft_tools": [
+        "detect_build_system",
+        "run_validation",
+        "summarize_failures"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-validate-and-test-design.md"
+    },
+    {
+      "name": "lint-fix-loop",
+      "phase": 3,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "eval_category": "fix-with-tests",
+      "l5": "pending",
+      "notes": "Known tool: run_linter (< 1s per file target). Full tool list needed.",
+      "tool_count": 3,
+      "implementation": "Linter wrappers",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "validate-and-test",
+      "order": 20,
+      "draft_tools": [
+        "run_linter",
+        "apply_safe_fixes",
+        "summarize_lint_results"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-lint-fix-loop-design.md"
+    },
+    {
+      "name": "tdd-runner",
+      "phase": 3,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "eval_category": "fix-with-tests",
+      "l5": "pending",
+      "notes": "Known tool: run_tests (< 5s target). Full tool list needed.",
+      "tool_count": 3,
+      "implementation": "Test framework",
+      "perf": "< 5s",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "validate-and-test",
+      "order": 21,
+      "draft_tools": [
+        "run_tests",
+        "failing_test_summary",
+        "select_tests_for_change"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-tdd-runner-design.md"
+    },
+    {
+      "name": "security-checker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Pattern DB",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "lint-fix-loop"
+      ],
+      "depends_on_raw": "lint-fix-loop",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 22,
+      "draft_tools": [
+        "scan_security_patterns",
+        "scan_file",
+        "list_rules",
+        "check_unsafe_calls"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-security-checker-design.md"
+    },
+    {
+      "name": "secrets-detector",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "Pattern matching",
+      "perf": "< 500ms",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on": [],
+      "depends_on_raw": "Plugin framework",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 23,
+      "draft_tools": [
+        "scan_secrets",
+        "scan_file",
+        "list_patterns",
+        "allowlist_check"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-secrets-detector-design.md"
+    },
+    {
+      "name": "type-import-stubber",
+      "phase": 5,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "eval_category": "structure",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 3,
+      "implementation": "AST parsing",
+      "perf": "< 500ms",
+      "complexity": "L",
+      "priority": 1,
+      "depends_on_raw": "symbol-navigator",
+      "order": 24,
+      "draft_tools": [
+        "list_missing_imports",
+        "generate_type_stubs",
+        "validate_stubs"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-type-import-stubber-design.md"
+    },
+    {
+      "name": "circular-dependency-detector",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "Graph analysis",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "dependency-graph-analyzer"
+      ],
+      "depends_on_raw": "dependency-graph",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md).",
+      "order": 25,
+      "draft_tools": [
+        "find_cycles",
+        "cycle_path",
+        "suggest_break_points",
+        "check_change_cycles"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-circular-dependency-detector-design.md"
+    },
+    {
+      "name": "api-contract-validator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "API extraction",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 26,
+      "draft_tools": [
+        "extract_api",
+        "diff_api",
+        "check_breaking_changes",
+        "list_contracts"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-api-contract-validator-design.md"
+    },
+    {
+      "name": "surgical-patch",
+      "phase": 5,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "lint-fix-loop"
+      ],
+      "eval_category": "refactor",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 3,
+      "implementation": "Diff generation",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on_raw": "lint-fix-loop",
+      "order": 27,
+      "draft_tools": [
+        "generate_minimal_diff",
+        "validate_patch_scope",
+        "apply_patch_dry_run"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-surgical-patch-design.md"
+    },
+    {
+      "name": "regression-test-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 3,
+      "implementation": "Template-based",
+      "perf": "< 2s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "tdd-runner"
+      ],
+      "depends_on_raw": "tdd-runner",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (3) and perf only. Tool names needed.",
+      "order": 28,
+      "draft_tools": [
+        "suggest_regression_tests",
+        "generate_test_stub",
+        "validate_generated_test"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-regression-test-generator-design.md"
+    },
+    {
+      "name": "documentation-enforcer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "AST walking",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "lint-fix-loop"
+      ],
+      "depends_on_raw": "lint-fix-loop",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 29,
+      "draft_tools": [
+        "find_undocumented",
+        "check_doc_comments",
+        "generate_doc_stub",
+        "doc_coverage_report"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-documentation-enforcer-design.md"
+    },
+    {
+      "name": "mock-stub-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "Template-based",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "multi-file",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 30,
+      "draft_tools": [
+        "generate_mock",
+        "generate_stub",
+        "list_mockable_deps",
+        "validate_stub"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-mock-stub-generator-design.md"
+    },
+    {
+      "name": "deprecation-manager",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Annotation parsing",
+      "perf": "< 2s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "refactor",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 31,
+      "draft_tools": [
+        "find_deprecated",
+        "list_deprecations",
+        "check_deprecated_usage",
+        "plan_migration"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-deprecation-manager-design.md"
+    },
+    {
+      "name": "test-coverage-analyzer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Coverage tools",
+      "perf": "< 2s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "tdd-runner"
+      ],
+      "depends_on_raw": "tdd-runner",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 32,
+      "draft_tools": [
+        "run_coverage",
+        "parse_coverage_report",
+        "find_uncovered_changes",
+        "coverage_delta"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-test-coverage-analyzer-design.md"
+    },
+    {
+      "name": "license-compliance-checker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Dependency analysis",
+      "perf": "< 2s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [],
+      "depends_on_raw": "Plugin framework",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 33,
+      "draft_tools": [
+        "list_dependency_licenses",
+        "check_license_policy",
+        "find_license_conflicts",
+        "license_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-license-compliance-checker-design.md"
+    },
+    {
+      "name": "team-knowledge-extractor",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "AST + git mining",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on_raw": "structural-anchor",
+      "order": 34,
+      "draft_tools": [
+        "mine_conventions",
+        "extract_ownership",
+        "extract_review_patterns",
+        "export_knowledge_base"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-team-knowledge-extractor-design.md"
+    },
+    {
+      "name": "invariant-checker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Pattern matching",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 1,
+      "depends_on": [
+        "team-knowledge-extractor"
+      ],
+      "depends_on_raw": "team-knowledge",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md).",
+      "order": 35,
+      "draft_tools": [
+        "load_invariants",
+        "check_invariants",
+        "report_violations",
+        "add_invariant"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-invariant-checker-design.md"
+    },
+    {
+      "name": "code-style-enforcer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 4,
+      "tool_count": 4,
+      "implementation": "AST analysis",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "team-knowledge-extractor"
+      ],
+      "depends_on_raw": "team-knowledge",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md).",
+      "order": 36,
+      "draft_tools": [
+        "check_style",
+        "load_style_rules",
+        "suggest_fixes",
+        "style_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-code-style-enforcer-design.md"
+    },
+    {
+      "name": "naming-validator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Heuristics",
+      "perf": "< 100ms",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "code-style-enforcer"
+      ],
+      "depends_on_raw": "code-style",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md).",
+      "order": 37,
+      "draft_tools": [
+        "check_names",
+        "suggest_names",
+        "list_violations",
+        "load_naming_rules"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-naming-validator-design.md"
+    },
+    {
+      "name": "logging-enforcer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Pattern matching",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 2,
+      "depends_on": [
+        "code-style-enforcer"
+      ],
+      "depends_on_raw": "code-style",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md).",
+      "order": 38,
+      "draft_tools": [
+        "find_log_calls",
+        "check_log_levels",
+        "check_sensitive_fields",
+        "logging_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-logging-enforcer-design.md"
+    },
+    {
+      "name": "code-review-simulator",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [
+        "code-style-enforcer"
+      ],
+      "eval_category": "structure",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "Heuristics + ML",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on_raw": "code-style-enforcer",
+      "order": 39,
+      "draft_tools": [
+        "review_diff",
+        "score_risk",
+        "list_reviewer_questions",
+        "suggest_tests"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-code-review-simulator-design.md"
+    },
+    {
+      "name": "type-safety-enhancer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 3,
+      "tool_count": 4,
+      "implementation": "Type inference",
+      "perf": "< 500ms",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 40,
+      "draft_tools": [
+        "infer_types",
+        "find_untyped_symbols",
+        "suggest_annotations",
+        "type_coverage_report"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-type-safety-enhancer-design.md"
+    },
+    {
+      "name": "doc-scraper",
+      "phase": 4,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access.",
+      "tool_count": 3,
+      "implementation": "Markdown + HTML",
+      "perf": "< 3s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on_raw": "Plugin framework",
+      "order": 41,
+      "draft_tools": [
+        "fetch_and_parse",
+        "extract_sections",
+        "search_doc_index"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-doc-scraper-design.md"
+    },
+    {
+      "name": "performance-profiler",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Benchmarking",
+      "perf": "< 3s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "build-system-integrator"
+      ],
+      "depends_on_raw": "build-system",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md).",
+      "order": 42,
+      "draft_tools": [
+        "run_benchmark",
+        "profile_hotspots",
+        "compare_profiles",
+        "summarize_profile"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-performance-profiler-design.md"
+    },
+    {
+      "name": "refactoring-suggester",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 5,
+      "implementation": "Code analysis",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "depends_on_raw": "structural-anchor",
+      "eval_category": "refactor",
+      "notes": "Matrix gives tool count (5) and perf only. Tool names needed.",
+      "order": 43,
+      "draft_tools": [
+        "analyze_complexity",
+        "find_duplicates",
+        "suggest_extract_method",
+        "suggest_rename",
+        "rank_refactorings"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-refactoring-suggester-design.md"
+    },
+    {
+      "name": "benchmark-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 5,
+      "implementation": "Language-specific",
+      "perf": "< 3s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "build-system-integrator"
+      ],
+      "depends_on_raw": "build-system",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (5) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md).",
+      "order": 44,
+      "draft_tools": [
+        "find_bench_targets",
+        "generate_benchmark",
+        "validate_benchmark",
+        "run_benchmark_once",
+        "list_benchmarks"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-benchmark-generator-design.md"
+    },
+    {
+      "name": "change-impact-analyzer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Dependency graph",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "dependency-graph-analyzer"
+      ],
+      "depends_on_raw": "dependency-graph",
+      "eval_category": "multi-file",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md).",
+      "order": 45,
+      "draft_tools": [
+        "analyze_change_impact",
+        "list_affected_tests",
+        "affected_modules",
+        "impact_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-change-impact-analyzer-design.md"
+    },
+    {
+      "name": "documentation-sync-manager",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Doc/code compare",
+      "perf": "< 3s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "documentation-enforcer"
+      ],
+      "depends_on_raw": "documentation-enforcer",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 46,
+      "draft_tools": [
+        "find_doc_drift",
+        "check_examples",
+        "list_stale_docs",
+        "sync_report"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-documentation-sync-manager-design.md"
+    },
+    {
+      "name": "environment-validator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Config parsing",
+      "perf": "< 1s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "depends_on_raw": "validate-and-test",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 47,
+      "draft_tools": [
+        "check_env_vars",
+        "parse_env_files",
+        "compare_env_templates",
+        "env_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-environment-validator-design.md"
+    },
+    {
+      "name": "interface-segregation-enforcer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Interface analysis",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 48,
+      "draft_tools": [
+        "list_interfaces",
+        "find_fat_interfaces",
+        "suggest_split",
+        "check_implementations"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-interface-segregation-enforcer-design.md"
+    },
+    {
+      "name": "language-idioms-enforcer",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Pattern library",
+      "perf": "< 500ms",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "code-style-enforcer"
+      ],
+      "depends_on_raw": "code-style",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md).",
+      "order": 49,
+      "draft_tools": [
+        "check_idioms",
+        "load_idiom_pack",
+        "suggest_idiom_fix",
+        "idiom_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-language-idioms-enforcer-design.md"
+    },
+    {
+      "name": "performance-regression-detector",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Benchmark compare",
+      "perf": "< 10s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "benchmark-generator"
+      ],
+      "depends_on_raw": "benchmark-generator",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 50,
+      "draft_tools": [
+        "load_baseline",
+        "compare_to_baseline",
+        "flag_regressions",
+        "update_baseline"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-performance-regression-detector-design.md"
+    },
+    {
+      "name": "stale-code-identifier",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Graph analysis",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "structural-anchor"
+      ],
+      "depends_on_raw": "structural-anchor",
+      "eval_category": "refactor",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 51,
+      "draft_tools": [
+        "find_unreferenced",
+        "find_unused_exports",
+        "rank_staleness",
+        "stale_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-stale-code-identifier-design.md"
+    },
+    {
+      "name": "team-metrics-collector",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "not-applicable",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Metrics aggregation",
+      "perf": "< 5s",
+      "complexity": "M",
+      "priority": 2,
+      "depends_on": [
+        "cache-manager"
+      ],
+      "depends_on_raw": "cache-manager",
+      "eval_category": null,
+      "notes": "Infrastructure, not model-facing. Matrix row has no direct model effect.",
+      "order": 52,
+      "draft_tools": [
+        "collect_commit_metrics",
+        "collect_review_metrics",
+        "aggregate_metrics",
+        "export_metrics"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-team-metrics-collector-design.md"
+    },
+    {
+      "name": "concurrency-checker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Static analysis",
+      "perf": "< 2s",
+      "complexity": "H",
+      "priority": 2,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "depends_on_raw": "validate-and-test",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 53,
+      "draft_tools": [
+        "find_shared_state",
+        "check_locking",
+        "find_race_candidates",
+        "concurrency_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-concurrency-checker-design.md"
+    },
+    {
+      "name": "database-schema-validator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 5,
+      "implementation": "Schema parsing",
+      "perf": "< 3s",
+      "complexity": "H",
+      "priority": 2,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "depends_on_raw": "validate-and-test",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (5) and perf only. Tool names needed.",
+      "order": 54,
+      "draft_tools": [
+        "parse_schema",
+        "validate_schema",
+        "check_migrations",
+        "check_orm_usage",
+        "schema_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-database-schema-validator-design.md"
+    },
+    {
+      "name": "fuzzing-test-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Go fuzzing",
+      "perf": "< 5s",
+      "complexity": "H",
+      "priority": 2,
+      "depends_on": [
+        "tdd-runner"
+      ],
+      "depends_on_raw": "tdd-runner",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 55,
+      "draft_tools": [
+        "find_fuzz_targets",
+        "generate_fuzz_target",
+        "validate_fuzz_target",
+        "run_fuzz_smoke"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-fuzzing-test-generator-design.md"
+    },
+    {
+      "name": "goroutine-leak-detector",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "pprof analysis",
+      "perf": "< 3s",
+      "complexity": "H",
+      "priority": 2,
+      "depends_on": [
+        "concurrency-checker"
+      ],
+      "depends_on_raw": "concurrency-checker",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 56,
+      "draft_tools": [
+        "parse_goroutine_dump",
+        "find_leak_candidates",
+        "explain_goroutine",
+        "leak_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-goroutine-leak-detector-design.md"
+    },
+    {
+      "name": "integration-test-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Test scaffolding",
+      "perf": "< 3s",
+      "complexity": "H",
+      "priority": 2,
+      "depends_on": [
+        "tdd-runner"
+      ],
+      "depends_on_raw": "tdd-runner",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 57,
+      "draft_tools": [
+        "find_integration_points",
+        "generate_integration_test",
+        "validate_test_file",
+        "list_fixtures"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-integration-test-generator-design.md"
+    },
+    {
+      "name": "blame-context-historian",
+      "phase": 2,
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "language": "python",
+      "tools": null,
+      "depends_on": [],
+      "eval_category": "navigation",
+      "l5": "pending",
+      "notes": "Tool list needed.",
+      "tool_count": 4,
+      "implementation": "Git blame parsing",
+      "perf": "< 500ms",
+      "complexity": "L",
+      "priority": 3,
+      "depends_on_raw": "Plugin framework",
+      "order": 58,
+      "draft_tools": [
+        "blame_lines",
+        "history_for_symbol",
+        "recent_changes_summary",
+        "find_last_change_author"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-blame-context-historian-design.md"
+    },
+    {
+      "name": "feature-flag-manager",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Template-based",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 3,
+      "depends_on": [
+        "validate-and-test"
+      ],
+      "depends_on_raw": "validate-and-test",
+      "eval_category": "refactor",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 59,
+      "draft_tools": [
+        "find_flags",
+        "list_stale_flags",
+        "plan_flag_removal",
+        "flag_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-feature-flag-manager-design.md"
+    },
+    {
+      "name": "code-generation-helper",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 5,
+      "implementation": "Template-based",
+      "perf": "< 1s",
+      "complexity": "L",
+      "priority": 3,
+      "depends_on": [
+        "symbol-navigator"
+      ],
+      "depends_on_raw": "symbol-navigator",
+      "eval_category": "multi-file",
+      "notes": "Matrix gives tool count (5) and perf only. Tool names needed.",
+      "order": 60,
+      "draft_tools": [
+        "list_templates",
+        "render_template",
+        "validate_generated_code",
+        "suggest_template",
+        "generation_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-code-generation-helper-design.md"
+    },
+    {
+      "name": "accessibility-checker",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "AST + rules",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "lint-fix-loop"
+      ],
+      "depends_on_raw": "lint-fix-loop",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 61,
+      "draft_tools": [
+        "check_a11y_file",
+        "list_a11y_rules",
+        "a11y_summary",
+        "suggest_fixes"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-accessibility-checker-design.md"
+    },
+    {
+      "name": "rollback-plan-generator",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 5,
+      "tool_count": 4,
+      "implementation": "Change analysis",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "change-impact-analyzer"
+      ],
+      "depends_on_raw": "change-impact",
+      "eval_category": "multi-file",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'change-impact' normalized to 'change-impact-analyzer' (see MATRIX_NOTES.md).",
+      "order": 62,
+      "draft_tools": [
+        "analyze_change_risk",
+        "generate_rollback_steps",
+        "list_affected_services",
+        "validate_rollback_plan"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-rollback-plan-generator-design.md"
+    },
+    {
+      "name": "contract-testing-helper",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "API analysis",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "api-contract-validator"
+      ],
+      "depends_on_raw": "api-contract",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'api-contract' normalized to 'api-contract-validator' (see MATRIX_NOTES.md).",
+      "order": 63,
+      "draft_tools": [
+        "generate_contract",
+        "verify_contract",
+        "list_consumers",
+        "contract_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-contract-testing-helper-design.md"
+    },
+    {
+      "name": "incremental-refactoring-helper",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "State tracking",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "refactoring-suggester"
+      ],
+      "depends_on_raw": "refactoring-suggester",
+      "eval_category": "refactor",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 64,
+      "draft_tools": [
+        "plan_refactor_steps",
+        "track_refactor_state",
+        "next_step",
+        "mark_step_done"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-incremental-refactoring-helper-design.md"
+    },
+    {
+      "name": "memory-profiler",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Profiler wrapper",
+      "perf": "< 5s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "performance-profiler"
+      ],
+      "depends_on_raw": "performance-profiler",
+      "eval_category": "fix-with-tests",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 65,
+      "draft_tools": [
+        "run_memory_profile",
+        "parse_heap_profile",
+        "find_allocation_hotspots",
+        "memory_summary"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-memory-profiler-design.md"
+    },
+    {
+      "name": "monitoring-alerting-setup",
+      "status": "needs-spec",
+      "profile": "json_tools",
+      "tools": null,
+      "l5": "pending",
+      "phase": 6,
+      "tool_count": 4,
+      "implementation": "Template-based",
+      "perf": "< 2s",
+      "complexity": "M",
+      "priority": 3,
+      "depends_on": [
+        "performance-profiler"
+      ],
+      "depends_on_raw": "performance-profiler",
+      "eval_category": "structure",
+      "notes": "Matrix gives tool count (4) and perf only. Tool names needed.",
+      "order": 66,
+      "draft_tools": [
+        "detect_metrics",
+        "generate_alert_rules",
+        "validate_alert_rules",
+        "render_dashboard_config"
+      ],
+      "spec_status": "draft",
+      "spec_path": "docs/superpowers/specs/2026-10-14-monitoring-alerting-setup-design.md"
+    }
+  ],
+  "_order_note": "order is the build sequence: dependencies first, then tier (MATRIX implementation order), then priority (1 critical), then complexity (L before M before H), then phase. Existing plugins take the first slots; plugin-manager is pinned as the first new build."
+}
