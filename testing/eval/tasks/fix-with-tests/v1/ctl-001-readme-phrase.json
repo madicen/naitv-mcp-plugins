@@ -1,0 +1,19 @@
+{
+  "id": "ctl-001-readme-phrase",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Open README.md and quote the word Makefile from its first sentence. Do not run builds.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Makefile"
+    ]
+  },
+  "control": true,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

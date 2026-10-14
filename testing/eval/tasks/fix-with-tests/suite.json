@@ -1,0 +1,5 @@
+{
+  "name": "fix-with-tests",
+  "description": "Build detection, target listing, and error parsing uplift (build-system-integrator)",
+  "treatment_plugins": ["build-system-integrator"]
+}

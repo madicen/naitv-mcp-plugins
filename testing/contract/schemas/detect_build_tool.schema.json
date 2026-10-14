@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/detect_build_tool.schema.json",
+  "title": "detect_build_tool",
+  "type": "object",
+  "required": ["tool", "config_files"],
+  "properties": {
+    "tool": {
+      "type": "string",
+      "enum": ["make", "go", "npm", "cargo", "python", "unknown"]
+    },
+    "config_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

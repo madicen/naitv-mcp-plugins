@@ -1,0 +1,61 @@
+{
+  "name": "build-system-integrator",
+  "version": "0.1.0",
+  "description": "Detect local build systems, list targets, run a bounded target, and parse compiler-style errors.",
+  "author": "madicen",
+  "tags": ["build-system-integrator", "build", "fix-with-tests"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "detect_build_tool",
+      "delivery": "on-demand",
+      "tags": ["build-system-integrator"],
+      "body": "Detect the primary build tool under root_path (make, go, npm, cargo, python) and list matching config files.",
+      "fields": {
+        "exec": "TOOL_NAME=detect_build_tool python3 ~/.config/naitv-mcp/tools/build-system-integrator/build_system_integrator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_build_targets",
+      "delivery": "on-demand",
+      "tags": ["build-system-integrator"],
+      "body": "List known build targets for the detected tool under root_path.",
+      "fields": {
+        "exec": "TOOL_NAME=list_build_targets python3 ~/.config/naitv-mcp/tools/build-system-integrator/build_system_integrator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "run_build_target",
+      "delivery": "on-demand",
+      "tags": ["build-system-integrator"],
+      "body": "Run one allowlisted build target under root_path with a short timeout; return exit_code and output_tail.",
+      "fields": {
+        "exec": "TOOL_NAME=run_build_target python3 ~/.config/naitv-mcp/tools/build-system-integrator/build_system_integrator.py",
+        "io_mode": "json",
+        "timeout": "10s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"target\",\"description\":\"Target name (e.g. hello, build, test)\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "parse_build_errors",
+      "delivery": "on-demand",
+      "tags": ["build-system-integrator"],
+      "body": "Parse compiler-style file:line: message lines from a build log string.",
+      "fields": {
+        "exec": "TOOL_NAME=parse_build_errors python3 ~/.config/naitv-mcp/tools/build-system-integrator/build_system_integrator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"output\",\"description\":\"Build log text to parse\",\"required\":true}]"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/run_build_target.schema.json",
+  "title": "run_build_target",
+  "type": "object",
+  "required": ["exit_code", "output_tail", "tool", "target"],
+  "properties": {
+    "exit_code": { "type": "integer" },
+    "output_tail": { "type": "string" },
+    "tool": { "type": "string" },
+    "target": { "type": "string" }
+  },
+  "additionalProperties": false
+}

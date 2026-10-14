@@ -1,0 +1,19 @@
+{
+  "id": "fix-008-make-config",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Which config file name did detect_build_tool find for make?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Makefile"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

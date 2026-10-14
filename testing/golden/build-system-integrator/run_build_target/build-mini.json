@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "output_tail": "hello-from-make\n",
+  "target": "hello",
+  "tool": "make"
+}

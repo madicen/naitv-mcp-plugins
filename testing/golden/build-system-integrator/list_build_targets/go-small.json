@@ -1,0 +1,8 @@
+{
+  "targets": [
+    "build",
+    "test",
+    "vet"
+  ],
+  "tool": "go"
+}

@@ -94,7 +94,7 @@
     },
     {
       "name": "build-system-integrator",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "detect_build_tool",
@@ -112,7 +112,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "fix-with-tests",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1–L4 green. L5 pending (no l5.model pinned). 10 dev + 2 control tasks under fix-with-tests. Approved first-draft tools from draft_tools.",
       "order": 6,
       "draft_tools": [
         "detect_build_tool",

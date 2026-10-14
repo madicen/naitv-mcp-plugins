@@ -1,0 +1,19 @@
+{
+  "id": "fix-001-detect-make",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "What build tool does this repo use? Answer with the tool id.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "make"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

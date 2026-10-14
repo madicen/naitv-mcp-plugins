@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/parse_build_errors.schema.json",
+  "title": "parse_build_errors",
+  "type": "object",
+  "required": ["errors", "count"],
+  "properties": {
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "line", "message"],
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 0 },
+          "message": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "count": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

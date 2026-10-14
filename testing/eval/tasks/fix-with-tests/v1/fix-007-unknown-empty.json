@@ -1,0 +1,19 @@
+{
+  "id": "fix-007-unknown-empty",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "empty",
+  "request": "If no build files exist, what tool id should detect_build_tool return?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "unknown"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "fix-009-error-line",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "From log 'a.go:10:2: syntax error', what line number is the error on?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "10"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

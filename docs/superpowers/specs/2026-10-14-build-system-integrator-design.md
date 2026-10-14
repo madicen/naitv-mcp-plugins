@@ -1,84 +1,45 @@
-# build-system-integrator: design (DRAFT)
+# build-system-integrator — Design Spec
 
-> Status: DRAFT first pass. Generated for review. Tool names are proposals, not approved. `tools` in `docs/plan/plugins.json` stays `null` until a person approves this spec. Then the entry becomes `planned`.
+**Date:** 2026-10-14  
+**Phase:** 3  
+**Status:** Approved first-draft (catalog `planned` → implementing)
 
 ## Purpose
 
-`build-system-integrator` belongs to phase 3 (Validation and testing). It is a Build wrappers plugin with complexity L and priority 1 in the reference matrix. Its job is to help a small local model make a deterministic, checkable decision it would otherwise guess at. It must give structured JSON, not prose.
+Help agents detect the local build system, list targets, run one allowlisted target with a short timeout, and parse `file:line: message` errors from logs.
 
-Dependencies: none (naitv-mcp core only). Build order: 6. Eval category for L5: `fix-with-tests`.
+## Tools
 
-## Shared contract
+| Tool | Timeout | Input | Output |
+|------|---------|-------|--------|
+| `detect_build_tool` | 5s | `root_path` | `tool`, `config_files[]` |
+| `list_build_targets` | 5s | `root_path` | `tool`, `targets[]` |
+| `run_build_target` | 10s | `root_path`, `target` | `exit_code`, `output_tail`, `tool`, `target` |
+| `parse_build_errors` | 5s | `output` | `errors[]` (`file`,`line`,`message`), `count` |
 
-- Every tool reads one JSON object on stdin and writes one JSON line on stdout (`io_mode: json`).
-- `root_path` is required wherever a repo is read. `depth` defaults to 3. `skip_dirs` defaults to the standard set (`.git`, `node_modules`, `vendor`, `.venv`, `__pycache__`).
-- Output is deterministic for the same input and repo state. Stdout is capped at 1 MB. Traversal caps are documented in the README.
-- Caches go only under `~/.cache/naitv-mcp/build-system-integrator/`. No network access.
+Supported tools: `make`, `go`, `npm`, `cargo`, `python`, or `unknown`.
 
-## Performance target
+`run_build_target` only runs allowlisted commands (e.g. `make <target>`, `go build ./...`). No arbitrary shell. Output tail capped at 8 KiB.
 
-`< 5s` (from the matrix; enforced once `harness.json` has a perf block).
+## Performance
 
-## Tools (draft)
-
-| Tool | Input | Output |
-|---|---|---|
-| `detect_build_tool` | root_path | tool, config_files[] |
-| `list_build_targets` | root_path | targets[] |
-| `run_build_target` | root_path, target | exit_code, output_tail |
-| `parse_build_errors` | output | errors[] with file, line, message |
-
-### `detect_build_tool`
-
-- Input: root_path, plus shared `root_path` where applicable.
-- Output: one JSON object with tool, config_files[].
-- Timeout: set from the performance target (`< 5s`) with headroom.
-- Errors: a structured `{"error": ..., "code": ...}` object for bad input. No tracebacks on stdout.
-
-### `list_build_targets`
-
-- Input: root_path, plus shared `root_path` where applicable.
-- Output: one JSON object with targets[].
-- Timeout: set from the performance target (`< 5s`) with headroom.
-- Errors: a structured `{"error": ..., "code": ...}` object for bad input. No tracebacks on stdout.
-
-### `run_build_target`
-
-- Input: root_path, target, plus shared `root_path` where applicable.
-- Output: one JSON object with exit_code, output_tail.
-- Timeout: set from the performance target (`< 5s`) with headroom.
-- Errors: a structured `{"error": ..., "code": ...}` object for bad input. No tracebacks on stdout.
-
-### `parse_build_errors`
-
-- Input: output, plus shared `root_path` where applicable.
-- Output: one JSON object with errors[] with file, line, message.
-- Timeout: set from the performance target (`< 5s`) with headroom.
-- Errors: a structured `{"error": ..., "code": ...}` object for bad input. No tracebacks on stdout.
+Matrix target `< 5s` for detect/list/parse; run uses up to ~4s subprocess timeout inside a 10s tool timeout.
 
 ## Failure modes
 
-- Missing or unreadable `root_path`: structured error, exit 0 with `"error"` set.
-- Repo larger than the traversal cap: partial result with `"truncated": true`, never a silent cut.
-- Timeout: the harness kills the process. The tool must not write partial output.
-- Unsupported language or file type: skipped and listed in `"skipped"`, not guessed.
+- Bad `root_path` / missing required fields → stderr + exit 1
+- No build tool / unsupported target → exit 0 JSON with `exit_code` 2
+- Subprocess timeout → `exit_code` 124
 
-## Test plan (profile `json_tools`)
+## Fixtures
 
-- L1 unit tests for each tool, including bad input and truncation.
-- L2 contract schema per tool under `testing/contract/schemas/`, inputs under `testing/fixtures/inputs/`.
-- L3 golden output for at least one fixture repo, and a perf check against the target above.
-- L4 MCP integration: `make l4 PLUGIN=build-system-integrator`.
-- L5 uplift: eval category `fix-with-tests`, at least 10 dev tasks plus 2 controls, pre-registered gate, 3 seeds, pinned model. Held-out tasks are not touched.
+- New: `build-mini` (Makefile) — justified: shared fixtures are source trees without build files for make
+- Reuse: `go-small`, `empty`
+
+## L5
+
+Category `fix-with-tests`. Gate pre-registered in harness. No model pinned → result `pending` until ollama run.
 
 ## Out of scope
 
-- Any behavior the reference matrix does not name for this plugin.
-- Editing repo files. Read-only unless a tool's name and spec say otherwise.
-- Plugins other than `build-system-integrator`. Shared harness changes must be additive and listed in the PR.
-
-## Open questions for review
-
-- Confirm the tool list and counts (matrix gives 4 tools).
-- Confirm the eval category `fix-with-tests`.
-- Confirm the timeout and cap values.
+Network installs, editing files, non-allowlisted commands, held-out suite.
