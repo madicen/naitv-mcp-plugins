@@ -87,6 +87,7 @@ Defaults when omitted: `json_tools` if any `kind=tool` with `exec`, else `rules_
 ## Commands
 
 ```bash
+make help                                       # Makefile wrappers for the below
 ./scripts/scaffold_plugin.sh my-plugin          # directory + harness stub
 ./scripts/test.sh my-plugin                     # L1 → L2 → L3 golden (if present)
 RUN_L4=1 ./scripts/test.sh my-plugin            # + L4
