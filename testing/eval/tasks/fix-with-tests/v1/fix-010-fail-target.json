@@ -1,0 +1,19 @@
+{
+  "id": "fix-010-fail-target",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "The fail make target prints a compiler-style error. What file path appears in that error?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/main.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

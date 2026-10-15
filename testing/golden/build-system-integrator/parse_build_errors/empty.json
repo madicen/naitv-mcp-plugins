@@ -1,0 +1,10 @@
+{
+  "count": 1,
+  "errors": [
+    {
+      "file": "pkg/main.go",
+      "line": 3,
+      "message": "undefined: Missing"
+    }
+  ]
+}

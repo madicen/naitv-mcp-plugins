@@ -1,0 +1,20 @@
+{
+  "id": "fix-004-parse-undefined",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Parse this build log and name the file with the error: pkg/main.go:3:1: undefined: Missing",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/main.go",
+      "undefined"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

@@ -39,6 +39,14 @@
       "tags": ["plugin-manager", "developer-tools"],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "build-system-integrator",
+      "description": "Detect local build systems, list targets, run a bounded target, and parse compiler-style errors.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/build-system-integrator/plugin.json",
+      "tags": ["build-system-integrator", "build", "fix-with-tests"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "build_system_integrator",
+    "search_paths": ["tools/build-system-integrator", "plugins/build-system-integrator"],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": ["build-mini", "go-small", "empty"],
+    "queries": {
+      "detect_build_tool": {},
+      "list_build_targets": {},
+      "run_build_target": { "target": "hello" },
+      "parse_build_errors": {
+        "output": "pkg/main.go:3:1: undefined: Missing\nok"
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:build-mini",
+      "target": "hello",
+      "output": "pkg/main.go:3:1: undefined: Missing"
+    },
+    "expect_keys": {
+      "detect_build_tool": ["tool", "config_files"],
+      "list_build_targets": ["tool", "targets"],
+      "run_build_target": ["exit_code", "output_tail"],
+      "parse_build_errors": ["errors", "count"]
+    },
+    "invalid_tool": "detect_build_tool",
+    "invalid_args": {},
+    "post_timeout_tool": "detect_build_tool",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty"
+    }
+  },
+  "l5": {
+    "treatment_plugins": ["build-system-integrator"],
+    "tool_names": [
+      "detect_build_tool",
+      "list_build_targets",
+      "run_build_target",
+      "parse_build_errors"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}

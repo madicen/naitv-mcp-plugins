@@ -1,0 +1,19 @@
+{
+  "id": "ctl-002-go-module-path",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "Read go.mod and report the module path string. Do not invent other modules.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "example.com/gosmall"
+    ]
+  },
+  "control": true,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

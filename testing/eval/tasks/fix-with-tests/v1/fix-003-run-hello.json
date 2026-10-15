@@ -1,0 +1,19 @@
+{
+  "id": "fix-003-run-hello",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Run the hello make target and report the stdout phrase it prints.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "hello-from-make"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

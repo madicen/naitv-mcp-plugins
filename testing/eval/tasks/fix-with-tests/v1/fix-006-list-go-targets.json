@@ -1,0 +1,21 @@
+{
+  "id": "fix-006-list-go-targets",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "List the standard go targets this plugin exposes (build/test/vet).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "build",
+      "test",
+      "vet"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "build-system-integrator"
+  ]
+}

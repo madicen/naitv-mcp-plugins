@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/list_build_targets.schema.json",
+  "title": "list_build_targets",
+  "type": "object",
+  "required": ["tool", "targets"],
+  "properties": {
+    "tool": {
+      "type": "string",
+      "enum": ["make", "go", "npm", "cargo", "python", "unknown"]
+    },
+    "targets": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}
