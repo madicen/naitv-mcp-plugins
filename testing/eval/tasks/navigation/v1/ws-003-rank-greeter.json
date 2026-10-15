@@ -1,0 +1,19 @@
+{
+  "id": "ws-003-rank-greeter",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Rank candidates pkg/greeter.py vs pkg/util/math.py for query Greeter. Which ranks first?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

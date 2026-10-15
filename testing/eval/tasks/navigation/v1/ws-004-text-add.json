@@ -1,0 +1,19 @@
+{
+  "id": "ws-004-text-add",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Text-search for def add. What file defines it?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

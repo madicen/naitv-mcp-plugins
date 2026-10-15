@@ -1,0 +1,19 @@
+{
+  "id": "ws-001-text-greeter",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Use text search for Greeter. Which file path contains the class?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

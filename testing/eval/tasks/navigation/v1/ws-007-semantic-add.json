@@ -1,0 +1,19 @@
+{
+  "id": "ws-007-semantic-add",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Semantic search query add. Does math.py appear in results?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "math"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

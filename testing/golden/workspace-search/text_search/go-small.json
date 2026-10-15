@@ -1,0 +1,26 @@
+{
+  "count": 4,
+  "matches": [
+    {
+      "line": 1,
+      "path": "pkg/greeter/greeter.go",
+      "text": "package greeter"
+    },
+    {
+      "line": 9,
+      "path": "pkg/greeter/greeter.go",
+      "text": "type Greeter struct{}"
+    },
+    {
+      "line": 11,
+      "path": "pkg/greeter/greeter.go",
+      "text": "func (g Greeter) Hello(name string) string {"
+    },
+    {
+      "line": 1,
+      "path": "pkg/greeter/other.go",
+      "text": "package greeter"
+    }
+  ],
+  "truncated": false
+}

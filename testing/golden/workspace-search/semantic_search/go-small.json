@@ -1,0 +1,14 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "path": "pkg/greeter/greeter.go",
+      "score": 0.297619
+    },
+    {
+      "path": "pkg/greeter/other.go",
+      "score": 0.166667
+    }
+  ],
+  "truncated": false
+}

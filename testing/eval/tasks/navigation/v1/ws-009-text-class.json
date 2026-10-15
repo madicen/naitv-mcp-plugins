@@ -1,0 +1,20 @@
+{
+  "id": "ws-009-text-class",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Regex search for class Greeter. Confirm greeter.py is a hit.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.py",
+      "Greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

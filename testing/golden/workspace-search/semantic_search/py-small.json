@@ -1,0 +1,10 @@
+{
+  "count": 1,
+  "results": [
+    {
+      "path": "pkg/greeter.py",
+      "score": 0.340909
+    }
+  ],
+  "truncated": false
+}

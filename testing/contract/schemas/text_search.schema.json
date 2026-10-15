@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/text_search.schema.json",
+  "title": "text_search",
+  "type": "object",
+  "required": ["matches", "count", "truncated"],
+  "properties": {
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "line", "text"],
+        "properties": {
+          "path": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 },
+          "text": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "count": { "type": "integer", "minimum": 0 },
+    "truncated": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

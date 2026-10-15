@@ -1,0 +1,19 @@
+{
+  "id": "ws-010-semantic-limit",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Semantic search Greeter with limit 1. How many results at most?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "1"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}
