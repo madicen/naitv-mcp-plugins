@@ -156,7 +156,7 @@
     {
       "name": "context-injector",
       "phase": 2,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -169,7 +169,7 @@
       ],
       "eval_category": "multi-file",
       "l5": "pending",
-      "notes": "Known tool: get_code_slice (< 50ms target). Full tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1–L4 green. L5 pending (no model). multi-file suite with 10+2 tasks. Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "Python/Go AST",
       "perf": "< 50ms",

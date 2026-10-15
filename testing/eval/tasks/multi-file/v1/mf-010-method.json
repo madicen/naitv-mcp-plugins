@@ -1,0 +1,19 @@
+{
+  "id": "mf-010-method",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Outline pkg/greeter.py. Is Greeter.hello listed as a method?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "hello"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}

@@ -1,0 +1,1 @@
+{"_contract": {"expect": "error", "reason": "traversal"}, "root_path": "$TRAVERSAL_PATH", "path": "x.py", "query": "x", "start_line": 1, "end_line": 2}

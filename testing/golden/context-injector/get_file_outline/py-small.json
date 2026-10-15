@@ -1,0 +1,39 @@
+{
+  "file": "pkg/greeter.py",
+  "found": true,
+  "language": "python",
+  "line_ranges": [
+    {
+      "end_line": 3,
+      "name": "Greeter",
+      "start_line": 1
+    },
+    {
+      "end_line": 3,
+      "name": "Greeter.hello",
+      "start_line": 2
+    },
+    {
+      "end_line": 7,
+      "name": "add",
+      "start_line": 6
+    }
+  ],
+  "symbols": [
+    {
+      "kind": "class",
+      "line": 1,
+      "name": "Greeter"
+    },
+    {
+      "kind": "method",
+      "line": 2,
+      "name": "Greeter.hello"
+    },
+    {
+      "kind": "function",
+      "line": 6,
+      "name": "add"
+    }
+  ]
+}

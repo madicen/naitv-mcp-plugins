@@ -1,0 +1,5 @@
+{
+  "name": "multi-file",
+  "description": "Code slice / outline / snippet context uplift (context-injector)",
+  "treatment_plugins": ["context-injector"]
+}

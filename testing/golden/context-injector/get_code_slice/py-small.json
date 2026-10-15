@@ -1,0 +1,8 @@
+{
+  "code": "class Greeter:\n    def hello(self, name: str) -> str:\n        return f\"hi {name}\"",
+  "end_line": 3,
+  "file": "pkg/greeter.py",
+  "found": true,
+  "hash": "3eecea06ab3f34b7",
+  "start_line": 1
+}

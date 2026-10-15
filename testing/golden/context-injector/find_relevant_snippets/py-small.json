@@ -1,0 +1,12 @@
+{
+  "snippets": [
+    {
+      "end_line": 5,
+      "path": "pkg/greeter.py",
+      "score": 1.0,
+      "start_line": 1,
+      "text": "class Greeter:\n    def hello(self, name: str) -> str:\n        return f\"hi {name}\"\n\n"
+    }
+  ],
+  "total_tokens": 11
+}

@@ -55,6 +55,14 @@
       "tags": ["workspace-search", "search", "navigation"],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "context-injector",
+      "description": "Extract code slices, relevant snippets, and file outlines for agent context.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/context-injector/plugin.json",
+      "tags": ["context-injector", "context", "multi-file"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
