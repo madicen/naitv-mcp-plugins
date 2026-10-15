@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/get_code_slice.schema.json",
+  "title": "get_code_slice",
+  "type": "object",
+  "required": ["code", "file", "hash", "start_line", "end_line", "found"],
+  "properties": {
+    "code": { "type": "string" },
+    "file": { "type": "string" },
+    "hash": { "type": "string" },
+    "start_line": { "type": "integer" },
+    "end_line": { "type": "integer" },
+    "found": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

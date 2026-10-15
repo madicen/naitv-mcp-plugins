@@ -1,0 +1,67 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "context_injector",
+    "search_paths": ["tools/context-injector", "plugins/context-injector"],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": ["py-small", "go-small", "empty"],
+    "queries": {
+      "get_code_slice": {
+        "path": "pkg/greeter.py",
+        "start_line": 1,
+        "end_line": 3
+      },
+      "find_relevant_snippets": {
+        "query": "Greeter hello",
+        "max_tokens": 200,
+        "depth": 3
+      },
+      "get_file_outline": { "path": "pkg/greeter.py" }
+    }
+  },
+  "perf": { "enabled": false },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:py-small",
+      "path": "pkg/greeter.py",
+      "start_line": 1,
+      "end_line": 4,
+      "query": "Greeter",
+      "max_tokens": 200,
+      "depth": 3
+    },
+    "expect_keys": {
+      "get_code_slice": ["code", "file", "hash"],
+      "find_relevant_snippets": ["snippets", "total_tokens"],
+      "get_file_outline": ["symbols", "line_ranges"]
+    },
+    "invalid_tool": "get_code_slice",
+    "invalid_args": {},
+    "post_timeout_tool": "find_relevant_snippets",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x",
+      "max_tokens": 50
+    }
+  },
+  "l5": {
+    "treatment_plugins": ["context-injector"],
+    "tool_names": ["get_code_slice", "find_relevant_snippets", "get_file_outline"],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}

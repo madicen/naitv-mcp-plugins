@@ -1,0 +1,48 @@
+{
+  "name": "context-injector",
+  "version": "0.1.0",
+  "description": "Extract code slices, relevant snippets, and file outlines for agent context.",
+  "author": "madicen",
+  "tags": ["context-injector", "context", "multi-file"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "get_code_slice",
+      "delivery": "on-demand",
+      "tags": ["context-injector"],
+      "body": "Return lines [start_line, end_line] from a file under root_path with a content hash.",
+      "fields": {
+        "exec": "TOOL_NAME=get_code_slice python3 ~/.config/naitv-mcp/tools/context-injector/context_injector.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"path\",\"description\":\"Relative file path\",\"required\":true},{\"name\":\"start_line\",\"description\":\"1-based start line\",\"required\":true},{\"name\":\"end_line\",\"description\":\"1-based end line inclusive\",\"required\":true}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_relevant_snippets",
+      "delivery": "on-demand",
+      "tags": ["context-injector"],
+      "body": "Find token-overlap snippets under root_path bounded by max_tokens.",
+      "fields": {
+        "exec": "TOOL_NAME=find_relevant_snippets python3 ~/.config/naitv-mcp/tools/context-injector/context_injector.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"query\",\"description\":\"Relevance query\",\"required\":true},{\"name\":\"max_tokens\",\"description\":\"Approx token budget (default 400)\",\"required\":false},{\"name\":\"depth\",\"description\":\"Walk depth (default 3)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "get_file_outline",
+      "delivery": "on-demand",
+      "tags": ["context-injector"],
+      "body": "Outline symbols and line ranges for a Python or Go file under root_path.",
+      "fields": {
+        "exec": "TOOL_NAME=get_file_outline python3 ~/.config/naitv-mcp/tools/context-injector/context_injector.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"path\",\"description\":\"Relative file path\",\"required\":true}]"
+      }
+    }
+  ]
+}

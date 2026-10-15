@@ -1,0 +1,19 @@
+{
+  "id": "mf-006-go-outline",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "Outline pkg/greeter/greeter.go. Report a function or type name.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}

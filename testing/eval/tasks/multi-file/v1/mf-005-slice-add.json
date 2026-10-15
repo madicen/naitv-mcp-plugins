@@ -1,0 +1,19 @@
+{
+  "id": "mf-005-slice-add",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Slice the add function region in pkg/greeter.py (around lines 6-8). Mention return.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "return"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}
