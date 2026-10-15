@@ -1,0 +1,48 @@
+{
+  "name": "workspace-search",
+  "version": "0.1.0",
+  "description": "Workspace text search, lightweight semantic ranking, and result re-ranking for naitv-mcp agents.",
+  "author": "madicen",
+  "tags": ["workspace-search", "search", "navigation"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "semantic_search",
+      "delivery": "on-demand",
+      "tags": ["workspace-search"],
+      "body": "Score files under root_path by token overlap with query (stdlib; no network/embeddings). Returns path + score.",
+      "fields": {
+        "exec": "TOOL_NAME=semantic_search python3 ~/.config/naitv-mcp/tools/workspace-search/workspace_search.py",
+        "io_mode": "json",
+        "timeout": "2s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"query\",\"description\":\"Search query\",\"required\":true},{\"name\":\"limit\",\"description\":\"Max results (default 10)\",\"required\":false},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "text_search",
+      "delivery": "on-demand",
+      "tags": ["workspace-search"],
+      "body": "Regex search over text files under root_path; optional glob filter. Returns path, line, text.",
+      "fields": {
+        "exec": "TOOL_NAME=text_search python3 ~/.config/naitv-mcp/tools/workspace-search/workspace_search.py",
+        "io_mode": "json",
+        "timeout": "2s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute path to the project root\",\"required\":true},{\"name\":\"pattern\",\"description\":\"Regex pattern\",\"required\":true},{\"name\":\"glob\",\"description\":\"Optional filename glob\",\"required\":false},{\"name\":\"depth\",\"description\":\"Max directory walk depth (default 3)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "rank_results",
+      "delivery": "on-demand",
+      "tags": ["workspace-search"],
+      "body": "Re-rank candidate paths against a query using token overlap.",
+      "fields": {
+        "exec": "TOOL_NAME=rank_results python3 ~/.config/naitv-mcp/tools/workspace-search/workspace_search.py",
+        "io_mode": "json",
+        "timeout": "2s",
+        "params": "[{\"name\":\"query\",\"description\":\"Ranking query\",\"required\":true},{\"name\":\"candidates\",\"description\":\"Array of path strings or {path,...} objects\",\"required\":true}]"
+      }
+    }
+  ]
+}

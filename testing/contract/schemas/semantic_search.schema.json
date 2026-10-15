@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/semantic_search.schema.json",
+  "title": "semantic_search",
+  "type": "object",
+  "required": ["results", "count", "truncated"],
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "score"],
+        "properties": {
+          "path": { "type": "string" },
+          "score": { "type": "number", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "count": { "type": "integer", "minimum": 0 },
+    "truncated": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

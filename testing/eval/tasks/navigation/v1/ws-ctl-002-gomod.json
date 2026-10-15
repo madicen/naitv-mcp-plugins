@@ -1,0 +1,19 @@
+{
+  "id": "ws-ctl-002-gomod",
+  "suite": "navigation",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "Open go.mod and report the module path. Do not run search tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "example.com/gosmall"
+    ]
+  },
+  "control": true,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

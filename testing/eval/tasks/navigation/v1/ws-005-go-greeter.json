@@ -1,0 +1,19 @@
+{
+  "id": "ws-005-go-greeter",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "go-small",
+  "request": "Text-search for Greeter in this Go tree. Report a matching .go path.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

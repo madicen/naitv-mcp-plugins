@@ -1,0 +1,19 @@
+{
+  "id": "ws-008-rank-math",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Rank pkg/util/math.py and README.md for query math. Winner?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

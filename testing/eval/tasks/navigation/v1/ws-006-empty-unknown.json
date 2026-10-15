@@ -1,0 +1,19 @@
+{
+  "id": "ws-006-empty-unknown",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "empty",
+  "request": "Text-search Greeter in an empty tree. How many matches?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

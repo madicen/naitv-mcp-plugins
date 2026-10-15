@@ -126,7 +126,7 @@
     {
       "name": "workspace-search",
       "phase": 4,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -137,7 +137,7 @@
       "depends_on": [],
       "eval_category": "navigation",
       "l5": "pending",
-      "notes": "Known tool: semantic_search (< 500ms target). Full tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1–L4 green. L5 pending (no model pinned). 10+2 ws-* tasks in navigation. Stdlib token-overlap semantic_search (no embeddings). Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "ripgrep + ranking",
       "perf": "< 500ms",

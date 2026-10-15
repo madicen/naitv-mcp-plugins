@@ -1,0 +1,20 @@
+{
+  "count": 3,
+  "ranked": [
+    {
+      "index": 0,
+      "path": "pkg/greeter.py",
+      "score": 1.0
+    },
+    {
+      "index": 1,
+      "path": "pkg/util/math.py",
+      "score": 0.0
+    },
+    {
+      "index": 2,
+      "path": "README.md",
+      "score": 0.0
+    }
+  ]
+}

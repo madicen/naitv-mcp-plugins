@@ -1,0 +1,19 @@
+{
+  "id": "ws-002-semantic-greeter",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Semantically search for Greeter. Name a high-scoring path.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "workspace-search"
+  ]
+}

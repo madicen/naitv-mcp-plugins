@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "matches": [
+    {
+      "line": 1,
+      "path": "pkg/greeter.py",
+      "text": "class Greeter:"
+    }
+  ],
+  "truncated": false
+}
