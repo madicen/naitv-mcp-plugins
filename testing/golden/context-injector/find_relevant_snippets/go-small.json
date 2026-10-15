@@ -1,0 +1,19 @@
+{
+  "snippets": [
+    {
+      "end_line": 11,
+      "path": "pkg/greeter/greeter.go",
+      "score": 1.0,
+      "start_line": 7,
+      "text": "var unexportedVar = \"no\"\n\ntype Greeter struct{}\n\nfunc (g Greeter) Hello(name string) string {"
+    },
+    {
+      "end_line": 5,
+      "path": "pkg/greeter/other.go",
+      "score": 0.5,
+      "start_line": 1,
+      "text": "package greeter\n\ntype Helper interface {\n\tHelp()\n}"
+    }
+  ],
+  "total_tokens": 22
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mf-001-slice-greeter",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Slice pkg/greeter.py lines 1-3. Does the code mention Greeter?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}

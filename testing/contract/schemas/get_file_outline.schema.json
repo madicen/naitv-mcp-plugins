@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/get_file_outline.schema.json",
+  "title": "get_file_outline",
+  "type": "object",
+  "required": ["file", "language", "symbols", "line_ranges", "found"],
+  "properties": {
+    "file": { "type": "string" },
+    "language": { "type": "string" },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "line"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "line_ranges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "start_line", "end_line"],
+        "properties": {
+          "name": { "type": "string" },
+          "start_line": { "type": "integer", "minimum": 1 },
+          "end_line": { "type": "integer", "minimum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "found": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}
