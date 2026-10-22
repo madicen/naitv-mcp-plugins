@@ -65,3 +65,4 @@ OK team-knowledge-extractor https://github.com/madicen/naitv-mcp-plugins/pull/38
 catalog: 66 entries  blocked=0  exists=35  needs-spec=0  planned=31
 OK invariant-checker https://github.com/madicen/naitv-mcp-plugins/pull/39 base=plugin/team-knowledge-extractor
 === BUILD code-style-enforcer ===
+catalog: 66 entries  blocked=0  exists=36  needs-spec=0  planned=30
