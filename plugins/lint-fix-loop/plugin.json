@@ -1,0 +1,56 @@
+{
+  "name": "lint-fix-loop",
+  "version": "0.1.0",
+  "description": "Known tool: run_linter (< 1s per file target). Full tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "lint-fix-loop"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "run_linter",
+      "delivery": "on-demand",
+      "tags": [
+        "lint-fix-loop"
+      ],
+      "body": "run_linter for lint-fix-loop.",
+      "fields": {
+        "exec": "TOOL_NAME=run_linter python3 ~/.config/naitv-mcp/tools/lint-fix-loop/lint_fix_loop.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "apply_safe_fixes",
+      "delivery": "on-demand",
+      "tags": [
+        "lint-fix-loop"
+      ],
+      "body": "apply_safe_fixes for lint-fix-loop.",
+      "fields": {
+        "exec": "TOOL_NAME=apply_safe_fixes python3 ~/.config/naitv-mcp/tools/lint-fix-loop/lint_fix_loop.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "summarize_lint_results",
+      "delivery": "on-demand",
+      "tags": [
+        "lint-fix-loop"
+      ],
+      "body": "summarize_lint_results for lint-fix-loop.",
+      "fields": {
+        "exec": "TOOL_NAME=summarize_lint_results python3 ~/.config/naitv-mcp/tools/lint-fix-loop/lint_fix_loop.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
