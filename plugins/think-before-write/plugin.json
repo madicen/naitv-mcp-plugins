@@ -1,0 +1,56 @@
+{
+  "name": "think-before-write",
+  "version": "0.1.0",
+  "description": "Tool list or rule set needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "think-before-write"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "plan_checklist",
+      "delivery": "on-demand",
+      "tags": [
+        "think-before-write"
+      ],
+      "body": "plan_checklist for think-before-write.",
+      "fields": {
+        "exec": "TOOL_NAME=plan_checklist python3 ~/.config/naitv-mcp/tools/think-before-write/think_before_write.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_assumptions",
+      "delivery": "on-demand",
+      "tags": [
+        "think-before-write"
+      ],
+      "body": "check_assumptions for think-before-write.",
+      "fields": {
+        "exec": "TOOL_NAME=check_assumptions python3 ~/.config/naitv-mcp/tools/think-before-write/think_before_write.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "render_pre_write_prompt",
+      "delivery": "on-demand",
+      "tags": [
+        "think-before-write"
+      ],
+      "body": "render_pre_write_prompt for think-before-write.",
+      "fields": {
+        "exec": "TOOL_NAME=render_pre_write_prompt python3 ~/.config/naitv-mcp/tools/think-before-write/think_before_write.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

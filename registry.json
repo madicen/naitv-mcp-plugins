@@ -192,6 +192,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "think-before-write",
+      "description": "think-before-write JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/think-before-write/plugin.json",
+      "tags": [
+        "think-before-write"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

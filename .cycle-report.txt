@@ -11,3 +11,4 @@ OK decision-log-runner https://github.com/madicen/naitv-mcp-plugins/pull/20 base
 catalog: 66 entries  blocked=0  exists=17  needs-spec=0  planned=49
 OK task-decomposer https://github.com/madicen/naitv-mcp-plugins/pull/21 base=plugin/decision-log-runner
 === BUILD think-before-write ===
+catalog: 66 entries  blocked=0  exists=18  needs-spec=0  planned=48

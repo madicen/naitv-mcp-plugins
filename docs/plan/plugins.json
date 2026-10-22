@@ -488,7 +488,7 @@
     {
       "name": "think-before-write",
       "phase": 5,
-      "status": "planned",
+      "status": "exists",
       "profile": "rules_only",
       "language": "markdown",
       "tools": [
@@ -501,7 +501,7 @@
       ],
       "eval_category": "structure",
       "l5": "pending",
-      "notes": "Tool list or rule set needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list or rule set needed. Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "Prompt structure",
       "perf": "< 2s",
