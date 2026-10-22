@@ -26,3 +26,4 @@ OK tdd-runner https://github.com/madicen/naitv-mcp-plugins/pull/25 base=plugin/l
 catalog: 66 entries  blocked=0  exists=22  needs-spec=0  planned=44
 OK security-checker https://github.com/madicen/naitv-mcp-plugins/pull/26 base=plugin/tdd-runner
 === BUILD secrets-detector ===
+catalog: 66 entries  blocked=0  exists=23  needs-spec=0  planned=43

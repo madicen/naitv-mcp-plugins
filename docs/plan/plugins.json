@@ -649,11 +649,11 @@
     },
     {
       "name": "secrets-detector",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "scan_secrets",
-        "scan_file",
+        "scan_secrets_file",
         "list_patterns",
         "allowlist_check"
       ],
@@ -667,7 +667,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'scan_file': 'scan_secrets_file'}.",
       "order": 23,
       "draft_tools": [
         "scan_secrets",
@@ -676,7 +676,8 @@
         "allowlist_check"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-secrets-detector-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-secrets-detector-design.md",
+      "language": "python"
     },
     {
       "name": "type-import-stubber",
