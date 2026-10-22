@@ -1,0 +1,71 @@
+{
+  "name": "logging-enforcer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "logging-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_log_calls",
+      "delivery": "on-demand",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "body": "find_log_calls for logging-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=find_log_calls python3 ~/.config/naitv-mcp/tools/logging-enforcer/logging_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_log_levels",
+      "delivery": "on-demand",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "body": "check_log_levels for logging-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_log_levels python3 ~/.config/naitv-mcp/tools/logging-enforcer/logging_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_sensitive_fields",
+      "delivery": "on-demand",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "body": "check_sensitive_fields for logging-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_sensitive_fields python3 ~/.config/naitv-mcp/tools/logging-enforcer/logging_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "logging_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "body": "logging_summary for logging-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=logging_summary python3 ~/.config/naitv-mcp/tools/logging-enforcer/logging_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

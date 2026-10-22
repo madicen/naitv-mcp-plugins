@@ -1149,7 +1149,7 @@
     },
     {
       "name": "logging-enforcer",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "find_log_calls",
@@ -1169,7 +1169,7 @@
       ],
       "depends_on_raw": "code-style",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
       "order": 38,
       "draft_tools": [
         "find_log_calls",
@@ -1178,7 +1178,8 @@
         "logging_summary"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-logging-enforcer-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-logging-enforcer-design.md",
+      "language": "python"
     },
     {
       "name": "code-review-simulator",

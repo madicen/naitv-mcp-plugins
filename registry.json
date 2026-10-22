@@ -392,6 +392,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "logging-enforcer",
+      "description": "logging-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/logging-enforcer/plugin.json",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
