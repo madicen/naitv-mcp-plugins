@@ -1,0 +1,19 @@
+{
+  "id": "stale-004-stale-code-i",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

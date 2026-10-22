@@ -1,0 +1,71 @@
+{
+  "name": "stale-code-identifier",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "stale-code-identifier"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_unreferenced",
+      "delivery": "on-demand",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "body": "find_unreferenced for stale-code-identifier.",
+      "fields": {
+        "exec": "TOOL_NAME=find_unreferenced python3 ~/.config/naitv-mcp/tools/stale-code-identifier/stale_code_identifier.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_unused_exports",
+      "delivery": "on-demand",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "body": "find_unused_exports for stale-code-identifier.",
+      "fields": {
+        "exec": "TOOL_NAME=find_unused_exports python3 ~/.config/naitv-mcp/tools/stale-code-identifier/stale_code_identifier.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "rank_staleness",
+      "delivery": "on-demand",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "body": "rank_staleness for stale-code-identifier.",
+      "fields": {
+        "exec": "TOOL_NAME=rank_staleness python3 ~/.config/naitv-mcp/tools/stale-code-identifier/stale_code_identifier.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "stale_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "body": "stale_summary for stale-code-identifier.",
+      "fields": {
+        "exec": "TOOL_NAME=stale_summary python3 ~/.config/naitv-mcp/tools/stale-code-identifier/stale_code_identifier.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
