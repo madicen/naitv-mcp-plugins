@@ -1,0 +1,71 @@
+{
+  "name": "naming-validator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "naming-validator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "check_names",
+      "delivery": "on-demand",
+      "tags": [
+        "naming-validator"
+      ],
+      "body": "check_names for naming-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=check_names python3 ~/.config/naitv-mcp/tools/naming-validator/naming_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_names",
+      "delivery": "on-demand",
+      "tags": [
+        "naming-validator"
+      ],
+      "body": "suggest_names for naming-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_names python3 ~/.config/naitv-mcp/tools/naming-validator/naming_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_violations",
+      "delivery": "on-demand",
+      "tags": [
+        "naming-validator"
+      ],
+      "body": "list_violations for naming-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_violations python3 ~/.config/naitv-mcp/tools/naming-validator/naming_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "load_naming_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "naming-validator"
+      ],
+      "body": "load_naming_rules for naming-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=load_naming_rules python3 ~/.config/naitv-mcp/tools/naming-validator/naming_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
