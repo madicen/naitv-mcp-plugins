@@ -1,0 +1,56 @@
+{
+  "name": "surgical-patch",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "surgical-patch"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "generate_minimal_diff",
+      "delivery": "on-demand",
+      "tags": [
+        "surgical-patch"
+      ],
+      "body": "generate_minimal_diff for surgical-patch.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_minimal_diff python3 ~/.config/naitv-mcp/tools/surgical-patch/surgical_patch.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_patch_scope",
+      "delivery": "on-demand",
+      "tags": [
+        "surgical-patch"
+      ],
+      "body": "validate_patch_scope for surgical-patch.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_patch_scope python3 ~/.config/naitv-mcp/tools/surgical-patch/surgical_patch.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "apply_patch_dry_run",
+      "delivery": "on-demand",
+      "tags": [
+        "surgical-patch"
+      ],
+      "body": "apply_patch_dry_run for surgical-patch.",
+      "fields": {
+        "exec": "TOOL_NAME=apply_patch_dry_run python3 ~/.config/naitv-mcp/tools/surgical-patch/surgical_patch.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
