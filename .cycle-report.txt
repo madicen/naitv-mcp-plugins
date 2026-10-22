@@ -35,3 +35,4 @@ OK type-import-stubber https://github.com/madicen/naitv-mcp-plugins/pull/28 base
 catalog: 66 entries  blocked=0  exists=25  needs-spec=0  planned=41
 OK circular-dependency-detector https://github.com/madicen/naitv-mcp-plugins/pull/29 base=plugin/type-import-stubber
 === BUILD api-contract-validator ===
+catalog: 66 entries  blocked=0  exists=26  needs-spec=0  planned=40
