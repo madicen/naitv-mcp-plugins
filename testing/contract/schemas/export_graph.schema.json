@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/export_graph.schema.json",
+  "title": "export_graph",
+  "type": "object",
+  "required": ["format", "graph", "node_count", "edge_count"],
+  "properties": {
+    "format": { "type": "string" },
+    "graph": { "type": "string" },
+    "node_count": { "type": "integer", "minimum": 0 },
+    "edge_count": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

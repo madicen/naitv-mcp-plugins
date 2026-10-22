@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/build_import_graph.schema.json",
+  "title": "build_import_graph",
+  "type": "object",
+  "required": ["nodes", "edges", "node_count", "edge_count", "truncated", "language"],
+  "properties": {
+    "language": { "type": "string" },
+    "nodes": { "type": "array", "items": { "type": "string" } },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "node_count": { "type": "integer", "minimum": 0 },
+    "edge_count": { "type": "integer", "minimum": 0 },
+    "truncated": { "type": "boolean" },
+    "skipped": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

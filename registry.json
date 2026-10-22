@@ -63,6 +63,14 @@
       "tags": ["context-injector", "context", "multi-file"],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "dependency-graph-analyzer",
+      "description": "Build and query Python/Go import graphs: hubs, dependencies, and DOT/JSON export.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/dependency-graph-analyzer/plugin.json",
+      "tags": ["dependency-graph-analyzer", "imports", "navigation"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

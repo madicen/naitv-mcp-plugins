@@ -1,0 +1,15 @@
+{
+  "id": "dep-009-missing-module",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "Is there a module named mod_z in the import graph? Answer yes or no.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["no"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

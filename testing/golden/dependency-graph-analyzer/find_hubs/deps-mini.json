@@ -1,0 +1,17 @@
+{
+  "count": 3,
+  "modules": [
+    {
+      "fan_in": 2,
+      "module": "mod_c"
+    },
+    {
+      "fan_in": 1,
+      "module": "mod_b"
+    },
+    {
+      "fan_in": 0,
+      "module": "mod_a"
+    }
+  ]
+}

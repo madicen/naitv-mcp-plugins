@@ -1,0 +1,15 @@
+{
+  "id": "dep-004-edge-count",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "How many import edges are in the dependency graph of this project?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["3"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

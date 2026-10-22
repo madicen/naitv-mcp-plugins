@@ -1,0 +1,15 @@
+{
+  "id": "dep-001-hub-mod-c",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "Which module has the highest fan-in (is imported by the most others)?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["mod_c"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

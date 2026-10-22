@@ -1,0 +1,15 @@
+{
+  "id": "dep-008-mod-a-fan-in",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "What is the fan-in of mod_a (how many modules import it)?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["0"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "dep-005-node-count",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "How many modules appear in the import graph?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["3"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

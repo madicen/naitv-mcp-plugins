@@ -1,0 +1,9 @@
+{
+  "count": 1,
+  "modules": [
+    {
+      "fan_in": 0,
+      "module": "pkg/greeter"
+    }
+  ]
+}

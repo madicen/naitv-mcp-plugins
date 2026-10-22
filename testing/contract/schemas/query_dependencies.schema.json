@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/query_dependencies.schema.json",
+  "title": "query_dependencies",
+  "type": "object",
+  "required": ["module", "imports", "imported_by", "found"],
+  "properties": {
+    "module": { "type": "string" },
+    "imports": { "type": "array", "items": { "type": "string" } },
+    "imported_by": { "type": "array", "items": { "type": "string" } },
+    "found": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+{
+  "edge_count": 3,
+  "edges": [
+    {
+      "from": "mod_a",
+      "to": "mod_b"
+    },
+    {
+      "from": "mod_a",
+      "to": "mod_c"
+    },
+    {
+      "from": "mod_b",
+      "to": "mod_c"
+    }
+  ],
+  "language": "python",
+  "node_count": 3,
+  "nodes": [
+    "mod_a",
+    "mod_b",
+    "mod_c"
+  ],
+  "skipped": [],
+  "truncated": false
+}
