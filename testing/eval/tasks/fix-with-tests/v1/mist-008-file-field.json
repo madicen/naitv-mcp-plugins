@@ -1,0 +1,15 @@
+{
+  "id": "mist-008-file-field",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Record mistake description 'missing phony' category 'make' file 'Makefile'. Which file path was stored?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["Makefile"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

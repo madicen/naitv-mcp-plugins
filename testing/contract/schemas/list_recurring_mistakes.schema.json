@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/list_recurring_mistakes.schema.json",
+  "title": "list_recurring_mistakes",
+  "type": "object",
+  "required": ["recurring", "counts", "count"],
+  "properties": {
+    "recurring": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fingerprint", "description", "category", "count"],
+        "properties": {
+          "fingerprint": { "type": "string" },
+          "description": { "type": "string" },
+          "category": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "counts": { "type": "array", "items": { "type": "integer" } },
+    "count": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

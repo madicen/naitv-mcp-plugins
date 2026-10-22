@@ -1,0 +1,15 @@
+{
+  "id": "mist-010-stored-flag",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Call record_mistake with description 'race in test' category 'race' file 'test.py'. Is stored true? Answer true or false.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["true"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

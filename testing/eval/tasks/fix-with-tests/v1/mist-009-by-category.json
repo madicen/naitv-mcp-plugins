@@ -1,0 +1,15 @@
+{
+  "id": "mist-009-by-category",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Record two mistakes both category 'test': descriptions 'flaky assert' and 'wrong expect', files 'a.py' and 'b.py'. Does mistake_stats by_category include test? Answer yes or no.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["yes"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

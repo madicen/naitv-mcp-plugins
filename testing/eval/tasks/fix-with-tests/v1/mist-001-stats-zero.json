@@ -1,0 +1,15 @@
+{
+  "id": "mist-001-stats-zero",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Using mistake_stats, how many mistakes are recorded for this project? Answer with the total number.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["0"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

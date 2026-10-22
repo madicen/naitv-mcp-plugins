@@ -1,0 +1,61 @@
+{
+  "name": "mistake-tracker",
+  "version": "0.1.0",
+  "description": "Record, search, and summarize recurring coding mistakes per project root.",
+  "author": "madicen",
+  "tags": ["mistake-tracker", "mistakes", "fix-with-tests"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "search_mistakes",
+      "delivery": "on-demand",
+      "tags": ["mistake-tracker"],
+      "body": "Search recorded mistakes by query (optional category filter).",
+      "fields": {
+        "exec": "TOOL_NAME=search_mistakes python3 ~/.config/naitv-mcp/tools/mistake-tracker/mistake_tracker.py",
+        "io_mode": "json",
+        "timeout": "3s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"query\",\"description\":\"Substring to match\",\"required\":true},{\"name\":\"category\",\"description\":\"Optional category filter\",\"required\":false},{\"name\":\"limit\",\"description\":\"Max matches (default 20)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_recurring_mistakes",
+      "delivery": "on-demand",
+      "tags": ["mistake-tracker"],
+      "body": "List mistake fingerprints with count >= min_count.",
+      "fields": {
+        "exec": "TOOL_NAME=list_recurring_mistakes python3 ~/.config/naitv-mcp/tools/mistake-tracker/mistake_tracker.py",
+        "io_mode": "json",
+        "timeout": "3s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"min_count\",\"description\":\"Minimum occurrences (default 2)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "mistake_stats",
+      "delivery": "on-demand",
+      "tags": ["mistake-tracker"],
+      "body": "Total mistakes and counts by category (optional since unix timestamp).",
+      "fields": {
+        "exec": "TOOL_NAME=mistake_stats python3 ~/.config/naitv-mcp/tools/mistake-tracker/mistake_tracker.py",
+        "io_mode": "json",
+        "timeout": "3s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"since\",\"description\":\"Unix timestamp lower bound\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "record_mistake",
+      "delivery": "on-demand",
+      "tags": ["mistake-tracker"],
+      "body": "Record a mistake (description, category, file) for this root_path.",
+      "fields": {
+        "exec": "TOOL_NAME=record_mistake python3 ~/.config/naitv-mcp/tools/mistake-tracker/mistake_tracker.py",
+        "io_mode": "json",
+        "timeout": "3s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"description\",\"description\":\"What went wrong\",\"required\":true},{\"name\":\"category\",\"description\":\"Category slug\",\"required\":true},{\"name\":\"file\",\"description\":\"Related file path\",\"required\":true}]"
+      }
+    }
+  ]
+}

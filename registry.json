@@ -79,6 +79,14 @@
       "tags": ["cache-manager", "cache", "infrastructure"],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "mistake-tracker",
+      "description": "Record, search, and summarize recurring coding mistakes per project root.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/mistake-tracker/plugin.json",
+      "tags": ["mistake-tracker", "mistakes", "fix-with-tests"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
