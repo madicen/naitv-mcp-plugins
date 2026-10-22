@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/parse_decision_log.schema.json",
+  "title": "parse_decision_log",
+  "type": "object",
+  "required": [
+    "loaded",
+    "content"
+  ],
+  "properties": {
+    "loaded": {
+      "type": "boolean"
+    },
+    "content": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

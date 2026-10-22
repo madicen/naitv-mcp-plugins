@@ -420,7 +420,7 @@
     {
       "name": "decision-log-runner",
       "phase": 2,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -434,7 +434,7 @@
       ],
       "eval_category": "structure",
       "l5": "pending",
-      "notes": "Tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
       "tool_count": 4,
       "implementation": "Markdown parsing",
       "perf": "< 1s",

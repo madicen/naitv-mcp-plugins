@@ -172,6 +172,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "decision-log-runner",
+      "description": "decision-log-runner JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/decision-log-runner/plugin.json",
+      "tags": [
+        "decision-log-runner"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
