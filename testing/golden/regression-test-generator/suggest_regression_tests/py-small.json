@@ -1,0 +1,10 @@
+{
+  "generated": "# suggest_regression_tests\n# root=py-small\n# query=Greeter\n",
+  "items": [
+    {
+      "text": "# suggest_regression_tests\n# root=py-small\n# query=Greeter\n"
+    }
+  ],
+  "ok": true,
+  "tool": "suggest_regression_tests"
+}
