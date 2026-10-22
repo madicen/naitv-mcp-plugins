@@ -41,3 +41,4 @@ OK api-contract-validator https://github.com/madicen/naitv-mcp-plugins/pull/30 b
 catalog: 66 entries  blocked=0  exists=27  needs-spec=0  planned=39
 OK surgical-patch https://github.com/madicen/naitv-mcp-plugins/pull/31 base=plugin/api-contract-validator
 === BUILD regression-test-generator ===
+catalog: 66 entries  blocked=0  exists=28  needs-spec=0  planned=38

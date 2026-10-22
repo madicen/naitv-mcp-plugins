@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/generate_test_stub.schema.json",
+  "title": "generate_test_stub",
+  "type": "object",
+  "required": [
+    "generated",
+    "ok"
+  ],
+  "properties": {
+    "generated": {
+      "type": "string"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "items": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}
