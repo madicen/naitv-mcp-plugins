@@ -442,6 +442,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "refactoring-suggester",
+      "description": "refactoring-suggester JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/refactoring-suggester/plugin.json",
+      "tags": [
+        "refactoring-suggester"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
