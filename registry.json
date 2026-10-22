@@ -522,6 +522,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "stale-code-identifier",
+      "description": "stale-code-identifier JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/stale-code-identifier/plugin.json",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

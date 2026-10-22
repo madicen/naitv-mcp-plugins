@@ -1591,7 +1591,7 @@
     },
     {
       "name": "stale-code-identifier",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "find_unreferenced",
@@ -1611,7 +1611,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "refactor",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 51,
       "draft_tools": [
         "find_unreferenced",
@@ -1620,7 +1620,8 @@
         "stale_summary"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-stale-code-identifier-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-stale-code-identifier-design.md",
+      "language": "python"
     },
     {
       "name": "team-metrics-collector",
