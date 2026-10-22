@@ -143,3 +143,4 @@ OK code-generation-helper https://github.com/madicen/naitv-mcp-plugins/pull/64 b
 catalog: 66 entries  blocked=0  exists=61  needs-spec=0  planned=5
 OK accessibility-checker https://github.com/madicen/naitv-mcp-plugins/pull/65 base=plugin/code-generation-helper
 === BUILD rollback-plan-generator ===
+catalog: 66 entries  blocked=0  exists=62  needs-spec=0  planned=4

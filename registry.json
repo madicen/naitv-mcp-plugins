@@ -632,6 +632,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "rollback-plan-generator",
+      "description": "rollback-plan-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/rollback-plan-generator/plugin.json",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
