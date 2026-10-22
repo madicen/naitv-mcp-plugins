@@ -1,0 +1,71 @@
+{
+  "name": "rollback-plan-generator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'change-impact' normalized to 'change-impact-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "rollback-plan-generator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "analyze_change_risk",
+      "delivery": "on-demand",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "body": "analyze_change_risk for rollback-plan-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=analyze_change_risk python3 ~/.config/naitv-mcp/tools/rollback-plan-generator/rollback_plan_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_rollback_steps",
+      "delivery": "on-demand",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "body": "generate_rollback_steps for rollback-plan-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_rollback_steps python3 ~/.config/naitv-mcp/tools/rollback-plan-generator/rollback_plan_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_affected_services",
+      "delivery": "on-demand",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "body": "list_affected_services for rollback-plan-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_affected_services python3 ~/.config/naitv-mcp/tools/rollback-plan-generator/rollback_plan_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_rollback_plan",
+      "delivery": "on-demand",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "body": "validate_rollback_plan for rollback-plan-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_rollback_plan python3 ~/.config/naitv-mcp/tools/rollback-plan-generator/rollback_plan_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
