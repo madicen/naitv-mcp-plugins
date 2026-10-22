@@ -1832,7 +1832,7 @@
     {
       "name": "blame-context-historian",
       "phase": 2,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -1844,7 +1844,7 @@
       "depends_on": [],
       "eval_category": "navigation",
       "l5": "pending",
-      "notes": "Tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
       "tool_count": 4,
       "implementation": "Git blame parsing",
       "perf": "< 500ms",
