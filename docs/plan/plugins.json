@@ -2069,7 +2069,7 @@
     },
     {
       "name": "memory-profiler",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "run_memory_profile",
@@ -2089,7 +2089,7 @@
       ],
       "depends_on_raw": "performance-profiler",
       "eval_category": "fix-with-tests",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 65,
       "draft_tools": [
         "run_memory_profile",
@@ -2098,7 +2098,8 @@
         "memory_summary"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-memory-profiler-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-memory-profiler-design.md",
+      "language": "python"
     },
     {
       "name": "monitoring-alerting-setup",
