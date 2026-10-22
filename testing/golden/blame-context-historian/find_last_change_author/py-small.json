@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "items": [
+    {
+      "path": "pkg/greeter.py",
+      "score": 0.5
+    }
+  ],
+  "tool": "find_last_change_author",
+  "truncated": false
+}

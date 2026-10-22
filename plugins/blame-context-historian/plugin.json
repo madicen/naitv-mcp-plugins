@@ -1,0 +1,71 @@
+{
+  "name": "blame-context-historian",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "blame-context-historian"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "blame_lines",
+      "delivery": "on-demand",
+      "tags": [
+        "blame-context-historian"
+      ],
+      "body": "blame_lines for blame-context-historian.",
+      "fields": {
+        "exec": "TOOL_NAME=blame_lines python3 ~/.config/naitv-mcp/tools/blame-context-historian/blame_context_historian.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "history_for_symbol",
+      "delivery": "on-demand",
+      "tags": [
+        "blame-context-historian"
+      ],
+      "body": "history_for_symbol for blame-context-historian.",
+      "fields": {
+        "exec": "TOOL_NAME=history_for_symbol python3 ~/.config/naitv-mcp/tools/blame-context-historian/blame_context_historian.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "recent_changes_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "blame-context-historian"
+      ],
+      "body": "recent_changes_summary for blame-context-historian.",
+      "fields": {
+        "exec": "TOOL_NAME=recent_changes_summary python3 ~/.config/naitv-mcp/tools/blame-context-historian/blame_context_historian.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_last_change_author",
+      "delivery": "on-demand",
+      "tags": [
+        "blame-context-historian"
+      ],
+      "body": "find_last_change_author for blame-context-historian.",
+      "fields": {
+        "exec": "TOOL_NAME=find_last_change_author python3 ~/.config/naitv-mcp/tools/blame-context-historian/blame_context_historian.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

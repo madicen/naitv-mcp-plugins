@@ -131,3 +131,6 @@ OK goroutine-leak-detector https://github.com/madicen/naitv-mcp-plugins/pull/60 
 catalog: 66 entries  blocked=0  exists=57  needs-spec=0  planned=9
 OK integration-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/61 base=plugin/goroutine-leak-detector
 === BUILD blame-context-historian ===
+catalog: 66 entries  blocked=0  exists=58  needs-spec=0  planned=8
+OK blame-context-historian https://github.com/madicen/naitv-mcp-plugins/pull/62 base=plugin/integration-test-generator
+=== BUILD feature-flag-manager ===
