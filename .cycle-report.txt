@@ -92,3 +92,6 @@ OK refactoring-suggester https://github.com/madicen/naitv-mcp-plugins/pull/47 ba
 catalog: 66 entries  blocked=0  exists=44  needs-spec=0  planned=22
 OK benchmark-generator https://github.com/madicen/naitv-mcp-plugins/pull/48 base=plugin/refactoring-suggester
 === BUILD change-impact-analyzer ===
+catalog: 66 entries  blocked=0  exists=45  needs-spec=0  planned=21
+OK change-impact-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/49 base=plugin/benchmark-generator
+=== BUILD documentation-sync-manager ===
