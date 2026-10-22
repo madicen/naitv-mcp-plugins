@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-005-summary-path",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator env_summary, report path .env.example and key_count 4.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example",
+      "4"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

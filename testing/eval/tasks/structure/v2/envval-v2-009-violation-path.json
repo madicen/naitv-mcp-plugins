@@ -1,0 +1,19 @@
+{
+  "id": "envval-v2-009-violation-path",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator check_env_vars, report a violation path .env.example.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

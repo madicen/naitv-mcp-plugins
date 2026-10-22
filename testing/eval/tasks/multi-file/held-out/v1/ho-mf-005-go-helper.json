@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter/other.go",
+      "Helper"
+    ]
+  },
+  "id": "ho-mf-005-go-helper",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "fixture": "go-small",
+  "request": "In the go fixture, which file declares the Helper interface?"
+}

@@ -8,6 +8,13 @@
       "text": "var unexportedVar = \"no\"\n\ntype Greeter struct{}\n\nfunc (g Greeter) Hello(name string) string {"
     },
     {
+      "end_line": 9,
+      "path": "pkg/greeter/greeter_fuzz_test.go",
+      "score": 1.0,
+      "start_line": 5,
+      "text": "// FuzzHello is a stub fuzz target for eval fixtures (fuzzing-test-generator).\nfunc FuzzHello(f *testing.F) {\n\tf.Add(\"world\")\n\tf.Fuzz(func(t *testing.T, name string) {\n\t\t_ = Greeter{}.Hello(name)"
+    },
+    {
       "end_line": 5,
       "path": "pkg/greeter/other.go",
       "score": 0.5,
@@ -15,5 +22,5 @@
       "text": "package greeter\n\ntype Helper interface {\n\tHelp()\n}"
     }
   ],
-  "total_tokens": 22
+  "total_tokens": 46
 }

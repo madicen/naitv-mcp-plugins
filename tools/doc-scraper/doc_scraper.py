@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""doc-scraper: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""doc-scraper: local markdown README/docs only — no HTTP (JSON I/O)."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -13,12 +12,15 @@ from typing import Any
 MAX_INPUT_BYTES = 1_000_000
 MAX_FILES = 500
 MAX_FILE_BYTES = 64_000
+MAX_CONTENT = 4000
 SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
+MD_EXTS = {".md", ".markdown", ".mdx", ".txt"}
 TOOLS = {
-        'fetch_and_parse',
-        'extract_sections',
-        'search_doc_index'
+    "fetch_and_parse",
+    "extract_sections",
+    "search_doc_index",
 }
+_HEADING = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 
 
 def _error(message: str, *, code: int = 1) -> None:
@@ -81,73 +83,210 @@ def read_text(path: Path) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
-    depth = int(data.get("depth", 3))
-    query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
-    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
-    limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
+def _limit(n: Any, default: int = 20) -> int:
+    try:
+        return max(1, min(int(n), 100))
+    except (TypeError, ValueError):
+        return default
 
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
-                continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
+
+def _is_doc(path: Path) -> bool:
+    name = path.name
+    if name.upper().startswith("README"):
+        return True
+    return path.suffix.lower() in MD_EXTS
+
+
+def _doc_files(root: Path, depth: int) -> tuple[list[Path], bool]:
+    all_files = iter_files(root, depth)
+    docs = [f for f in all_files if _is_doc(f)]
+    return docs, len(all_files) >= MAX_FILES
+
+
+def _safe_rel_path(root: Path, path_s: str) -> Path | None:
+    raw = Path(path_s)
+    if raw.is_absolute() or ".." in raw.parts:
+        return None
+    target = (root / raw).resolve()
+    try:
+        target.relative_to(root.resolve())
+    except ValueError:
+        return None
+    return target if target.is_file() else None
+
+
+def _parse_sections(text: str) -> list[dict[str, Any]]:
+    """Extract markdown headings; titles are literal heading text from the file."""
+    sections: list[dict[str, Any]] = []
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        m = _HEADING.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        level = len(m.group(1))
+        title = m.group(2).strip()
+        start_line = i + 1
+        j = i + 1
+        # body ends at the next heading of any level so nested ## are separate sections
+        while j < len(lines) and not _HEADING.match(lines[j]):
+            j += 1
+        body = "\n".join(lines[i + 1 : j]).strip()
+        sections.append(
+            {
+                "name": title,
+                "level": level,
+                "line": start_line,
+                "body": body[:2000],
+            }
+        )
+        i = j
+    return sections
+
+
+def fetch_and_parse(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
+    target = _safe_rel_path(root, path_s) if path_s else None
+    if target is None or not _is_doc(target):
+        # prefer README*, then first markdown under root
+        docs, _ = _doc_files(root, depth)
+        readmes = [f for f in docs if f.name.upper().startswith("README")]
+        pick = (readmes or docs)
+        if not pick:
+            return {
+                "loaded": False,
+                "content": "",
+                "path": path_s,
+                "sections": [],
+                "tool": "fetch_and_parse",
+            }
+        target = pick[0]
+        path_s = rel(target, root)
+    else:
+        path_s = rel(target, root)
+    content = read_text(target)
+    sections = _parse_sections(content)
+    return {
+        "loaded": True,
+        "content": content[:MAX_CONTENT],
+        "path": path_s,
+        "sections": [
+            {"name": s["name"], "level": s["level"], "line": s["line"]}
+            for s in sections
+        ],
+        "tool": "fetch_and_parse",
+    }
+
+
+def extract_sections(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    limit = _limit(data.get("limit", 20))
+    path_s = str(data.get("path") or data.get("file") or "").strip()
+    truncated = False
+    files: list[Path] = []
+    if path_s:
+        target = _safe_rel_path(root, path_s)
+        if target is not None and _is_doc(target):
+            files = [target]
+    if not files:
+        files, truncated = _doc_files(root, depth)
+    items: list[dict[str, Any]] = []
+    for path in files:
+        r = rel(path, root)
+        for sec in _parse_sections(read_text(path)):
+            items.append(
+                {
+                    "path": r,
+                    "name": sec["name"],
+                    "line": sec["line"],
+                    "level": sec["level"],
+                }
+            )
             if len(items) >= limit:
                 break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+        if len(items) >= limit:
+            break
+    return {
+        "items": items[:limit],
+        "count": len(items[:limit]),
+        "truncated": truncated,
+        "tool": "extract_sections",
+    }
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
 
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
-
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
-
-    if tool.startswith(("load_", "parse_", "fetch_")):
-        target = root / path_s
-        if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
+def search_doc_index(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
+    depth = int(data.get("depth", 3))
+    limit = _limit(data.get("limit", 20))
+    docs, truncated = _doc_files(root, depth)
+    items: list[dict[str, Any]] = []
+    q = query.lower()
+    for path in docs:
+        r = rel(path, root)
+        text = read_text(path)
+        sections = _parse_sections(text)
+        if not sections and (not q or q in text.lower() or q in r.lower()):
+            items.append(
+                {
+                    "path": r,
+                    "name": path.stem,
+                    "line": 1,
+                    "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4),
                 }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
+            )
+            if len(items) >= limit:
+                break
+            continue
+        for sec in sections:
+            hay = f"{sec['name']}\n{sec['body']}".lower()
+            if q and q not in hay and q not in r.lower():
+                continue
+            score = 1.0
+            if q:
+                if q in sec["name"].lower():
+                    score = 1.0
+                elif q in sec["body"].lower():
+                    score = 0.75
+                else:
+                    score = 0.4
+            items.append(
+                {
+                    "path": r,
+                    "name": sec["name"],
+                    "line": sec["line"],
+                    "score": score,
+                }
+            )
+            if len(items) >= limit:
+                break
+        if len(items) >= limit:
+            break
+    items.sort(key=lambda x: (-float(x.get("score", 0)), x["path"], x["line"]))
+    return {
+        "items": items[:limit],
+        "count": len(items[:limit]),
+        "truncated": truncated,
+        "tool": "search_doc_index",
+    }
 
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "doc-scraper"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
 
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if tool == "fetch_and_parse":
+        return fetch_and_parse(root, data)
+    if tool == "extract_sections":
+        return extract_sections(root, data)
+    if tool == "search_doc_index":
+        return search_doc_index(root, data)
+    depth = int(data.get("depth", 3))
+    files = iter_files(root, depth)
+    return {
+        "ok": True,
+        "tool": tool,
+        "result": {"root": root.name, "files": len(files)},
+        "truncated": len(files) >= MAX_FILES,
+    }
 
 
 def main() -> None:

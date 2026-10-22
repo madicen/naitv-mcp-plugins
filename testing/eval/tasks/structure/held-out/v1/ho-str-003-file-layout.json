@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter.py",
+      "pkg/a/b/deep.py"
+    ]
+  },
+  "id": "ho-str-003-file-layout",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "py-small",
+  "request": "Name two paths that exist: the greeter module and the nested deep module."
+}

@@ -1,0 +1,18 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "all",
+      "hello",
+      "fail"
+    ]
+  },
+  "id": "ho-fix-004-phony",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "fixture": "build-mini",
+  "request": "Name the three .PHONY targets from the Makefile."
+}

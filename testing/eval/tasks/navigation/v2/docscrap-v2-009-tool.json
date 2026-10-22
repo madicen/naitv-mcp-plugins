@@ -1,0 +1,20 @@
+{
+  "id": "docscrap-v2-009-tool",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper search_doc_index with query fixture, report path README.md and hit count 1.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md",
+      "1"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

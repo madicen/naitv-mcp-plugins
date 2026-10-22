@@ -1,9 +1,23 @@
 {
-  "count": 1,
+  "count": 3,
   "items": [
     {
+      "line": 1,
+      "name": "Greeter",
+      "path": "pkg/a/b/deep.py",
+      "score": 1.0
+    },
+    {
+      "line": 5,
+      "name": "Greeter",
+      "path": "pkg/a/b/deep.py",
+      "score": 1.0
+    },
+    {
+      "line": 4,
+      "name": "Greeter",
       "path": "pkg/greeter.py",
-      "score": 0.5
+      "score": 1.0
     }
   ],
   "tool": "find_pattern_instances",

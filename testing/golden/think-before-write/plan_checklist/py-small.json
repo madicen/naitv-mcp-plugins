@@ -1,8 +1,20 @@
 {
-  "generated": "# plan_checklist\n# root=py-small\n# query=Greeter\n",
+  "generated": "# plan_checklist\n# root=py-small\n# query=Greeter\n# paths=pkg/a/b/deep.py,pkg/greeter.py\n# names=buried,Greeter,hello,add,format_greeting,shout_count\n- [ ] confirm target paths exist\n- [ ] touch only: buried, Greeter, hello, add, format_greeting\n",
   "items": [
     {
-      "text": "# plan_checklist\n# root=py-small\n# query=Greeter\n"
+      "names": [
+        "buried",
+        "Greeter",
+        "hello",
+        "add",
+        "format_greeting",
+        "shout_count"
+      ],
+      "paths": [
+        "pkg/a/b/deep.py",
+        "pkg/greeter.py"
+      ],
+      "text": "# plan_checklist\n# root=py-small\n# query=Greeter\n# paths=pkg/a/b/deep.py,pkg/greeter.py\n# names=buried,Greeter,hello,add,format_greeting,shout_count\n- [ ] confirm target paths exist\n- [ ] touch only: buried, Greeter, hello, add, format_greeting\n"
     }
   ],
   "ok": true,

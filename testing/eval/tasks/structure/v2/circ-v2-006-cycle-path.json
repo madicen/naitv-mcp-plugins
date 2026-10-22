@@ -1,0 +1,20 @@
+{
+  "id": "circ-v2-006-cycle-path",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "Using circular-dependency-detector cycle_path, report root deps-mini and files 3.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "deps-mini",
+      "3"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

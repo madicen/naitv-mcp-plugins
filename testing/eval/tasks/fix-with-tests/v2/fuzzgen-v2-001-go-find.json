@@ -1,0 +1,20 @@
+{
+  "id": "fuzzgen-v2-001-go-find",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator find_fuzz_targets, report name FuzzHello and path pkg/greeter/greeter_fuzz_test.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "FuzzHello",
+      "pkg/greeter/greeter_fuzz_test.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

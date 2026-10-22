@@ -1,10 +1,15 @@
 {
-  "generated": "# generate_fuzz_target\n# root=py-small\n# query=Greeter\n",
+  "existing_targets": [],
+  "generated": "# fuzz dry-run template for add (pkg/greeter.py)\n# call only the discovered symbol: add\n# example: add(fuzzed_input)\n",
   "items": [
     {
-      "text": "# generate_fuzz_target\n# root=py-small\n# query=Greeter\n"
+      "name": "add",
+      "path": "pkg/greeter.py",
+      "text": "# fuzz dry-run template for add (pkg/greeter.py)\n# call only the discovered symbol: add\n# example: add(fuzzed_input)\n"
     }
   ],
+  "name": "add",
   "ok": true,
+  "path": "pkg/greeter.py",
   "tool": "generate_fuzz_target"
 }

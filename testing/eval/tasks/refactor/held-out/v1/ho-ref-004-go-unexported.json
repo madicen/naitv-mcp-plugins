@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "unexportedFn"
+    ]
+  },
+  "id": "ho-ref-004-go-unexported",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "go-small",
+  "request": "Name the unexported function in greeter.go."
+}

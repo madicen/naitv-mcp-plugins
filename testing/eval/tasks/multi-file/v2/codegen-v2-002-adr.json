@@ -1,0 +1,19 @@
+{
+  "id": "codegen-v2-002-adr",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper list_templates, report path docs/adr/0001-record-architecture.md.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/0001-record-architecture.md"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

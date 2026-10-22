@@ -1,9 +1,11 @@
 {
+  "build_system": "unknown",
+  "commands": [],
+  "config_files": [],
   "ok": true,
   "result": {
-    "files": 7,
-    "root": "py-small"
+    "build_system": "unknown",
+    "config_files": []
   },
-  "tool": "detect_build_system",
-  "truncated": false
+  "tool": "detect_build_system"
 }

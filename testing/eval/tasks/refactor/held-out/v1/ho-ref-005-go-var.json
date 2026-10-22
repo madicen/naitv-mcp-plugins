@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "ok"
+    ]
+  },
+  "id": "ho-ref-005-go-var",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "go-small",
+  "request": "What string value does ExportedVar hold?"
+}

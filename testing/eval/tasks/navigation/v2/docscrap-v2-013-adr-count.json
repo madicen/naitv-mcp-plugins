@@ -1,0 +1,21 @@
+{
+  "id": "docscrap-v2-013-adr-count",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper extract_sections on docs/adr/0001-record-architecture.md, report section count 5 and that sections include Status and Context.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "5",
+      "Status",
+      "Context"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

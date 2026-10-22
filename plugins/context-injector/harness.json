@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "context_injector",
-    "search_paths": ["tools/context-injector", "plugins/context-injector"],
+    "search_paths": [
+      "tools/context-injector",
+      "plugins/context-injector"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,7 +16,11 @@
     "l5": true
   },
   "golden": {
-    "fixtures": ["py-small", "go-small", "empty"],
+    "fixtures": [
+      "py-small",
+      "go-small",
+      "empty"
+    ],
     "queries": {
       "get_code_slice": {
         "path": "pkg/greeter.py",
@@ -25,10 +32,14 @@
         "max_tokens": 200,
         "depth": 3
       },
-      "get_file_outline": { "path": "pkg/greeter.py" }
+      "get_file_outline": {
+        "path": "pkg/greeter.py"
+      }
     }
   },
-  "perf": { "enabled": false },
+  "perf": {
+    "enabled": false
+  },
   "l4": {
     "smoke_args": {
       "root_path": "FIXTURE:py-small",
@@ -40,9 +51,19 @@
       "depth": 3
     },
     "expect_keys": {
-      "get_code_slice": ["code", "file", "hash"],
-      "find_relevant_snippets": ["snippets", "total_tokens"],
-      "get_file_outline": ["symbols", "line_ranges"]
+      "get_code_slice": [
+        "code",
+        "file",
+        "hash"
+      ],
+      "find_relevant_snippets": [
+        "snippets",
+        "total_tokens"
+      ],
+      "get_file_outline": [
+        "symbols",
+        "line_ranges"
+      ]
     },
     "invalid_tool": "get_code_slice",
     "invalid_args": {},
@@ -54,14 +75,28 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["context-injector"],
-    "tool_names": ["get_code_slice", "find_relevant_snippets", "get_file_outline"],
+    "treatment_plugins": [
+      "context-injector"
+    ],
+    "tool_names": [
+      "get_code_slice",
+      "find_relevant_snippets",
+      "get_file_outline"
+    ],
     "gate": {
       "min_success_delta_pp": 10,
       "ci_must_exclude_zero": true,
       "max_control_regression_pp": 2,
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "id": "valtest-v2-008-py-unknown",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using validate-and-test detect_build_system on py-small, report build_system unknown.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "unknown"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

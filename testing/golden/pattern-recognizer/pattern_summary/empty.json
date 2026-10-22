@@ -1,6 +1,8 @@
 {
   "count": 0,
+  "instance_count": 0,
   "items": [],
+  "summary": "instances=0",
   "tool": "pattern_summary",
   "truncated": false
 }

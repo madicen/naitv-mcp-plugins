@@ -1,0 +1,19 @@
+{
+  "id": "valtest-v2-004-fail-sum",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Using validate-and-test summarize_failures, report summary no FAIL lines found.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "no FAIL lines found"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

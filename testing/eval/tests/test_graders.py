@@ -24,3 +24,26 @@ def test_hallucination_flags_unknown_symbol() -> None:
     got = grade_hallucination("Greeter and TotallyFakeService are used", pmap)
     assert "TotallyFakeService" in got["nonexistent"]
     assert "Greeter" not in got["nonexistent"]
+
+
+def test_hallucination_ignores_allcaps_and_title_english() -> None:
+    pmap = {"packages": [{"name": "pkg", "path": "pkg", "symbols": []}], "languages": ["python"]}
+    got = grade_hallucination("README Final Path Makefile FAIL yes", pmap)
+    assert got["nonexistent"] == []
+    assert got["candidates"] == []
+
+
+def test_hallucination_accepts_file_stems() -> None:
+    pmap = {
+        "packages": [
+            {
+                "name": "greeter",
+                "path": "pkg/greeter",
+                "symbols": [{"name": "FuzzHello", "path": "pkg/greeter/greeter_fuzz_test.go"}],
+            }
+        ],
+        "languages": ["go"],
+    }
+    got = grade_hallucination("see greeter_fuzz_test and mod_a missing", pmap)
+    assert "greeter_fuzz_test" not in got["nonexistent"]
+    assert "mod_a" in got["nonexistent"]

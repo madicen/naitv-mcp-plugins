@@ -1,7 +1,7 @@
 {
   "ok": true,
   "result": {
-    "files": 7,
+    "files": 9,
     "root": "py-small"
   },
   "tool": "analyze_change_risk",

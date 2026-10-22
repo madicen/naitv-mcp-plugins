@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 3,
   "results": [
     {
       "path": "pkg/greeter/greeter.go",
@@ -8,6 +8,10 @@
     {
       "path": "pkg/greeter/other.go",
       "score": 0.166667
+    },
+    {
+      "path": "pkg/greeter/greeter_fuzz_test.go",
+      "score": 0.047619
     }
   ],
   "truncated": false

@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-010-go-node",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using dependency-graph-analyzer build_import_graph on go-small, report language go and node pkg/greeter.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "go",
+      "pkg/greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py",
+      "mul"
+    ]
+  },
+  "id": "ho-mf-002-mul-path",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "fixture": "py-small",
+  "request": "Which file defines mul? Give relative path."
+}

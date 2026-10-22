@@ -16,10 +16,36 @@ class _FakeStdin:
 def test_handle_empty() -> None:
     out = mod.handle('fetch_and_parse', FIXTURES / "empty", {"query": "x", "depth": 2})
     assert isinstance(out, dict)
+    assert out["loaded"] is False
 
 def test_handle_py_small() -> None:
     out = mod.handle('fetch_and_parse', FIXTURES / "py-small", {"query": "Greeter", "depth": 3})
     assert isinstance(out, dict)
+    assert out["loaded"] is True
+    assert out["path"] == "README.md"
+    assert "py-small" in out["content"]
+
+def test_extract_sections_readme() -> None:
+    out = mod.handle(
+        "extract_sections",
+        FIXTURES / "py-small",
+        {"path": "README.md", "depth": 3, "limit": 10},
+    )
+    assert out["count"] >= 1
+    names = [i["name"] for i in out["items"]]
+    assert "py-small fixture" in names
+    for item in out["items"]:
+        assert item["path"] == "README.md"
+
+def test_search_doc_index_heading(tmp_path: Path) -> None:
+    (tmp_path / "README.md").write_text("# Root\n\n## install steps\n\nrun make\n")
+    out = mod.handle(
+        "search_doc_index",
+        tmp_path,
+        {"query": "install", "depth": 2, "limit": 5},
+    )
+    assert out["count"] >= 1
+    assert any(i["name"] == "install steps" for i in out["items"])
 
 def test_handle_all_branches() -> None:
     root = FIXTURES / "py-small"
@@ -74,6 +100,10 @@ def test_main_all_tools(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureF
         mod.main()
         out = json.loads(capsys.readouterr().out)
         assert isinstance(out, dict)
+        if tool == "fetch_and_parse":
+            assert "loaded" in out and "content" in out
+        else:
+            assert "items" in out and "count" in out
 
 def test_iter_files() -> None:
     files = mod.iter_files(FIXTURES / "py-small", depth=3)

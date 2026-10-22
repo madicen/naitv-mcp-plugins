@@ -1,0 +1,20 @@
+{
+  "id": "think-v2-004-query-add",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write render_pre_write_prompt with query add, report query=add.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "query=add",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

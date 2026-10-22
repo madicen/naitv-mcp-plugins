@@ -20,7 +20,7 @@ FIXTURES_DIR = REPO_ROOT / "testing" / "fixtures"
 GOLDEN_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT / "testing"))
 
-from plugin_harness import load_harness, load_manifest  # noqa: E402
+from plugin_harness import link_tools_lib, load_harness, load_manifest  # noqa: E402
 
 MASK_KEYS = frozenset({"cached", "commit"})
 DEFAULT_FIXTURES = ("py-small", "go-small", "empty", "mixed-polyglot", "hostile")
@@ -38,6 +38,7 @@ def prepare_home(plugin_name: str, home: Path) -> None:
     if dest.exists() or dest.is_symlink():
         dest.unlink()
     dest.symlink_to(src, target_is_directory=True)
+    link_tools_lib(home)
 
 
 def expand_exec(exec_str: str, home: Path) -> str:

@@ -2,13 +2,22 @@
   "definition": {
     "column": 1,
     "file": "pkg/greeter.py",
-    "imports": [],
-    "line": 1,
+    "imports": [
+      "pkg.util.math"
+    ],
+    "line": 4,
     "receivers": [],
     "signature": "class Greeter",
     "source": "ast",
     "type": "class"
   },
   "heuristic": true,
-  "references": []
+  "references": [
+    {
+      "column": 9,
+      "context": "_ = Greeter()",
+      "file": "pkg/a/b/deep.py",
+      "line": 5
+    }
+  ]
 }

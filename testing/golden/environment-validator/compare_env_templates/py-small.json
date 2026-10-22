@@ -1,9 +1,23 @@
 {
+  "count": 4,
+  "env_path": ".env.example",
+  "extra": [
+    "API_KEY",
+    "APP_ENV",
+    "DATABASE_URL",
+    "LOG_LEVEL"
+  ],
+  "missing": [],
   "ok": true,
   "result": {
-    "files": 7,
-    "root": "py-small"
+    "extra": [
+      "API_KEY",
+      "APP_ENV",
+      "DATABASE_URL",
+      "LOG_LEVEL"
+    ],
+    "missing": []
   },
-  "tool": "compare_env_templates",
-  "truncated": false
+  "template_path": "README.md",
+  "tool": "compare_env_templates"
 }

@@ -1,6 +1,17 @@
 {
-  "count": 0,
-  "ok": true,
+  "count": 2,
+  "ok": false,
   "tool": "check_assumptions",
-  "violations": []
+  "violations": [
+    {
+      "message": "no files/identifiers matched 'Greeter'",
+      "path": "README.md",
+      "rule": "no_match"
+    },
+    {
+      "message": "path does not exist",
+      "path": "README.md",
+      "rule": "missing_path"
+    }
+  ]
 }

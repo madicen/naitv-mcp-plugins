@@ -1,0 +1,45 @@
+{
+  "plugin": "decision-log-runner",
+  "suite": "structure",
+  "version": 2,
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 72,
+    "success_rate": 0.75,
+    "control_n": 36,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 0.8333333333333334,
+    "mean_wall_seconds": 8.429709482625993,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 72,
+    "success_rate": 0.9027777777777778,
+    "control_n": 36,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 0.8333333333333334,
+    "mean_wall_seconds": 16.004758830969674,
+    "total_tool_calls": 36
+  },
+  "verdict": {
+    "baseline_success_rate": 0.75,
+    "treatment_success_rate": 0.9027777777777778,
+    "delta_pp": 15.277777777777779,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.0,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": true,
+    "l5": "measured-helpful"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/structure-v2-decision-log-runner-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/structure-v2-decision-log-runner-treatment-latest.json"
+}

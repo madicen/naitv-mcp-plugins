@@ -1,0 +1,18 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mod_a.py",
+      "mod_b.py",
+      "mod_c.py"
+    ]
+  },
+  "id": "ho-str-006-deps-files",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "deps-mini",
+  "request": "List the three python module filenames at the fixture root."
+}

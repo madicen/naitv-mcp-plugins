@@ -1,0 +1,20 @@
+{
+  "id": "decision-v2-012-by-status",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner summarize_decisions, report result by_status unknown count 5.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "unknown",
+      "5"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

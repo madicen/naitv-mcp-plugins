@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "dependency_graph_analyzer",
-    "search_paths": ["tools/dependency-graph-analyzer", "plugins/dependency-graph-analyzer"],
+    "search_paths": [
+      "tools/dependency-graph-analyzer",
+      "plugins/dependency-graph-analyzer"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,15 +16,33 @@
     "l5": true
   },
   "golden": {
-    "fixtures": ["deps-mini", "empty", "go-small"],
+    "fixtures": [
+      "deps-mini",
+      "empty",
+      "go-small"
+    ],
     "queries": {
-      "build_import_graph": { "language": "auto", "depth": 3 },
-      "query_dependencies": { "module": "mod_a", "depth": 3 },
-      "find_hubs": { "limit": 5, "depth": 3 },
-      "export_graph": { "format": "dot", "depth": 3 }
+      "build_import_graph": {
+        "language": "auto",
+        "depth": 3
+      },
+      "query_dependencies": {
+        "module": "mod_a",
+        "depth": 3
+      },
+      "find_hubs": {
+        "limit": 5,
+        "depth": 3
+      },
+      "export_graph": {
+        "format": "dot",
+        "depth": 3
+      }
     }
   },
-  "perf": { "enabled": false },
+  "perf": {
+    "enabled": false
+  },
   "l4": {
     "smoke_args": {
       "root_path": "FIXTURE:deps-mini",
@@ -32,10 +53,24 @@
       "depth": 3
     },
     "expect_keys": {
-      "build_import_graph": ["nodes", "edges", "node_count"],
-      "query_dependencies": ["module", "imports", "imported_by"],
-      "find_hubs": ["modules", "count"],
-      "export_graph": ["format", "graph"]
+      "build_import_graph": [
+        "nodes",
+        "edges",
+        "node_count"
+      ],
+      "query_dependencies": [
+        "module",
+        "imports",
+        "imported_by"
+      ],
+      "find_hubs": [
+        "modules",
+        "count"
+      ],
+      "export_graph": [
+        "format",
+        "graph"
+      ]
     },
     "invalid_tool": "build_import_graph",
     "invalid_args": {},
@@ -46,7 +81,9 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["dependency-graph-analyzer"],
+    "treatment_plugins": [
+      "dependency-graph-analyzer"
+    ],
     "tool_names": [
       "build_import_graph",
       "query_dependencies",
@@ -59,6 +96,14 @@
       "max_control_regression_pp": 2,
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
     }
   }
 }

@@ -16,10 +16,29 @@ class _FakeStdin:
 def test_handle_empty() -> None:
     out = mod.handle('find_pattern_instances', FIXTURES / "empty", {"query": "x", "depth": 2})
     assert isinstance(out, dict)
+    assert out["count"] == 0
+    assert out["items"] == []
 
 def test_handle_py_small() -> None:
     out = mod.handle('find_pattern_instances', FIXTURES / "py-small", {"query": "Greeter", "depth": 3})
     assert isinstance(out, dict)
+    assert out["count"] >= 1
+    paths = {i["path"] for i in out["items"]}
+    assert any("greeter.py" in p for p in paths)
+    for item in out["items"]:
+        assert "path" in item
+        assert "name" in item
+        assert item["name"]  # real token from file
+
+def test_detect_repeated_on_tmp(tmp_path: Path) -> None:
+    (tmp_path / "a.py").write_text("import os\n\ndef foo():\n    return os.getcwd()\n    # pad\n")
+    (tmp_path / "b.py").write_text("import os\n\ndef bar():\n    return 1\n")
+    out = mod.handle("detect_repeated_patterns", tmp_path, {"depth": 2, "limit": 10})
+    assert out["ok"] is True
+    assert out["tool"] == "detect_repeated_patterns"
+    # repeated import os
+    names = [p["name"] for p in out["items"]]
+    assert any("import os" in n for n in names)
 
 def test_handle_all_branches() -> None:
     root = FIXTURES / "py-small"
@@ -74,6 +93,11 @@ def test_main_all_tools(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureF
         mod.main()
         out = json.loads(capsys.readouterr().out)
         assert isinstance(out, dict)
+        if tool in ("detect_repeated_patterns", "rank_examples"):
+            assert out.get("ok") is True
+            assert out.get("tool") == tool
+        else:
+            assert "items" in out and "count" in out
 
 def test_iter_files() -> None:
     files = mod.iter_files(FIXTURES / "py-small", depth=3)
@@ -90,3 +114,14 @@ def test_main_non_object(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(sys, "stdin", _FakeStdin(b"[]\n"))
     with pytest.raises(SystemExit):
         mod.main()
+
+def test_rank_and_summary(tmp_path: Path) -> None:
+    body = "def shared():\n    x = 1\n    y = 2\n    return x + y\n"
+    (tmp_path / "one.py").write_text(body)
+    (tmp_path / "two.py").write_text(body)
+    ranked = mod.handle("rank_examples", tmp_path, {"limit": 5, "depth": 2})
+    assert ranked["ok"] is True
+    assert ranked["count"] >= 1
+    summary = mod.handle("pattern_summary", tmp_path, {"limit": 5, "depth": 2})
+    assert "items" in summary
+    assert summary["instance_count"] >= 1

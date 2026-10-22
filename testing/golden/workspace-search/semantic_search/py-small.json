@@ -1,9 +1,13 @@
 {
-  "count": 1,
+  "count": 2,
   "results": [
     {
       "path": "pkg/greeter.py",
-      "score": 0.340909
+      "score": 0.275
+    },
+    {
+      "path": "pkg/a/b/deep.py",
+      "score": 0.142857
     }
   ],
   "truncated": false

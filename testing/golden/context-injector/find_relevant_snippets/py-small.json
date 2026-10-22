@@ -5,8 +5,15 @@
       "path": "pkg/greeter.py",
       "score": 1.0,
       "start_line": 1,
-      "text": "class Greeter:\n    def hello(self, name: str) -> str:\n        return f\"hi {name}\"\n\n"
+      "text": "from pkg.util.math import mul\n\n\nclass Greeter:\n    def hello(self, name: str) -> str:"
+    },
+    {
+      "end_line": 5,
+      "path": "pkg/a/b/deep.py",
+      "score": 0.5,
+      "start_line": 1,
+      "text": "from pkg.greeter import Greeter\n\n\ndef buried() -> None:\n    _ = Greeter()"
     }
   ],
-  "total_tokens": 11
+  "total_tokens": 23
 }

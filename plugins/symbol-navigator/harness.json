@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "symbol_navigator",
-    "search_paths": ["tools/symbol-navigator", "plugins/symbol-navigator"],
+    "search_paths": [
+      "tools/symbol-navigator",
+      "plugins/symbol-navigator"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,11 +16,26 @@
     "l5": true
   },
   "golden": {
-    "fixtures": ["py-small", "go-small", "empty", "mixed-polyglot", "hostile"],
+    "fixtures": [
+      "py-small",
+      "go-small",
+      "empty",
+      "mixed-polyglot",
+      "hostile"
+    ],
     "queries": {
-      "find_symbol_definition": { "symbol": "Greeter", "depth": 3 },
-      "search_by_pattern": { "pattern": "Greet|Add|add", "depth": 3 },
-      "get_symbol_references": { "symbol": "Greeter", "depth": 3 }
+      "find_symbol_definition": {
+        "symbol": "Greeter",
+        "depth": 3
+      },
+      "search_by_pattern": {
+        "pattern": "Greet|Add|add",
+        "depth": 3
+      },
+      "get_symbol_references": {
+        "symbol": "Greeter",
+        "depth": 3
+      }
     }
   },
   "perf": {
@@ -26,7 +44,9 @@
     "module": "symbol_navigator",
     "cache_subdir": "symbol-navigator",
     "call": "find_symbol_definition",
-    "call_args": ["PerfAnchor"],
+    "call_args": [
+      "PerfAnchor"
+    ],
     "targets_seconds": {
       "warm": 0.1,
       "cold": 30.0,
@@ -41,12 +61,23 @@
       "pattern": "^Greet"
     },
     "expect_keys": {
-      "find_symbol_definition": ["cached"],
-      "search_by_pattern": ["results", "cached"],
-      "get_symbol_references": ["references", "heuristic", "cached"]
+      "find_symbol_definition": [
+        "cached"
+      ],
+      "search_by_pattern": [
+        "results",
+        "cached"
+      ],
+      "get_symbol_references": [
+        "references",
+        "heuristic",
+        "cached"
+      ]
     },
     "invalid_tool": "find_symbol_definition",
-    "invalid_args": { "depth": 1 },
+    "invalid_args": {
+      "depth": 1
+    },
     "post_timeout_tool": "search_by_pattern",
     "post_timeout_args": {
       "root_path": "FIXTURE:empty",
@@ -55,11 +86,22 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["structural-anchor", "symbol-navigator"],
+    "treatment_plugins": [
+      "structural-anchor",
+      "symbol-navigator"
+    ],
     "tool_names": [
       "find_symbol_definition",
       "search_by_pattern",
       "get_symbol_references"
-    ]
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
   }
 }

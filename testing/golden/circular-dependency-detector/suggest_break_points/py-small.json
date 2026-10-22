@@ -1,8 +1,16 @@
 {
-  "generated": "# suggest_break_points\n# root=py-small\n# query=Greeter\n",
+  "generated": "# suggest_break_points\n# root=py-small\n# hubs=pkg/a/b/deep.py,pkg/greeter.py,pkg/__init__.py,pkg/broken.py,pkg/util/math.py,skip_me/secret.py\n",
   "items": [
     {
-      "text": "# suggest_break_points\n# root=py-small\n# query=Greeter\n"
+      "paths": [
+        "pkg/a/b/deep.py",
+        "pkg/greeter.py",
+        "pkg/__init__.py",
+        "pkg/broken.py",
+        "pkg/util/math.py",
+        "skip_me/secret.py"
+      ],
+      "text": "# suggest_break_points\n# root=py-small\n# hubs=pkg/a/b/deep.py,pkg/greeter.py,pkg/__init__.py,pkg/broken.py,pkg/util/math.py,skip_me/secret.py\n"
     }
   ],
   "ok": true,

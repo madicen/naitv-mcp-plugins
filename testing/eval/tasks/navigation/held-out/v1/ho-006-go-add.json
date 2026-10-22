@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter/greeter.go",
+      "Add"
+    ]
+  },
+  "id": "ho-006-go-add",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "fixture": "go-small",
+  "request": "Where is Add defined in the go fixture? Path and package."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "decision-v2-002-title",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner parse_decision_log, report title Record architecture decisions and count 5.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Record architecture decisions",
+      "5"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

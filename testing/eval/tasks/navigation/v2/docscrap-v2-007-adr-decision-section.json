@@ -1,0 +1,20 @@
+{
+  "id": "docscrap-v2-007-adr-decision-section",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper fetch_and_parse on the ADR file, report that sections include Decision and Consequences.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Decision",
+      "Consequences"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

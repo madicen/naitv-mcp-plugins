@@ -1,0 +1,19 @@
+{
+  "id": "stale-v2-007-math",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier find_unused_exports with query mul, report pkg/util/math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

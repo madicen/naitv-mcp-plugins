@@ -1,0 +1,19 @@
+{
+  "id": "depgraph-v2-002-edges",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer build_import_graph, report edge_count 2.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "2"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

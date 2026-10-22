@@ -1,0 +1,20 @@
+{
+  "id": "surg-v2-007-exit",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch apply_patch_dry_run, report exit_code 0 and ok true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

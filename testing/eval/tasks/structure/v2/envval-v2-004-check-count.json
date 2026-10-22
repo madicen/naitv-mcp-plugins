@@ -1,0 +1,19 @@
+{
+  "id": "envval-v2-004-check-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator check_env_vars, report count 4 missing required env keys.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "4"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

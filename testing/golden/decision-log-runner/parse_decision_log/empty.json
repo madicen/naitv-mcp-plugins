@@ -1,5 +1,7 @@
 {
   "content": "",
+  "count": 0,
+  "decisions": [],
   "loaded": false,
   "path": "README.md",
   "tool": "parse_decision_log"

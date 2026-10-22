@@ -1,0 +1,20 @@
+{
+  "id": "stale-v2-001-count",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier find_unreferenced, report count 9 and pkg/greeter.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      "pkg/greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

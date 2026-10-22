@@ -6,6 +6,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[3]
 TOOLS = REPO / "tools" / "logging-enforcer"
 FIXTURES = REPO / "testing" / "fixtures"
+sys.path.insert(0, str(REPO / "tools" / "_lib"))
 sys.path.insert(0, str(TOOLS))
 import logging_enforcer as mod  # noqa: E402
 

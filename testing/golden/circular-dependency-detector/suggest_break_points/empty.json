@@ -1,8 +1,9 @@
 {
-  "generated": "# suggest_break_points\n# root=empty\n# query=Greeter\n",
+  "generated": "# suggest_break_points\n# root=empty\n# hubs=\n",
   "items": [
     {
-      "text": "# suggest_break_points\n# root=empty\n# query=Greeter\n"
+      "paths": [],
+      "text": "# suggest_break_points\n# root=empty\n# hubs=\n"
     }
   ],
   "ok": true,

@@ -1,0 +1,19 @@
+{
+  "id": "fuzzgen-v2-005-py-find-empty",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using fuzzing-test-generator find_fuzz_targets on py-small, report count 0.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

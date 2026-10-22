@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""fuzzing-test-generator: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""fuzzing-test-generator: discover fuzz targets (JSON I/O, stdlib, dry-run)."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -15,11 +14,18 @@ MAX_FILES = 500
 MAX_FILE_BYTES = 64_000
 SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
 TOOLS = {
-        'find_fuzz_targets',
-        'generate_fuzz_target',
-        'validate_fuzz_target',
-        'run_fuzz_smoke'
+    "find_fuzz_targets",
+    "generate_fuzz_target",
+    "validate_fuzz_target",
+    "run_fuzz_smoke",
 }
+_GO_FUZZ = re.compile(r"^func\s+(Fuzz[A-Za-z0-9_]+)\s*\(", re.MULTILINE)
+_GO_FUNC = re.compile(r"^func\s+(?:\([^)]+\)\s*)?([A-Za-z_][A-Za-z0-9_]*)\s*\(", re.MULTILINE)
+_PY_DEF = re.compile(r"^def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(", re.MULTILINE)
+_PY_HYPOTHESIS = re.compile(
+    r"(@given\b|@settings\b|from\s+hypothesis\b|import\s+hypothesis\b|atheris\.|import\s+atheris\b)"
+)
+_IDENT = re.compile(r"\b([A-Za-z_][A-Za-z0-9_]*)\b")
 
 
 def _error(message: str, *, code: int = 1) -> None:
@@ -82,73 +88,251 @@ def read_text(path: Path) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
-    depth = int(data.get("depth", 3))
-    query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
-    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
-    limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
-
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
+def discover_fuzz_targets(root: Path, depth: int) -> list[dict[str, str]]:
+    """Return path+name for Go Fuzz* and Python hypothesis/atheris markers."""
+    items: list[dict[str, str]] = []
+    for f in iter_files(root, depth):
+        r = rel(f, root)
+        if f.suffix == ".go":
             text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
+            for m in _GO_FUZZ.finditer(text):
+                items.append({"path": r, "name": m.group(1), "kind": "go_fuzz"})
+        elif f.suffix == ".py":
+            text = read_text(f)
+            if not _PY_HYPOTHESIS.search(text):
+                # also treat def fuzz_* / test_fuzz_* as markers
+                defs = _PY_DEF.findall(text)
+                fuzz_defs = [d for d in defs if d.startswith("fuzz_") or d.startswith("test_fuzz")]
+                for name in fuzz_defs:
+                    items.append({"path": r, "name": name, "kind": "python_fuzz"})
                 continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
-            if len(items) >= limit:
-                break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+            for name in _PY_DEF.findall(text):
+                if name.startswith("_"):
+                    continue
+                items.append({"path": r, "name": name, "kind": "python_hypothesis"})
+    items.sort(key=lambda x: (x["path"], x["name"]))
+    return items
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
 
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
+def discover_callables(root: Path, depth: int) -> list[dict[str, str]]:
+    """Real function names from .py/.go (for templates)."""
+    items: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for f in iter_files(root, depth):
+        r = rel(f, root)
+        if f.suffix == ".py":
+            text = read_text(f)
+            for name in _PY_DEF.findall(text):
+                if name.startswith("_") and not name.startswith("__"):
+                    continue
+                key = (r, name)
+                if key in seen:
+                    continue
+                seen.add(key)
+                items.append({"path": r, "name": name, "lang": "python"})
+        elif f.suffix == ".go":
+            text = read_text(f)
+            for name in _GO_FUNC.findall(text):
+                if name.startswith("Test") or name.startswith("Benchmark") or name.startswith("Fuzz"):
+                    continue
+                key = (r, name)
+                if key in seen:
+                    continue
+                seen.add(key)
+                items.append({"path": r, "name": name, "lang": "go"})
+    items.sort(key=lambda x: (x["path"], x["name"]))
+    return items
 
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
 
-    if tool.startswith(("load_", "parse_", "fetch_")):
+def find_fuzz_targets(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    query = str(data.get("query") or data.get("pattern") or "").strip().lower()
+    limit = max(1, min(int(data.get("limit", 20)), 100))
+    found = discover_fuzz_targets(root, depth)
+    items: list[dict[str, Any]] = []
+    for t in found:
+        if query and query not in t["name"].lower() and query not in t["path"].lower():
+            continue
+        items.append({"path": t["path"], "name": t["name"], "kind": t["kind"]})
+        if len(items) >= limit:
+            break
+    return {
+        "items": items,
+        "count": len(items),
+        "truncated": len(found) > limit,
+        "tool": "find_fuzz_targets",
+    }
+
+
+def _pick_symbol(root: Path, data: dict[str, Any], callables: list[dict[str, str]]) -> dict[str, str] | None:
+    hint = str(
+        data.get("symbol") or data.get("query") or data.get("name") or data.get("path") or ""
+    ).strip()
+    if not callables:
+        return None
+    if hint:
+        hl = hint.lower()
+        for c in callables:
+            if c["name"].lower() == hl or c["path"].lower() == hl:
+                return c
+        for c in callables:
+            if hl in c["name"].lower() or hl in c["path"].lower():
+                return c
+        # hint not found — do not invent; fall back to first real callable
+    return callables[0]
+
+
+def generate_fuzz_target(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    callables = discover_callables(root, depth)
+    existing = discover_fuzz_targets(root, depth)
+    target = _pick_symbol(root, data, callables)
+    if not target:
+        body = "# no callable symbols discovered in repo\n"
+        return {
+            "generated": body,
+            "ok": False,
+            "items": [],
+            "path": "",
+            "name": "",
+            "tool": "generate_fuzz_target",
+        }
+    name = target["name"]
+    path = target["path"]
+    lang = target["lang"]
+    # Template references ONLY the real symbol name — no invented CamelCase wrappers.
+    if lang == "go":
+        body = (
+            f"# fuzz dry-run template for {name} ({path})\n"
+            f"# call only the discovered symbol: {name}\n"
+            f"# example: result := {name}(fuzzedInput)\n"
+        )
+    else:
+        body = (
+            f"# fuzz dry-run template for {name} ({path})\n"
+            f"# call only the discovered symbol: {name}\n"
+            f"# example: {name}(fuzzed_input)\n"
+        )
+    return {
+        "generated": body,
+        "ok": True,
+        "items": [{"path": path, "name": name, "text": body}],
+        "path": path,
+        "name": name,
+        "existing_targets": [{"path": t["path"], "name": t["name"]} for t in existing],
+        "tool": "generate_fuzz_target",
+    }
+
+
+def validate_fuzz_target(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    path_s = str(data.get("path") or data.get("file") or "").strip()
+    template = str(data.get("template") or data.get("text") or data.get("generated") or "")
+    callables = discover_callables(root, depth)
+    fuzz = discover_fuzz_targets(root, depth)
+    real_names = {c["name"] for c in callables} | {t["name"] for t in fuzz}
+    real_paths = {c["path"] for c in callables} | {t["path"] for t in fuzz}
+
+    if not template and path_s:
         target = root / path_s
         if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
+            template = read_text(target)
+
+    violations: list[dict[str, str]] = []
+    mentioned = [m.group(1) for m in _IDENT.finditer(template)]
+    # Keep identifiers that look like symbols (skip tiny words)
+    skip = {
+        "fuzz",
+        "dry",
+        "run",
+        "template",
+        "for",
+        "call",
+        "only",
+        "the",
+        "discovered",
+        "symbol",
+        "example",
+        "result",
+        "fuzzedInput",
+        "fuzzed_input",
+        "def",
+        "func",
+        "import",
+        "from",
+        "no",
+        "callable",
+        "symbols",
+        "in",
+        "repo",
+    }
+    candidates = [n for n in mentioned if n not in skip and len(n) > 1]
+    matched = [n for n in candidates if n in real_names]
+    # path mentions
+    path_hit = any(p in template for p in real_paths) if real_paths else False
+
+    if not real_names:
+        violations.append(
+            {"path": path_s, "rule": "no_symbols", "message": "no symbols in repo"}
+        )
+    elif not matched and not path_hit:
+        violations.append(
+            {
+                "path": path_s or "",
+                "rule": "missing_real_symbol",
+                "message": "template mentions no discovered symbol",
+            }
+        )
+    # flag invented CapWords in template that are not real
+    for n in candidates:
+        if n in real_names or n in skip:
+            continue
+        if re.match(r"^[A-Z][a-zA-Z0-9]+$", n) and n not in real_names:
+            violations.append(
+                {
+                    "path": path_s or "",
+                    "rule": "unknown_symbol",
+                    "message": n,  # report the token; caller decides
+                    "name": n,
                 }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
+            )
 
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "fuzzing-test-generator"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
+    return {
+        "ok": len(violations) == 0,
+        "violations": violations,
+        "count": len(violations),
+        "matched_symbols": matched,
+        "tool": "validate_fuzz_target",
+    }
 
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+
+def run_fuzz_smoke(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    limit = max(1, min(int(data.get("limit", 20)), 100))
+    found = discover_fuzz_targets(root, depth)
+    targets = [{"path": t["path"], "name": t["name"]} for t in found[:limit]]
+    # Dry-run only — never execute fuzzers.
+    summary = f"dry-run ok; targets={len(targets)}"
+    return {
+        "ok": True,
+        "exit_code": 0,
+        "summary": summary,
+        "targets": targets,
+        "count": len(targets),
+        "tool": "run_fuzz_smoke",
+    }
+
+
+def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if tool == "find_fuzz_targets":
+        return find_fuzz_targets(root, data)
+    if tool == "generate_fuzz_target":
+        return generate_fuzz_target(root, data)
+    if tool == "validate_fuzz_target":
+        return validate_fuzz_target(root, data)
+    if tool == "run_fuzz_smoke":
+        return run_fuzz_smoke(root, data)
+    return {"ok": False, "tool": tool, "error": "unknown tool"}
 
 
 def main() -> None:

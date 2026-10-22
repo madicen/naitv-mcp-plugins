@@ -1,0 +1,19 @@
+{
+  "id": "codegen-v2-009-math",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper list_templates with query mul, report pkg/util/math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

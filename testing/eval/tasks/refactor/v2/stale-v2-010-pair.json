@@ -1,0 +1,20 @@
+{
+  "id": "stale-v2-010-pair",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier find_unused_exports, report pkg/greeter.py and pkg/util/math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter.py",
+      "pkg/util/math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

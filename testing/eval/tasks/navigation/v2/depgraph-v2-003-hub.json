@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-003-hub",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer find_hubs, report the highest fan_in module pkg and its fan_in 2.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg",
+      "2"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

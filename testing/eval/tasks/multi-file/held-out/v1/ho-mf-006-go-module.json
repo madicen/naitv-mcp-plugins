@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "example.com/gosmall"
+    ]
+  },
+  "id": "ho-mf-006-go-module",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "fixture": "go-small",
+  "request": "What is the Go module path in go.mod?"
+}

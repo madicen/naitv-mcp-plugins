@@ -1,5 +1,5 @@
 {
-  "count": 4,
+  "count": 6,
   "matches": [
     {
       "line": 1,
@@ -15,6 +15,16 @@
       "line": 11,
       "path": "pkg/greeter/greeter.go",
       "text": "func (g Greeter) Hello(name string) string {"
+    },
+    {
+      "line": 1,
+      "path": "pkg/greeter/greeter_fuzz_test.go",
+      "text": "package greeter"
+    },
+    {
+      "line": 9,
+      "path": "pkg/greeter/greeter_fuzz_test.go",
+      "text": "\t\t_ = Greeter{}.Hello(name)"
     },
     {
       "line": 1,

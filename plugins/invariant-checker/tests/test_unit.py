@@ -6,6 +6,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[3]
 TOOLS = REPO / "tools" / "invariant-checker"
 FIXTURES = REPO / "testing" / "fixtures"
+sys.path.insert(0, str(REPO / "tools" / "_lib"))
 sys.path.insert(0, str(TOOLS))
 import invariant_checker as mod  # noqa: E402
 

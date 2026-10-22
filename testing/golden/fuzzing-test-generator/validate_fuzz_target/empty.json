@@ -1,6 +1,13 @@
 {
-  "count": 0,
-  "ok": true,
+  "count": 1,
+  "matched_symbols": [],
+  "ok": false,
   "tool": "validate_fuzz_target",
-  "violations": []
+  "violations": [
+    {
+      "message": "no symbols in repo",
+      "path": "README.md",
+      "rule": "no_symbols"
+    }
+  ]
 }

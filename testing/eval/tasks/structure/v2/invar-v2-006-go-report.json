@@ -1,0 +1,20 @@
+{
+  "id": "invar-v2-006-go-report",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using invariant-checker report_invariant_violations on go-small, report root go-small and files 4.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "go-small",
+      "4"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

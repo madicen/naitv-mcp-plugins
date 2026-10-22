@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""environment-validator: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""environment-validator: parse and compare .env files (JSON I/O, stdlib)."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -15,11 +14,12 @@ MAX_FILES = 500
 MAX_FILE_BYTES = 64_000
 SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
 TOOLS = {
-        'check_env_vars',
-        'parse_env_files',
-        'compare_env_templates',
-        'env_summary'
+    "check_env_vars",
+    "parse_env_files",
+    "compare_env_templates",
+    "env_summary",
 }
+_ENV_LINE = re.compile(r"^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
 
 
 def _error(message: str, *, code: int = 1) -> None:
@@ -82,73 +82,218 @@ def read_text(path: Path) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+def is_env_file(name: str) -> bool:
+    if name == ".env" or name == ".env.example":
+        return True
+    if name.startswith(".env."):
+        return True
+    if name.endswith(".env"):
+        return True
+    return False
+
+
+def is_template_env(name: str) -> bool:
+    return name in {".env.example", ".env.sample", ".env.template"} or name.endswith(
+        ".env.example"
+    )
+
+
+def parse_env_text(text: str) -> list[tuple[str, str]]:
+    """Return (key, value) pairs in file order; keys only from real KEY= lines."""
+    pairs: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for line in text.splitlines():
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        m = _ENV_LINE.match(line)
+        if not m:
+            continue
+        key, val = m.group(1), m.group(2).strip()
+        if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
+            val = val[1:-1]
+        if key not in seen:
+            seen.add(key)
+            pairs.append((key, val))
+    return pairs
+
+
+def collect_env_files(root: Path, depth: int) -> list[Path]:
+    files = [p for p in iter_files(root, depth) if is_env_file(p.name)]
+    # Root-level hidden env files (iter_files already includes them as files).
+    files.sort(key=lambda p: rel(p, root))
+    return files
+
+
+def file_keys(path: Path) -> list[str]:
+    return [k for k, _ in parse_env_text(read_text(path))]
+
+
+def _required_keys(data: dict[str, Any], templates: list[Path]) -> list[str]:
+    raw = data.get("required")
+    if isinstance(raw, list):
+        return [str(x) for x in raw if isinstance(x, str) and x]
+    if isinstance(raw, str) and raw.strip():
+        return [p.strip() for p in raw.split(",") if p.strip()]
+    keys: list[str] = []
+    seen: set[str] = set()
+    for t in templates:
+        for k in file_keys(t):
+            if k not in seen:
+                seen.add(k)
+                keys.append(k)
+    return keys
+
+
+def parse_env_files(root: Path, data: dict[str, Any]) -> dict[str, Any]:
     depth = int(data.get("depth", 3))
-    query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
-    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
-    limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
-
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
-                continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
-            if len(items) >= limit:
+    path_s = str(data.get("path") or data.get("file") or "").strip()
+    limit = max(1, min(int(data.get("limit", 100)), 500))
+    if path_s:
+        target = root / path_s
+        files = [target] if target.is_file() and is_env_file(target.name) else []
+    else:
+        files = collect_env_files(root, depth)
+    file_rows: list[dict[str, Any]] = []
+    vars_rows: list[dict[str, str]] = []
+    all_keys: list[str] = []
+    for f in files:
+        keys = file_keys(f)
+        r = rel(f, root)
+        file_rows.append({"path": r, "keys": keys, "key_count": len(keys)})
+        for k in keys:
+            vars_rows.append({"path": r, "key": k})
+            if k not in all_keys:
+                all_keys.append(k)
+            if len(vars_rows) >= limit:
                 break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+        if len(vars_rows) >= limit:
+            break
+    content = "\n".join(all_keys)
+    return {
+        "loaded": bool(file_rows),
+        "content": content,
+        "path": file_rows[0]["path"] if file_rows else path_s,
+        "files": file_rows,
+        "vars": vars_rows[:limit],
+        "count": len(vars_rows[:limit]),
+        "tool": "parse_env_files",
+    }
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
 
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
+def check_env_vars(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    files = collect_env_files(root, depth)
+    templates = [p for p in files if is_template_env(p.name)]
+    envs = [p for p in files if not is_template_env(p.name)]
+    required = _required_keys(data, templates)
+    present: set[str] = set()
+    key_paths: dict[str, str] = {}
+    for p in envs:
+        for k in file_keys(p):
+            present.add(k)
+            key_paths.setdefault(k, rel(p, root))
+    for p in templates:
+        for k in file_keys(p):
+            key_paths.setdefault(k, rel(p, root))
+    missing = [k for k in required if k not in present]
+    # unused = present in env but not required (only when required non-empty)
+    unused = [k for k in sorted(present) if required and k not in set(required)]
+    violations: list[dict[str, str]] = []
+    for k in missing:
+        violations.append(
+            {
+                "path": key_paths.get(k, templates and rel(templates[0], root) or ""),
+                "key": k,
+                "rule": "missing",
+            }
+        )
+    for k in unused:
+        violations.append(
+            {"path": key_paths.get(k, ""), "key": k, "rule": "unused"}
+        )
+    return {
+        "ok": len(missing) == 0,
+        "violations": violations,
+        "count": len(violations),
+        "missing": missing,
+        "unused": unused,
+        "required": required,
+        "tool": "check_env_vars",
+    }
 
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
 
-    if tool.startswith(("load_", "parse_", "fetch_")):
-        target = root / path_s
-        if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
-                }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
+def compare_env_templates(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    template_s = str(data.get("template_path") or data.get("path") or "").strip()
+    env_s = str(data.get("env_path") or data.get("file") or "").strip()
+    files = collect_env_files(root, depth)
+    templates = [p for p in files if is_template_env(p.name)]
+    envs = [p for p in files if not is_template_env(p.name)]
 
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "environment-validator"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
+    def resolve(hint: str, candidates: list[Path], fallback: list[Path]) -> Path | None:
+        if hint:
+            p = root / hint
+            if p.is_file():
+                return p
+        if candidates:
+            return candidates[0]
+        if fallback:
+            return fallback[0]
+        return None
 
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+    tpath = resolve(template_s, templates, files)
+    epath = resolve(env_s, envs, [p for p in files if p != tpath])
+    tkeys = set(file_keys(tpath)) if tpath else set()
+    ekeys = set(file_keys(epath)) if epath else set()
+    missing = sorted(tkeys - ekeys)
+    extra = sorted(ekeys - tkeys)
+    return {
+        "ok": len(missing) == 0,
+        "tool": "compare_env_templates",
+        "template_path": rel(tpath, root) if tpath else "",
+        "env_path": rel(epath, root) if epath else "",
+        "missing": missing,
+        "extra": extra,
+        "result": {"missing": missing, "extra": extra},
+        "count": len(missing) + len(extra),
+    }
+
+
+def env_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    limit = max(1, min(int(data.get("limit", 20)), 100))
+    files = collect_env_files(root, depth)
+    items: list[dict[str, Any]] = []
+    for f in files[:limit]:
+        keys = file_keys(f)
+        items.append(
+            {
+                "path": rel(f, root),
+                "key_count": len(keys),
+                "keys": keys,
+                "is_template": is_template_env(f.name),
+            }
+        )
+    return {
+        "items": items,
+        "count": len(items),
+        "truncated": len(files) > limit,
+        "file_count": len(files),
+        "tool": "env_summary",
+    }
+
+
+def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if tool == "check_env_vars":
+        return check_env_vars(root, data)
+    if tool == "parse_env_files":
+        return parse_env_files(root, data)
+    if tool == "compare_env_templates":
+        return compare_env_templates(root, data)
+    if tool == "env_summary":
+        return env_summary(root, data)
+    return {"ok": False, "tool": tool, "error": "unknown tool"}
 
 
 def main() -> None:

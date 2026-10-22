@@ -1,0 +1,19 @@
+{
+  "id": "docscrap-v2-008-adr-store",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper fetch_and_parse on the ADR, report the decision text mentions docs/adr/.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

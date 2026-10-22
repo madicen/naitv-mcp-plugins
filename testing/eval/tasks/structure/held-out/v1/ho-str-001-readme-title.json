@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "py-small fixture"
+    ]
+  },
+  "id": "ho-str-001-readme-title",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "py-small",
+  "request": "What is the exact markdown title text of README.md (without the #)?"
+}

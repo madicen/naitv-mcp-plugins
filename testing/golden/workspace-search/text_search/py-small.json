@@ -1,8 +1,18 @@
 {
-  "count": 1,
+  "count": 3,
   "matches": [
     {
       "line": 1,
+      "path": "pkg/a/b/deep.py",
+      "text": "from pkg.greeter import Greeter"
+    },
+    {
+      "line": 5,
+      "path": "pkg/a/b/deep.py",
+      "text": "    _ = Greeter()"
+    },
+    {
+      "line": 4,
       "path": "pkg/greeter.py",
       "text": "class Greeter:"
     }

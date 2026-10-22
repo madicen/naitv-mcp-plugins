@@ -1,11 +1,6 @@
 {
-  "count": 1,
-  "items": [
-    {
-      "path": "pkg/greeter.py",
-      "score": 0.5
-    }
-  ],
+  "count": 0,
+  "items": [],
   "tool": "find_fuzz_targets",
   "truncated": false
 }

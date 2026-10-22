@@ -1,6 +1,8 @@
 {
+  "count": 0,
   "exit_code": 0,
   "ok": true,
-  "summary": "run_fuzz_smoke dry-run on empty",
+  "summary": "dry-run ok; targets=0",
+  "targets": [],
   "tool": "run_fuzz_smoke"
 }

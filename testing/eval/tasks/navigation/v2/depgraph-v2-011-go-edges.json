@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-011-go-edges",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using dependency-graph-analyzer build_import_graph on go-small, report edge_count 1 and node_count 2.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "1",
+      "2"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-005-query-a",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer query_dependencies with module pkg.greeter, report that it imports pkg.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg.greeter",
+      "pkg"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

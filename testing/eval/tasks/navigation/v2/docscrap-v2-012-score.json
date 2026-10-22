@@ -1,0 +1,19 @@
+{
+  "id": "docscrap-v2-012-score",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper search_doc_index with query architecture, report the top hit name includes Record architecture decisions.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Record architecture decisions"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

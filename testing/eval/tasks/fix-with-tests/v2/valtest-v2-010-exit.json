@@ -1,0 +1,20 @@
+{
+  "id": "valtest-v2-010-exit",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Using validate-and-test run_validation, report exit_code 0 and ok true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

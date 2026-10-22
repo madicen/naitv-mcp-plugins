@@ -1,0 +1,45 @@
+{
+  "plugin": "pattern-recognizer",
+  "suite": "multi-file",
+  "version": 2,
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 48,
+    "success_rate": 0.375,
+    "control_n": 12,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 0.4722222222222222,
+    "mean_wall_seconds": 13.572928819339722,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 48,
+    "success_rate": 0.9166666666666666,
+    "control_n": 12,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 0.1527777777777778,
+    "mean_wall_seconds": 16.03887011804424,
+    "total_tool_calls": 38
+  },
+  "verdict": {
+    "baseline_success_rate": 0.375,
+    "treatment_success_rate": 0.9166666666666666,
+    "delta_pp": 54.166666666666664,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": -0.3194444444444444,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": true,
+    "l5": "measured-helpful"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/multi-file-v2-pattern-recognizer-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/multi-file-v2-pattern-recognizer-treatment-latest.json"
+}

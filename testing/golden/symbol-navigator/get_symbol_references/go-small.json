@@ -16,6 +16,12 @@
       "context": "func (g Greeter) Hello(name string) string {",
       "file": "pkg/greeter/greeter.go",
       "line": 11
+    },
+    {
+      "column": 7,
+      "context": "_ = Greeter{}.Hello(name)",
+      "file": "pkg/greeter/greeter_fuzz_test.go",
+      "line": 9
     }
   ]
 }

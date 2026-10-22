@@ -1,0 +1,20 @@
+{
+  "id": "fuzzgen-v2-003-go-gen",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator generate_fuzz_target, report discovered symbol Add and path pkg/greeter/greeter.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Add",
+      "pkg/greeter/greeter.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

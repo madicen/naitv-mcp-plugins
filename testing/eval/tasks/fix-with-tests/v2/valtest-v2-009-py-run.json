@@ -1,0 +1,19 @@
+{
+  "id": "valtest-v2-009-py-run",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using validate-and-test run_validation on py-small, report dry-run unknown.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "dry-run unknown"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

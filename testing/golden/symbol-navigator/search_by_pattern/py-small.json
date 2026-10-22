@@ -3,14 +3,14 @@
     {
       "file": "pkg/greeter.py",
       "kind": "class",
-      "line": 1,
+      "line": 4,
       "name": "Greeter",
       "signature": "class Greeter"
     },
     {
       "file": "pkg/greeter.py",
       "kind": "function",
-      "line": 6,
+      "line": 9,
       "name": "add",
       "signature": "def add(a: int, b: int) -> int"
     }

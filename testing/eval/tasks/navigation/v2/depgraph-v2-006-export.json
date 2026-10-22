@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-006-export",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer export_graph, report format dot and edge_count 2.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "dot",
+      "2"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

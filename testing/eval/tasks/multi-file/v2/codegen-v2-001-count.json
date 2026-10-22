@@ -1,0 +1,20 @@
+{
+  "id": "codegen-v2-001-count",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper list_templates, report count and path .env.example.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      ".env.example"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

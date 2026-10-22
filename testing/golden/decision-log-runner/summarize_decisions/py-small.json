@@ -1,9 +1,13 @@
 {
+  "decision_ids": [],
+  "items": [],
   "ok": true,
   "result": {
-    "files": 7,
-    "root": "py-small"
+    "by_status": {},
+    "count": 0,
+    "titles": []
   },
-  "tool": "summarize_decisions",
-  "truncated": false
+  "summary": "",
+  "titles": [],
+  "tool": "summarize_decisions"
 }

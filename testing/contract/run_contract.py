@@ -15,6 +15,8 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT / "testing"))
+from plugin_harness import link_tools_lib  # noqa: E402
 SCHEMAS_DIR = Path(__file__).resolve().parent / "schemas"
 FIXTURES_DIR = REPO_ROOT / "testing" / "fixtures"
 INPUTS_DIR = FIXTURES_DIR / "inputs"
@@ -99,6 +101,7 @@ def prepare_home(plugin_name: str, home: Path) -> Path | None:
     if dest.exists() or dest.is_symlink():
         dest.unlink()
     dest.symlink_to(src, target_is_directory=True)
+    link_tools_lib(home)
     return dest
 
 

@@ -6,6 +6,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[3]
 TOOLS = REPO / "tools" / "think-before-write"
 FIXTURES = REPO / "testing" / "fixtures"
+sys.path.insert(0, str(REPO / "tools" / "_lib"))
 sys.path.insert(0, str(TOOLS))
 import think_before_write as mod  # noqa: E402
 

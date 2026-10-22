@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "cache_manager",
-    "search_paths": ["tools/cache-manager", "plugins/cache-manager"],
+    "search_paths": [
+      "tools/cache-manager",
+      "plugins/cache-manager"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,34 +16,66 @@
     "l5": false
   },
   "golden": {
-    "fixtures": ["empty", "py-small"],
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
     "queries": {
-      "cache_get": { "key": "missing-key", "namespace": "golden" },
+      "cache_get": {
+        "key": "missing-key",
+        "namespace": "golden"
+      },
       "cache_put": {
         "key": "greeting",
-        "value": { "hello": "world" },
+        "value": {
+          "hello": "world"
+        },
         "namespace": "golden",
         "ttl": 3600
       },
-      "cache_stats": { "namespace": "golden" },
-      "cache_prune": { "namespace": "golden", "max_bytes": 1000000 }
+      "cache_stats": {
+        "namespace": "golden"
+      },
+      "cache_prune": {
+        "namespace": "golden",
+        "max_bytes": 1000000
+      }
     }
   },
-  "perf": { "enabled": false },
+  "perf": {
+    "enabled": false
+  },
   "l4": {
     "smoke_args": {
       "root_path": "FIXTURE:empty",
       "key": "l4-key",
-      "value": { "ok": true },
+      "value": {
+        "ok": true
+      },
       "namespace": "l4",
       "ttl": 60,
       "max_bytes": 0
     },
     "expect_keys": {
-      "cache_get": ["hit", "key", "value"],
-      "cache_put": ["stored", "key", "size_bytes"],
-      "cache_stats": ["entries", "bytes", "hit_rate"],
-      "cache_prune": ["removed", "remaining"]
+      "cache_get": [
+        "hit",
+        "key",
+        "value"
+      ],
+      "cache_put": [
+        "stored",
+        "key",
+        "size_bytes"
+      ],
+      "cache_stats": [
+        "entries",
+        "bytes",
+        "hit_rate"
+      ],
+      "cache_prune": [
+        "removed",
+        "remaining"
+      ]
     },
     "invalid_tool": "cache_get",
     "invalid_args": {},
@@ -50,7 +85,22 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["cache-manager"],
-    "tool_names": ["cache_get", "cache_put", "cache_stats", "cache_prune"]
+    "treatment_plugins": [
+      "cache-manager"
+    ],
+    "tool_names": [
+      "cache_get",
+      "cache_put",
+      "cache_stats",
+      "cache_prune"
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
   }
 }

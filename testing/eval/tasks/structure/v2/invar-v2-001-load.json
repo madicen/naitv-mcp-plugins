@@ -1,0 +1,20 @@
+{
+  "id": "invar-v2-001-load",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker load_invariants, report path README.md and content py-small fixture.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md",
+      "py-small fixture"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

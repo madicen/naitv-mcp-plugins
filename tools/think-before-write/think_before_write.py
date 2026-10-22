@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""think-before-write: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""think-before-write: checklist grounded in real paths/identifiers."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
+_LIB = Path(__file__).resolve().parents[1] / "_lib"
+if _LIB.is_dir() and str(_LIB) not in sys.path:
+    sys.path.insert(0, str(_LIB))
+import scanutil as su  # noqa: E402
+
 MAX_INPUT_BYTES = 1_000_000
-MAX_FILES = 500
-MAX_FILE_BYTES = 64_000
-SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
 TOOLS = {
-        'plan_checklist',
-        'check_assumptions',
-        'render_pre_write_prompt'
+    "plan_checklist",
+    "check_assumptions",
+    "render_pre_write_prompt",
 }
 
 
@@ -27,58 +27,28 @@ def _error(message: str, *, code: int = 1) -> None:
 
 
 def validate_root_path(root: str) -> Path:
-    raw = Path(root)
-    if ".." in raw.parts:
-        _error(f"root_path must not contain '..': {root}")
-    path = raw.expanduser()
-    path = path.resolve() if path.is_absolute() else (Path.cwd() / path).resolve()
-    if not path.exists():
-        _error(f"root_path does not exist: {root}")
-    if not path.is_dir():
-        _error(f"root_path is not a directory: {root}")
-    return path
+    return su.validate_root_path(root, error=_error)
 
 
 def iter_files(root: Path, depth: int = 3) -> list[Path]:
-    out: list[Path] = []
-
-    def walk(d: Path, cur: int) -> None:
-        if len(out) >= MAX_FILES:
-            return
-        try:
-            entries = sorted(os.scandir(d), key=lambda e: e.name)
-        except OSError:
-            return
-        for ent in entries:
-            if len(out) >= MAX_FILES:
-                return
-            name = ent.name
-            if ent.is_dir(follow_symlinks=False):
-                if name in SKIP or name.startswith("."):
-                    continue
-                if cur + 1 > depth:
-                    continue
-                walk(Path(ent.path), cur + 1)
-            elif ent.is_file(follow_symlinks=False):
-                out.append(Path(ent.path))
-
-    walk(root, 0)
-    return out
+    return su.iter_files(root, depth)
 
 
-def rel(path: Path, root: Path) -> str:
-    try:
-        return str(path.relative_to(root)).replace("\\", "/")
-    except ValueError:
-        return path.name
-
-
-def read_text(path: Path) -> str:
-    try:
-        data = path.read_bytes()[:MAX_FILE_BYTES]
-    except OSError:
-        return ""
-    return data.decode("utf-8", errors="replace")
+def _inventory(root: Path, files: list[Path], query: str, limit: int) -> tuple[list[str], list[str]]:
+    paths: list[str] = []
+    names: list[str] = []
+    for f in files:
+        r = su.rel(f, root)
+        text = su.read_text(f)
+        idents = su.extract_identifiers(text, f.suffix)
+        if query and not su.match_query(query, r, text, idents):
+            continue
+        paths.append(r)
+        names.extend(idents)
+        if len(paths) >= limit:
+            break
+    names = list(dict.fromkeys(names))[:limit]
+    return paths, names
 
 
 def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
@@ -86,68 +56,53 @@ def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
     query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
     path_s = str(data.get("path") or data.get("file") or "README.md").strip()
     limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
+    files = su.iter_files(root, depth)
+    paths, names = _inventory(root, files, query, limit)
 
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
-                continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
-            if len(items) >= limit:
-                break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+    if tool in ("plan_checklist", "render_pre_write_prompt"):
+        lines = [
+            f"# {tool}",
+            f"# root={root.name}",
+            f"# query={query or path_s}",
+        ]
+        if paths:
+            lines.append("# paths=" + ",".join(paths[:10]))
+        if names:
+            lines.append("# names=" + ",".join(names[:10]))
+        lines.append("- [ ] confirm target paths exist")
+        if names:
+            lines.append(f"- [ ] touch only: {', '.join(names[:5])}")
+        body = "\n".join(lines) + "\n"
+        return {
+            "generated": body,
+            "ok": True,
+            "items": [{"text": body, "paths": paths, "names": names}],
+            "tool": tool,
+        }
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
-
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
-
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
-
-    if tool.startswith(("load_", "parse_", "fetch_")):
-        target = root / path_s
-        if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
+    if tool == "check_assumptions":
+        violations: list[dict[str, Any]] = []
+        if query and not paths:
+            violations.append(
+                {
+                    "path": path_s,
+                    "rule": "no_match",
+                    "message": f"no files/identifiers matched {query!r}",
                 }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
+            )
+        target = root / path_s
+        if path_s and not target.exists():
+            violations.append(
+                {"path": path_s, "rule": "missing_path", "message": "path does not exist"}
+            )
+        return {
+            "ok": len(violations) == 0,
+            "violations": violations,
+            "count": len(violations),
+            "tool": tool,
+        }
 
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "think-before-write"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
-
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}}
 
 
 def main() -> None:

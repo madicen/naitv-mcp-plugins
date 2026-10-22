@@ -1,0 +1,20 @@
+{
+  "id": "think-v2-001-checklist",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write plan_checklist, report generated containing plan_checklist and root=py-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "plan_checklist",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

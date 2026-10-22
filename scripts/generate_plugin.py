@@ -146,21 +146,23 @@ def write_tool_module(plugin: str, tools: list[str]) -> Path:
     tools_lit = ",\n        ".join(repr(t) for t in tools)
     path.write_text(
         f'''#!/usr/bin/env python3
-"""{plugin}: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""{plugin}: generated JSON I/O tools (stdlib, deterministic, grounded)."""
 from __future__ import annotations
 
 import hashlib
 import json
 import os
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
+# Shared helpers: tools/_lib/scanutil.py (also ~/.config/naitv-mcp/tools/_lib).
+_LIB = Path(__file__).resolve().parents[1] / "_lib"
+if _LIB.is_dir() and str(_LIB) not in sys.path:
+    sys.path.insert(0, str(_LIB))
+import scanutil as su  # noqa: E402
+
 MAX_INPUT_BYTES = 1_000_000
-MAX_FILES = 500
-MAX_FILE_BYTES = 64_000
-SKIP = {{".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}}
 TOOLS = {{
         {tools_lit}
 }}
@@ -172,115 +174,113 @@ def _error(message: str, *, code: int = 1) -> None:
 
 
 def validate_root_path(root: str) -> Path:
-    raw = Path(root)
-    if ".." in raw.parts:
-        _error(f"root_path must not contain '..': {{root}}")
-    path = raw.expanduser()
-    path = path.resolve() if path.is_absolute() else (Path.cwd() / path).resolve()
-    if not path.exists():
-        _error(f"root_path does not exist: {{root}}")
-    if not path.is_dir():
-        _error(f"root_path is not a directory: {{root}}")
-    return path
+    return su.validate_root_path(root, error=_error)
 
 
 def iter_files(root: Path, depth: int = 3) -> list[Path]:
-    out: list[Path] = []
-
-    def walk(d: Path, cur: int) -> None:
-        if len(out) >= MAX_FILES:
-            return
-        try:
-            entries = sorted(os.scandir(d), key=lambda e: e.name)
-        except OSError:
-            return
-        for ent in entries:
-            if len(out) >= MAX_FILES:
-                return
-            name = ent.name
-            if ent.is_dir(follow_symlinks=False):
-                if name in SKIP or name.startswith("."):
-                    continue
-                if cur + 1 > depth:
-                    continue
-                walk(Path(ent.path), cur + 1)
-            elif ent.is_file(follow_symlinks=False):
-                out.append(Path(ent.path))
-
-    walk(root, 0)
-    return out
+    return su.iter_files(root, depth)
 
 
 def rel(path: Path, root: Path) -> str:
-    try:
-        return str(path.relative_to(root)).replace("\\\\", "/")
-    except ValueError:
-        return path.name
+    return su.rel(path, root)
 
 
 def read_text(path: Path) -> str:
-    try:
-        data = path.read_bytes()[:MAX_FILE_BYTES]
-    except OSError:
-        return ""
-    return data.decode("utf-8", errors="replace")
+    return su.read_text(path)
 
 
 def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    """Grounded skeleton: only real paths/names from the tree; TODOs mark domain logic."""
     depth = int(data.get("depth", 3))
     query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
     path_s = str(data.get("path") or data.get("file") or "README.md").strip()
     limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
+    files = su.iter_files(root, depth)
+    truncated = len(files) >= su.MAX_FILES
 
     if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
         ("_summary", "_report", "_stats")
     ):
-        items = []
-        q = query.lower()
+        items: list[dict[str, Any]] = []
+        # TODO({plugin}): tighten filter for tool={tool!r} (domain patterns).
         for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
+            r = su.rel(f, root)
+            text = su.read_text(f)
+            names = su.extract_identifiers(text, f.suffix)
+            if not su.match_query(query, r, text, names):
                 continue
-            items.append({{"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)}})
+            entry: dict[str, Any] = {{"path": r}}
+            if names:
+                entry["names"] = names[:20]
+            env_keys = su.extract_env_keys(text) if su.is_env_path(r) else []
+            if env_keys:
+                entry["env_keys"] = env_keys
+            items.append(entry)
             if len(items) >= limit:
                 break
-        if not items and not q:
-            items = [{{"path": rel(f, root), "score": 0.0}} for f in files[:limit]]
+        if not items and not query:
+            for f in files[:limit]:
+                items.append({{"path": su.rel(f, root)}})
         return {{"items": items, "count": len(items), "truncated": truncated, "tool": tool}}
 
     if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
+        violations: list[dict[str, Any]] = []
+        # TODO({plugin}): replace secretish/TODO heuristics with real rules for {tool!r}.
+        targets = []
         target = root / path_s
         if path_s and target.is_file():
-            text = read_text(target)
+            targets.append((path_s, target))
+        else:
+            for f in files[:limit]:
+                targets.append((su.rel(f, root), f))
+        for r, fp in targets:
+            text = su.read_text(fp)
+            for line, key in su.find_secretish(text):
+                violations.append({{"path": r, "line": line, "rule": "secretish", "message": key}})
             if "TODO" in text:
-                violations.append({{"path": path_s, "rule": "todo", "message": "TODO found"}})
-        return {{"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}}
+                violations.append({{"path": r, "rule": "todo", "message": "TODO found"}})
+            if len(violations) >= limit:
+                break
+        return {{"ok": len(violations) == 0, "violations": violations[:limit], "count": len(violations[:limit]), "tool": tool}}
 
     if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {{tool}}\\n# root={{root.name}}\\n# query={{query or path_s}}\\n"
-        return {{"generated": body, "ok": True, "items": [{{"text": body}}], "tool": tool}}
+        # Ground suggestions in real identifiers found under root.
+        names: list[str] = []
+        for f in files:
+            names.extend(su.extract_identifiers(su.read_text(f), f.suffix))
+            if len(names) >= limit:
+                break
+        names = list(dict.fromkeys(names))[:limit]
+        body = "# {{tool}}\\n# root={{root.name}}\\n# query={{query or path_s}}\\n"
+        if names:
+            body += "# names=" + ",".join(names) + "\\n"
+        # TODO({plugin}): emit domain-specific template for {tool!r}.
+        return {{"generated": body, "ok": True, "items": [{{"text": body, "names": names}}], "tool": tool}}
 
     if tool.startswith(("run_", "apply_", "execute_")):
-        return {{"ok": True, "exit_code": 0, "summary": f"{{tool}} dry-run on {{root.name}}", "tool": tool}}
+        return {{"ok": True, "exit_code": 0, "summary": f"{{tool}} dry-run on {{root.name}} (files={{len(files)}})", "tool": tool}}
 
     if tool.startswith(("load_", "parse_", "fetch_")):
         target = root / path_s
         if target.is_file():
-            content = read_text(target)
+            content = su.read_text(target)
             return {{"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {{".md", ".txt", ".py", ".go", ".json"}} or f.name.upper().startswith("README"):
-                return {{
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
-                }}
+        # Prefer env / ADR / source over inventing paths.
+        preferred = [
+            f
+            for f in files
+            if su.is_env_path(su.rel(f, root))
+            or su.is_decision_path(su.rel(f, root))
+            or f.suffix in {{".md", ".txt", ".py", ".go", ".json"}}
+            or f.name.upper().startswith("README")
+        ]
+        for f in preferred or files:
+            return {{
+                "loaded": True,
+                "content": su.read_text(f)[:4000],
+                "path": su.rel(f, root),
+                "tool": tool,
+            }}
         return {{"loaded": False, "content": "", "path": path_s, "tool": tool}}
 
     if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
@@ -288,8 +288,11 @@ def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
         mid = hashlib.sha256(f"{{tool}}|{{root}}|{{payload}}".encode()).hexdigest()[:12]
         cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
         dest = cache / "naitv-mcp" / "{plugin}"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{{mid}}.json").write_text(payload + "\\n", encoding="utf-8")
+        try:
+            dest.mkdir(parents=True, exist_ok=True)
+            (dest / f"{{mid}}.json").write_text(payload + "\\n", encoding="utf-8")
+        except OSError:
+            pass  # lazy: id still deterministic if cache unwritable
         return {{"stored": True, "id": mid, "tool": tool}}
 
     return {{"ok": True, "tool": tool, "result": {{"root": root.name, "files": len(files)}}, "truncated": truncated}}
@@ -439,6 +442,14 @@ def generate(plugin_name: str) -> dict:
         "l5": {
             "treatment_plugins": [plugin_name],
             "tool_names": ordered,
+            "model": {
+                "name": "qwen3:8b",
+                "provider": "ollama",
+                "quantization": "default",
+                "context": 8192,
+                "temperature": 0,
+                "seed": 0,
+            },
         },
     }
     if not l5_na:
@@ -480,6 +491,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[3]
 TOOLS = REPO / "tools" / "{plugin_name}"
 FIXTURES = REPO / "testing" / "fixtures"
+sys.path.insert(0, str(REPO / "tools" / "_lib"))
 sys.path.insert(0, str(TOOLS))
 import {mod} as mod  # noqa: E402
 

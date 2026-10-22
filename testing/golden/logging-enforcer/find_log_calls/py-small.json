@@ -1,6 +1,10 @@
 {
-  "count": 1,
+  "count": 2,
   "items": [
+    {
+      "path": "pkg/a/b/deep.py",
+      "score": 0.5
+    },
     {
       "path": "pkg/greeter.py",
       "score": 0.5

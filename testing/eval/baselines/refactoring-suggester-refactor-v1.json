@@ -1,0 +1,44 @@
+{
+  "plugin": "refactoring-suggester",
+  "suite": "refactor",
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 66,
+    "success_rate": 0.5454545454545454,
+    "control_n": 36,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 1.0,
+    "mean_wall_seconds": 15.176118194485422,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 66,
+    "success_rate": 0.5454545454545454,
+    "control_n": 36,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 1.0,
+    "mean_wall_seconds": 6.675753261421271,
+    "total_tool_calls": 0
+  },
+  "verdict": {
+    "baseline_success_rate": 0.5454545454545454,
+    "treatment_success_rate": 0.5454545454545454,
+    "delta_pp": 0.0,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.0,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": false,
+    "l5": "measured-no-uplift"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/refactor-v1-refactoring-suggester-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/refactor-v1-refactoring-suggester-treatment-latest.json"
+}

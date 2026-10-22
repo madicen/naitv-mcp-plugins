@@ -1,0 +1,20 @@
+{
+  "id": "patter-v2-007-hello-count",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using pattern-recognizer find_pattern_instances with query hello, report count and path pkg/greeter.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "2",
+      "pkg/greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

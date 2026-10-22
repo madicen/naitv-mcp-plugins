@@ -1,0 +1,20 @@
+{
+  "id": "logenf-v2-001-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer find_log_calls, report count 9 and path pkg/greeter.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      "pkg/greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

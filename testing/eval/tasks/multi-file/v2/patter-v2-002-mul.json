@@ -1,0 +1,20 @@
+{
+  "id": "patter-v2-002-mul",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using pattern-recognizer find_pattern_instances with query mul, report name and path.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mul",
+      "pkg/util/math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

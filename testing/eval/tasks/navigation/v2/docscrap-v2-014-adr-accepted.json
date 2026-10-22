@@ -1,0 +1,22 @@
+{
+  "id": "docscrap-v2-014-adr-accepted",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc-scraper extract_sections (and ADR body) on docs/adr/0001-record-architecture.md, report Status Accepted plus Decision and Consequences sections.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Status",
+      "Accepted",
+      "Decision",
+      "Consequences"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ]
+}

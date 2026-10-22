@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/a/b/deep.py",
+      "buried"
+    ]
+  },
+  "id": "ho-mf-001-deep-buried",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "fixture": "py-small",
+  "request": "Where is the buried function defined? Give the relative path."
+}

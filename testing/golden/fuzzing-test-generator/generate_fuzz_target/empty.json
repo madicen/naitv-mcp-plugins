@@ -1,10 +1,8 @@
 {
-  "generated": "# generate_fuzz_target\n# root=empty\n# query=Greeter\n",
-  "items": [
-    {
-      "text": "# generate_fuzz_target\n# root=empty\n# query=Greeter\n"
-    }
-  ],
-  "ok": true,
+  "generated": "# no callable symbols discovered in repo\n",
+  "items": [],
+  "name": "",
+  "ok": false,
+  "path": "",
   "tool": "generate_fuzz_target"
 }

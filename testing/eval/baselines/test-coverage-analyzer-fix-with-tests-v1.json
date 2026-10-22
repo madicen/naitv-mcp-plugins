@@ -1,0 +1,44 @@
+{
+  "plugin": "test-coverage-analyzer",
+  "suite": "fix-with-tests",
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 108,
+    "success_rate": 0.9722222222222222,
+    "control_n": 78,
+    "control_success_rate": 0.9615384615384616,
+    "mean_nonexistent_symbol_rate": 0.6944444444444444,
+    "mean_wall_seconds": 13.037914672482724,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 108,
+    "success_rate": 0.6944444444444444,
+    "control_n": 78,
+    "control_success_rate": 0.9615384615384616,
+    "mean_nonexistent_symbol_rate": 0.9907407407407407,
+    "mean_wall_seconds": 8.616267745402487,
+    "total_tool_calls": 0
+  },
+  "verdict": {
+    "baseline_success_rate": 0.9722222222222222,
+    "treatment_success_rate": 0.6944444444444444,
+    "delta_pp": -27.77777777777778,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.2962962962962963,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": false,
+    "l5": "measured-no-uplift"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v1-test-coverage-analyzer-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v1-test-coverage-analyzer-treatment-latest.json"
+}

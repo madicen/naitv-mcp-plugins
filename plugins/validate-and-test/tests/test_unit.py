@@ -16,10 +16,47 @@ class _FakeStdin:
 def test_handle_empty() -> None:
     out = mod.handle('detect_build_system', FIXTURES / "empty", {"query": "x", "depth": 2})
     assert isinstance(out, dict)
+    assert out["ok"] is True
+    assert out["build_system"] == "unknown"
 
 def test_handle_py_small() -> None:
     out = mod.handle('detect_build_system', FIXTURES / "py-small", {"query": "Greeter", "depth": 3})
     assert isinstance(out, dict)
+    assert out["ok"] is True
+    assert out["tool"] == "detect_build_system"
+    # py-small has no go.mod/pyproject — unknown is honest
+    assert out["build_system"] in {"unknown", "python", "make", "go", "npm"}
+
+def test_detect_go_mod(tmp_path: Path) -> None:
+    (tmp_path / "go.mod").write_text("module example\n\ngo 1.22\n")
+    out = mod.handle("detect_build_system", tmp_path, {})
+    assert out["build_system"] == "go"
+    assert "go.mod" in out["config_files"]
+    assert any("go test" in c for c in out["commands"])
+
+def test_run_validation_lists_tests(tmp_path: Path) -> None:
+    (tmp_path / "pyproject.toml").write_text("[project]\nname='t'\n")
+    (tmp_path / "test_add.py").write_text("def test_add():\n    assert 1 + 1 == 2\n")
+    out = mod.handle("run_validation", tmp_path, {"depth": 2, "limit": 10})
+    assert out["ok"] is True
+    assert out["exit_code"] == 0
+    assert out["dry_run"] is True
+    assert any(i["path"] == "test_add.py" for i in out["items"])
+    assert "test_add" in out["items"][0]["symbols"]
+
+def test_summarize_failures_from_log() -> None:
+    root = FIXTURES / "empty"
+    log = "ok\nFAIL: test_foo\n--- FAIL: TestBar\n"
+    out = mod.handle("summarize_failures", root, {"log": log, "limit": 10})
+    assert out["count"] >= 2
+    assert out["first_failure"] is not None
+    assert "FAIL" in out["first_failure"]["name"]
+
+def test_summarize_failures_from_file(tmp_path: Path) -> None:
+    (tmp_path / "pytest.log").write_text("PASSED\nFAILED test_x - AssertionError\n")
+    out = mod.handle("summarize_failures", tmp_path, {"depth": 2, "limit": 5})
+    assert out["count"] >= 1
+    assert out["items"][0]["path"] == "pytest.log"
 
 def test_handle_all_branches() -> None:
     root = FIXTURES / "py-small"
@@ -74,6 +111,7 @@ def test_main_all_tools(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureF
         mod.main()
         out = json.loads(capsys.readouterr().out)
         assert isinstance(out, dict)
+        assert out.get("ok") is not None or "exit_code" in out
 
 def test_iter_files() -> None:
     files = mod.iter_files(FIXTURES / "py-small", depth=3)
@@ -90,3 +128,8 @@ def test_main_non_object(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(sys, "stdin", _FakeStdin(b"[]\n"))
     with pytest.raises(SystemExit):
         mod.main()
+
+def test_detect_build_mini() -> None:
+    out = mod.handle("detect_build_system", FIXTURES / "build-mini", {})
+    assert out["build_system"] == "make"
+    assert "Makefile" in out["config_files"]

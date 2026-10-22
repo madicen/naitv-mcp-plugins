@@ -1,0 +1,19 @@
+{
+  "id": "think-v2-007-tool",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write check_assumptions, report tool check_assumptions.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "check_assumptions"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

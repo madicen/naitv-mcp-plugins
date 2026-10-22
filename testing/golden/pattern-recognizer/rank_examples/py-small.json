@@ -1,8 +1,9 @@
 {
+  "count": 0,
+  "items": [],
   "ok": true,
   "result": {
-    "files": 7,
-    "root": "py-small"
+    "examples": []
   },
   "tool": "rank_examples",
   "truncated": false

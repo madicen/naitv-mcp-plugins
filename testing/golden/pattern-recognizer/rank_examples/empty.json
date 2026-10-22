@@ -1,8 +1,9 @@
 {
+  "count": 0,
+  "items": [],
   "ok": true,
   "result": {
-    "files": 1,
-    "root": "empty"
+    "examples": []
   },
   "tool": "rank_examples",
   "truncated": false

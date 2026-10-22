@@ -1,0 +1,21 @@
+{
+  "id": "depgraph-v2-001-nodes",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer build_import_graph, report node_count 6 and nodes pkg.greeter and pkg.util.math.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "6",
+      "pkg.greeter",
+      "pkg.util.math"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}

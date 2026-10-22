@@ -1,8 +1,10 @@
 {
+  "count": 0,
+  "items": [],
   "ok": true,
   "result": {
-    "files": 1,
-    "root": "empty"
+    "min_occurrences": 2,
+    "patterns": []
   },
   "tool": "detect_repeated_patterns",
   "truncated": false

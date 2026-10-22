@@ -1,0 +1,19 @@
+{
+  "id": "think-v2-010-ok",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write check_assumptions, report ok true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

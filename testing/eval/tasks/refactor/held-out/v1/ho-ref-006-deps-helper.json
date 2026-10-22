@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "c"
+    ]
+  },
+  "id": "ho-ref-006-deps-helper",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "deps-mini",
+  "request": "What does mod_c.helper return?"
+}

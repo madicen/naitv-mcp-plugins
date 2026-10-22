@@ -1,6 +1,10 @@
 {
-  "count": 1,
+  "count": 2,
   "modules": [
+    {
+      "fan_in": 1,
+      "module": "testing"
+    },
     {
       "fan_in": 0,
       "module": "pkg/greeter"

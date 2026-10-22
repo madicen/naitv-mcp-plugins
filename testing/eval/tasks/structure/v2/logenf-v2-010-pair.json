@@ -1,0 +1,20 @@
+{
+  "id": "logenf-v2-010-pair",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer logging_summary, report pkg/util/math.py and pkg/a/b/deep.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py",
+      "pkg/a/b/deep.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

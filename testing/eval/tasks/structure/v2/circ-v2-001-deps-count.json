@@ -1,0 +1,20 @@
+{
+  "id": "circ-v2-001-deps-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "Using circular-dependency-detector find_cycles, report count 3 and mod_a.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "3",
+      "mod_a.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

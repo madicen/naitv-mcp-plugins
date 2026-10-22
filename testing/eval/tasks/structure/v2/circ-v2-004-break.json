@@ -1,0 +1,20 @@
+{
+  "id": "circ-v2-004-break",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "Using circular-dependency-detector suggest_break_points, report root=deps-mini and suggest_break_points.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "root=deps-mini",
+      "suggest_break_points"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

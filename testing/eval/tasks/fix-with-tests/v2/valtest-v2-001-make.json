@@ -1,0 +1,20 @@
+{
+  "id": "valtest-v2-001-make",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Using validate-and-test detect_build_system, report build_system make and config_files Makefile.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "make",
+      "Makefile"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

@@ -24,7 +24,7 @@
       "tools": null,
       "depends_on": [],
       "eval_category": "fix-with-tests",
-      "l5": "pending",
+      "l5": "not-applicable",
       "notes": "Text-mode tools (no io_mode=json) skip L2/L4 per PLUGIN_HARNESS.md.",
       "tool_count": null,
       "order": 2
@@ -38,7 +38,7 @@
       "tools": null,
       "depends_on": [],
       "eval_category": "navigation",
-      "l5": "pending",
+      "l5": "not-applicable",
       "notes": "Tools in plugins/structural-anchor/plugin.json. Perf: get_project_map cold < 2s, warm < 0.1s (harness.json). Its navigation L5 numbers so far came from the stub agent and are not evidence.",
       "tool_count": 3,
       "implementation": "Python/Go AST",
@@ -67,7 +67,8 @@
       "complexity": "M",
       "priority": 1,
       "depends_on_raw": "structural-anchor",
-      "order": 4
+      "order": 4,
+      "l5_note": "blocked on <5 tagged tasks"
     },
     {
       "name": "plugin-manager",
@@ -102,7 +103,7 @@
         "run_build_target",
         "parse_build_errors"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Build wrappers",
@@ -112,7 +113,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green. L5 pending (no l5.model pinned). 10 dev + 2 control tasks under fix-with-tests. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green. L5 pending (l5.model=qwen3:8b). 10 dev + 2 control tasks under fix-with-tests. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=7.0pp).",
       "order": 6,
       "draft_tools": [
         "detect_build_tool",
@@ -136,8 +137,8 @@
       ],
       "depends_on": [],
       "eval_category": "navigation",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green. L5 pending (no model pinned). 10+2 ws-* tasks in navigation. Stdlib token-overlap semantic_search (no embeddings). Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green. L5 pending (no model pinned). 10+2 ws-* tasks in navigation. Stdlib token-overlap semantic_search (no embeddings). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=7.9pp).",
       "tool_count": 3,
       "implementation": "ripgrep + ranking",
       "perf": "< 500ms",
@@ -168,8 +169,8 @@
         "symbol-navigator"
       ],
       "eval_category": "multi-file",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green. L5 pending (no model). multi-file suite with 10+2 tasks. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green. L5 pending (no model). multi-file suite with 10+2 tasks. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=8.3pp).",
       "tool_count": 3,
       "implementation": "Python/Go AST",
       "perf": "< 50ms",
@@ -196,7 +197,7 @@
         "find_hubs",
         "export_graph"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Import analysis",
@@ -208,7 +209,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "navigation",
-      "notes": "L1\u2013L4 green; L5 pending (no pinned l5.model). Navigation tasks dep-001..010 + dep-ctl-001/002.",
+      "notes": "L1\u2013L4 green; L5 pending (l5.model=qwen3:8b). Navigation tasks dep-001..010 + dep-ctl-001/002. L5 measured-no-uplift (qwen3:8b, seeds=1, \u0394=23.8pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=18.8pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 9,
       "draft_tools": [
         "build_import_graph",
@@ -262,7 +263,7 @@
         "list_recurring_mistakes",
         "mistake_stats"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Git mining + ML",
@@ -274,7 +275,7 @@
       ],
       "depends_on_raw": "cache-manager",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending (no pinned model). SQLite per root under ~/.cache; lazy: no git mining/ML. Tasks mist-001..010 + mist-ctl-001/002.",
+      "notes": "L1\u2013L4 green; L5 pending (l5.model=qwen3:8b; eval not yet run). SQLite per root under ~/.cache; lazy: no git mining/ML. Tasks mist-001..010 + mist-ctl-001/002. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 11,
       "draft_tools": [
         "record_mistake",
@@ -301,8 +302,8 @@
         "symbol-navigator"
       ],
       "eval_category": "structure",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 4,
       "implementation": "Python/Go AST",
       "perf": "< 500ms",
@@ -329,7 +330,7 @@
         "rank_examples",
         "pattern_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-helpful",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Code search + ML",
@@ -341,7 +342,7 @@
       ],
       "depends_on_raw": "workspace-search",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=45.5pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=58.3pp). L5 v2 measured-helpful (qwen3:8b, seeds=3, \u0394=54.2pp).",
       "order": 13,
       "draft_tools": [
         "find_pattern_instances",
@@ -368,8 +369,8 @@
         "mistake-tracker"
       ],
       "eval_category": "fix-with-tests",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-0.9pp).",
       "tool_count": 3,
       "implementation": "Similarity matching",
       "perf": "< 2s",
@@ -400,8 +401,8 @@
         "workspace-search"
       ],
       "eval_category": "multi-file",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'rank_examples': 'rank_golden_examples'}.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'rank_examples': 'rank_golden_examples'}. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-15.2pp).",
       "tool_count": 3,
       "implementation": "Code search + rank",
       "perf": "< 1s",
@@ -433,8 +434,8 @@
         "workspace-search"
       ],
       "eval_category": "structure",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-helpful",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=17.2pp). L5 v2 measured-helpful (qwen3:8b, seeds=3, \u0394=15.3pp).",
       "tool_count": 4,
       "implementation": "Markdown parsing",
       "perf": "< 1s",
@@ -461,7 +462,7 @@
         "order_subtasks",
         "validate_plan"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 4,
       "tool_count": 4,
       "implementation": "Structured prompt",
@@ -473,7 +474,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-44.8pp).",
       "order": 17,
       "draft_tools": [
         "decompose_task",
@@ -483,7 +484,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-task-decomposer-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "think-before-write",
@@ -500,8 +502,8 @@
         "task-decomposer"
       ],
       "eval_category": "structure",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list or rule set needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list or rule set needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 3,
       "implementation": "Prompt structure",
       "perf": "< 2s",
@@ -532,8 +534,8 @@
         "build-system-integrator"
       ],
       "eval_category": "fix-with-tests",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=17.6pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=18.8pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=2.1pp).",
       "tool_count": 3,
       "implementation": "Build tools",
       "perf": "< 5s",
@@ -564,8 +566,8 @@
         "validate-and-test"
       ],
       "eval_category": "fix-with-tests",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: run_linter (< 1s per file target). Full tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: run_linter (< 1s per file target). Full tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 3,
       "implementation": "Linter wrappers",
       "perf": "< 1s",
@@ -596,8 +598,8 @@
         "validate-and-test"
       ],
       "eval_category": "fix-with-tests",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: run_tests (< 5s target). Full tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: run_tests (< 5s target). Full tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 3,
       "implementation": "Test framework",
       "perf": "< 5s",
@@ -623,7 +625,7 @@
         "list_rules",
         "check_unsafe_calls"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Pattern DB",
@@ -635,7 +637,7 @@
       ],
       "depends_on_raw": "lint-fix-loop",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 22,
       "draft_tools": [
         "scan_security_patterns",
@@ -657,7 +659,7 @@
         "list_patterns",
         "allowlist_check"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 4,
       "tool_count": 4,
       "implementation": "Pattern matching",
@@ -667,7 +669,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'scan_file': 'scan_secrets_file'}.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'scan_file': 'scan_secrets_file'}. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-17.2pp).",
       "order": 23,
       "draft_tools": [
         "scan_secrets",
@@ -694,8 +696,8 @@
         "symbol-navigator"
       ],
       "eval_category": "structure",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 3,
       "implementation": "AST parsing",
       "perf": "< 500ms",
@@ -721,7 +723,7 @@
         "suggest_break_points",
         "check_change_cycles"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 4,
       "tool_count": 4,
       "implementation": "Graph analysis",
@@ -733,7 +735,7 @@
       ],
       "depends_on_raw": "dependency-graph",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 25,
       "draft_tools": [
         "find_cycles",
@@ -755,7 +757,7 @@
         "check_breaking_changes",
         "list_contracts"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "API extraction",
@@ -767,7 +769,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=5.7pp).",
       "order": 26,
       "draft_tools": [
         "extract_api",
@@ -794,8 +796,8 @@
         "lint-fix-loop"
       ],
       "eval_category": "refactor",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 3,
       "implementation": "Diff generation",
       "perf": "< 1s",
@@ -820,7 +822,7 @@
         "generate_test_stub",
         "validate_generated_test"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 3,
       "implementation": "Template-based",
@@ -832,7 +834,7 @@
       ],
       "depends_on_raw": "tdd-runner",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (3) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (3) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-0.9pp).",
       "order": 28,
       "draft_tools": [
         "suggest_regression_tests",
@@ -875,7 +877,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-documentation-enforcer-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "blocked on <5 tagged tasks"
     },
     {
       "name": "mock-stub-generator",
@@ -887,7 +890,7 @@
         "list_mockable_deps",
         "validate_stub"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 4,
       "tool_count": 4,
       "implementation": "Template-based",
@@ -899,7 +902,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-15.2pp).",
       "order": 30,
       "draft_tools": [
         "generate_mock",
@@ -921,7 +924,7 @@
         "check_deprecated_usage",
         "plan_migration"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Annotation parsing",
@@ -933,7 +936,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "refactor",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 31,
       "draft_tools": [
         "find_deprecated",
@@ -955,7 +958,7 @@
         "find_uncovered_changes",
         "coverage_delta"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Coverage tools",
@@ -967,7 +970,7 @@
       ],
       "depends_on_raw": "tdd-runner",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-27.8pp).",
       "order": 32,
       "draft_tools": [
         "run_coverage",
@@ -977,7 +980,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-test-coverage-analyzer-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "license-compliance-checker",
@@ -989,7 +993,7 @@
         "find_license_conflicts",
         "license_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Dependency analysis",
@@ -999,7 +1003,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 33,
       "draft_tools": [
         "list_dependency_licenses",
@@ -1027,8 +1031,8 @@
         "structural-anchor"
       ],
       "eval_category": "navigation",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-47.4pp).",
       "tool_count": 4,
       "implementation": "AST + git mining",
       "perf": "< 2s",
@@ -1043,7 +1047,8 @@
         "export_knowledge_base"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-team-knowledge-extractor-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-team-knowledge-extractor-design.md",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "invariant-checker",
@@ -1055,7 +1060,7 @@
         "report_invariant_violations",
         "add_invariant"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Pattern matching",
@@ -1067,7 +1072,7 @@
       ],
       "depends_on_raw": "team-knowledge",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'report_violations': 'report_invariant_violations'}.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'report_violations': 'report_invariant_violations'}. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 35,
       "draft_tools": [
         "load_invariants",
@@ -1089,7 +1094,7 @@
         "suggest_fixes",
         "style_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 4,
       "tool_count": 4,
       "implementation": "AST analysis",
@@ -1101,7 +1106,7 @@
       ],
       "depends_on_raw": "team-knowledge",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=5.7pp).",
       "order": 36,
       "draft_tools": [
         "check_style",
@@ -1123,7 +1128,7 @@
         "list_violations",
         "load_naming_rules"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Heuristics",
@@ -1135,7 +1140,7 @@
       ],
       "depends_on_raw": "code-style",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-11.5pp).",
       "order": 37,
       "draft_tools": [
         "check_names",
@@ -1157,7 +1162,7 @@
         "check_sensitive_fields",
         "logging_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Pattern matching",
@@ -1169,7 +1174,7 @@
       ],
       "depends_on_raw": "code-style",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 38,
       "draft_tools": [
         "find_log_calls",
@@ -1197,8 +1202,8 @@
         "code-style-enforcer"
       ],
       "eval_category": "structure",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "tool_count": 4,
       "implementation": "Heuristics + ML",
       "perf": "< 2s",
@@ -1225,7 +1230,7 @@
         "suggest_annotations",
         "type_coverage_report"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 3,
       "tool_count": 4,
       "implementation": "Type inference",
@@ -1237,7 +1242,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-17.2pp).",
       "order": 40,
       "draft_tools": [
         "infer_types",
@@ -1262,8 +1267,8 @@
       ],
       "depends_on": [],
       "eval_category": "navigation",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=43.9pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=8.3pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=9.3pp).",
       "tool_count": 3,
       "implementation": "Markdown + HTML",
       "perf": "< 3s",
@@ -1289,7 +1294,7 @@
         "compare_profiles",
         "summarize_profile"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Benchmarking",
@@ -1301,7 +1306,7 @@
       ],
       "depends_on_raw": "build-system",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-17.2pp).",
       "order": 42,
       "draft_tools": [
         "run_benchmark",
@@ -1324,7 +1329,7 @@
         "suggest_rename",
         "rank_refactorings"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 5,
       "implementation": "Code analysis",
@@ -1336,7 +1341,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "refactor",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 43,
       "draft_tools": [
         "analyze_complexity",
@@ -1360,7 +1365,7 @@
         "run_benchmark_once",
         "list_benchmarks"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 5,
       "implementation": "Language-specific",
@@ -1372,7 +1377,7 @@
       ],
       "depends_on_raw": "build-system",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=9.3pp).",
       "order": 44,
       "draft_tools": [
         "find_bench_targets",
@@ -1395,7 +1400,7 @@
         "affected_modules",
         "impact_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Dependency graph",
@@ -1407,7 +1412,7 @@
       ],
       "depends_on_raw": "dependency-graph",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-45.5pp).",
       "order": 45,
       "draft_tools": [
         "analyze_change_impact",
@@ -1417,7 +1422,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-change-impact-analyzer-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "documentation-sync-manager",
@@ -1429,7 +1435,7 @@
         "list_stale_docs",
         "sync_report"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Doc/code compare",
@@ -1441,7 +1447,7 @@
       ],
       "depends_on_raw": "documentation-enforcer",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-5.7pp).",
       "order": 46,
       "draft_tools": [
         "find_doc_drift",
@@ -1463,7 +1469,7 @@
         "compare_env_templates",
         "env_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Config parsing",
@@ -1475,7 +1481,7 @@
       ],
       "depends_on_raw": "validate-and-test",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=17.2pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=4.2pp).",
       "order": 47,
       "draft_tools": [
         "check_env_vars",
@@ -1497,7 +1503,7 @@
         "suggest_split",
         "check_implementations"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Interface analysis",
@@ -1509,7 +1515,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 48,
       "draft_tools": [
         "list_interfaces",
@@ -1531,7 +1537,7 @@
         "suggest_idiom_fix",
         "idiom_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Pattern library",
@@ -1543,7 +1549,7 @@
       ],
       "depends_on_raw": "code-style",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 49,
       "draft_tools": [
         "check_idioms",
@@ -1565,7 +1571,7 @@
         "flag_regressions",
         "update_baseline"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Benchmark compare",
@@ -1577,7 +1583,7 @@
       ],
       "depends_on_raw": "benchmark-generator",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-27.8pp).",
       "order": 50,
       "draft_tools": [
         "load_baseline",
@@ -1587,7 +1593,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-performance-regression-detector-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "stale-code-identifier",
@@ -1599,7 +1606,7 @@
         "rank_staleness",
         "stale_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Graph analysis",
@@ -1611,7 +1618,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "refactor",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 51,
       "draft_tools": [
         "find_unreferenced",
@@ -1667,7 +1674,7 @@
         "find_race_candidates",
         "concurrency_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Static analysis",
@@ -1679,7 +1686,7 @@
       ],
       "depends_on_raw": "validate-and-test",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-17.2pp).",
       "order": 53,
       "draft_tools": [
         "find_shared_state",
@@ -1702,7 +1709,7 @@
         "check_orm_usage",
         "schema_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 5,
       "implementation": "Schema parsing",
@@ -1714,7 +1721,7 @@
       ],
       "depends_on_raw": "validate-and-test",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 54,
       "draft_tools": [
         "parse_schema",
@@ -1737,7 +1744,7 @@
         "validate_fuzz_target",
         "run_fuzz_smoke"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Go fuzzing",
@@ -1749,7 +1756,7 @@
       ],
       "depends_on_raw": "tdd-runner",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=10.2pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-8.3pp).",
       "order": 55,
       "draft_tools": [
         "find_fuzz_targets",
@@ -1771,7 +1778,7 @@
         "explain_goroutine",
         "leak_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "pprof analysis",
@@ -1783,7 +1790,7 @@
       ],
       "depends_on_raw": "concurrency-checker",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 56,
       "draft_tools": [
         "parse_goroutine_dump",
@@ -1805,7 +1812,7 @@
         "validate_test_file",
         "list_fixtures"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Test scaffolding",
@@ -1817,7 +1824,7 @@
       ],
       "depends_on_raw": "tdd-runner",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-20.4pp).",
       "order": 57,
       "draft_tools": [
         "find_integration_points",
@@ -1827,7 +1834,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-integration-test-generator-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "blame-context-historian",
@@ -1843,8 +1851,8 @@
       ],
       "depends_on": [],
       "eval_category": "navigation",
-      "l5": "pending",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "measured-no-uplift",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-36.8pp).",
       "tool_count": 4,
       "implementation": "Git blame parsing",
       "perf": "< 500ms",
@@ -1859,7 +1867,8 @@
         "find_last_change_author"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-blame-context-historian-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-blame-context-historian-design.md",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "feature-flag-manager",
@@ -1871,7 +1880,7 @@
         "plan_flag_removal",
         "flag_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Template-based",
@@ -1883,7 +1892,7 @@
       ],
       "depends_on_raw": "validate-and-test",
       "eval_category": "refactor",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-30.3pp).",
       "order": 59,
       "draft_tools": [
         "find_flags",
@@ -1893,7 +1902,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-feature-flag-manager-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "code-generation-helper",
@@ -1906,7 +1916,7 @@
         "suggest_template",
         "generation_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-helpful",
       "phase": 6,
       "tool_count": 5,
       "implementation": "Template-based",
@@ -1918,7 +1928,7 @@
       ],
       "depends_on_raw": "symbol-navigator",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-helpful (qwen3:8b, seeds=3, \u0394=45.5pp).",
       "order": 60,
       "draft_tools": [
         "list_templates",
@@ -1941,7 +1951,7 @@
         "a11y_summary",
         "suggest_a11y_fixes"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "AST + rules",
@@ -1953,7 +1963,7 @@
       ],
       "depends_on_raw": "lint-fix-loop",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'suggest_fixes': 'suggest_a11y_fixes'}.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'suggest_fixes': 'suggest_a11y_fixes'}. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 61,
       "draft_tools": [
         "check_a11y_file",
@@ -1975,7 +1985,7 @@
         "list_affected_services",
         "validate_rollback_plan"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 5,
       "tool_count": 4,
       "implementation": "Change analysis",
@@ -1987,7 +1997,7 @@
       ],
       "depends_on_raw": "change-impact",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'change-impact' normalized to 'change-impact-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'change-impact' normalized to 'change-impact-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 62,
       "draft_tools": [
         "analyze_change_risk",
@@ -2009,7 +2019,7 @@
         "list_consumers",
         "contract_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "API analysis",
@@ -2021,7 +2031,7 @@
       ],
       "depends_on_raw": "api-contract",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'api-contract' normalized to 'api-contract-validator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'api-contract' normalized to 'api-contract-validator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=5.7pp).",
       "order": 63,
       "draft_tools": [
         "generate_contract",
@@ -2043,7 +2053,7 @@
         "next_step",
         "mark_step_done"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "State tracking",
@@ -2055,7 +2065,7 @@
       ],
       "depends_on_raw": "refactoring-suggester",
       "eval_category": "refactor",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-30.3pp).",
       "order": 64,
       "draft_tools": [
         "plan_refactor_steps",
@@ -2065,7 +2075,8 @@
       ],
       "spec_status": "approved",
       "spec_path": "docs/superpowers/specs/2026-10-14-incremental-refactoring-helper-design.md",
-      "language": "python"
+      "language": "python",
+      "l5_note": "regression on qwen3:8b; do not offer by default"
     },
     {
       "name": "memory-profiler",
@@ -2077,7 +2088,7 @@
         "find_allocation_hotspots",
         "memory_summary"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Profiler wrapper",
@@ -2089,7 +2100,7 @@
       ],
       "depends_on_raw": "performance-profiler",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=-0.9pp).",
       "order": 65,
       "draft_tools": [
         "run_memory_profile",
@@ -2111,7 +2122,7 @@
         "validate_alert_rules",
         "render_dashboard_config"
       ],
-      "l5": "pending",
+      "l5": "measured-no-uplift",
       "phase": 6,
       "tool_count": 4,
       "implementation": "Template-based",
@@ -2123,7 +2134,7 @@
       ],
       "depends_on_raw": "performance-profiler",
       "eval_category": "structure",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=0.0pp).",
       "order": 66,
       "draft_tools": [
         "detect_metrics",

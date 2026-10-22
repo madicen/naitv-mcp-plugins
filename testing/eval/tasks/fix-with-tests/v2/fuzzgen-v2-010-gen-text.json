@@ -1,0 +1,20 @@
+{
+  "id": "fuzzgen-v2-010-gen-text",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using fuzzing-test-generator generate_fuzz_target, report generated text mentions buried(fuzzed_input).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "buried",
+      "fuzzed_input"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

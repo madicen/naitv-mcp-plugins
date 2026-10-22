@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/main.go"
+    ]
+  },
+  "id": "ho-fix-003-fail-file",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "fixture": "build-mini",
+  "request": "Which file path appears in the fail target error line?"
+}

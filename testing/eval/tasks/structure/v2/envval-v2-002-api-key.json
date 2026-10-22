@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-002-api-key",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator parse_env_files, report that keys include API_KEY and LOG_LEVEL.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "API_KEY",
+      "LOG_LEVEL"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

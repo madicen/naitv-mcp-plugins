@@ -1,10 +1,16 @@
 {
-  "edge_count": 0,
-  "edges": [],
+  "edge_count": 1,
+  "edges": [
+    {
+      "from": "pkg/greeter",
+      "to": "testing"
+    }
+  ],
   "language": "go",
-  "node_count": 1,
+  "node_count": 2,
   "nodes": [
-    "pkg/greeter"
+    "pkg/greeter",
+    "testing"
   ],
   "skipped": [],
   "truncated": false

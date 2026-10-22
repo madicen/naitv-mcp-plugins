@@ -1,0 +1,20 @@
+{
+  "id": "codegen-v2-006-suggest",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper suggest_template with query add, report suggest_template and query=add.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "suggest_template",
+      "query=add"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

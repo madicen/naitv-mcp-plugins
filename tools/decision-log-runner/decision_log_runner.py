@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""decision-log-runner: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""decision-log-runner: parse ADR/decision markdown (JSON I/O, stdlib)."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -15,10 +14,23 @@ MAX_FILES = 500
 MAX_FILE_BYTES = 64_000
 SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
 TOOLS = {
-        'parse_decision_log',
-        'search_decisions',
-        'check_decision_conflicts',
-        'summarize_decisions'
+    "parse_decision_log",
+    "search_decisions",
+    "check_decision_conflicts",
+    "summarize_decisions",
+}
+_HEADING = re.compile(r"^(#{1,3})\s+(.+?)\s*$")
+_STATUS = re.compile(
+    r"(?i)^\s*(?:[-*]\s*)?(?:status|state)\s*[:\|]\s*(.+?)\s*$"
+)
+_STATUS_INLINE = re.compile(r"(?i)\bstatus\s*:\s*([A-Za-z_-]+)")
+_ADR_ID = re.compile(r"(?i)\b(?:ADR[-_ ]?)?(\d{3,5})\b")
+_CONTRADICT = {
+    frozenset({"accepted", "rejected"}),
+    frozenset({"accepted", "deprecated"}),
+    frozenset({"proposed", "rejected"}),
+    frozenset({"approved", "rejected"}),
+    frozenset({"active", "superseded"}),
 }
 
 
@@ -82,73 +94,286 @@ def read_text(path: Path) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+def is_decision_file(rpath: str) -> bool:
+    parts = rpath.replace("\\", "/").split("/")
+    name = parts[-1] if parts else rpath
+    lower = name.lower()
+    parents = [p.lower() for p in parts[:-1]]
+    if lower == "decisions.md":
+        return True
+    if "decisions" in parents and lower.endswith(".md"):
+        return True
+    if lower.startswith("adr") and lower.endswith(".md"):
+        return True
+    # docs/adr/**/*.md or **/adr*/**/*.md
+    if lower.endswith(".md") and any(p == "adr" or p.startswith("adr") for p in parents):
+        return True
+    return False
+
+
+def _clean_title(raw: str) -> str:
+    t = raw.strip()
+    t = re.sub(r"^ADR[-_ ]?\d+[:.\s-]*", "", t, flags=re.I).strip()
+    t = re.sub(r"^Decision[:.\s-]*", "", t, flags=re.I).strip()
+    return t or raw.strip()
+
+
+def _norm_status(raw: str) -> str:
+    s = raw.strip().strip("*_`").split()[0].lower() if raw.strip() else ""
+    s = re.sub(r"[^a-z_-]", "", s)
+    return s
+
+
+def _id_for(path: str, title: str, index: int) -> str:
+    stem = Path(path).stem
+    m = _ADR_ID.search(stem) or _ADR_ID.search(title)
+    if m:
+        return m.group(1)
+    # Prefer filename stem (exists on disk) over invented CamelCase.
+    return stem or f"decision-{index}"
+
+
+def parse_file_decisions(path: Path, root: Path) -> list[dict[str, str]]:
+    rpath = rel(path, root)
+    text = read_text(path)
+    decisions: list[dict[str, str]] = []
+    pending_title: str | None = None
+    pending_status = ""
+    file_status = ""
+
+    def flush() -> None:
+        nonlocal pending_title, pending_status
+        if not pending_title:
+            return
+        status = pending_status or file_status or "unknown"
+        idx = len(decisions)
+        decisions.append(
+            {
+                "id": _id_for(rpath, pending_title, idx),
+                "title": pending_title,
+                "status": status,
+                "path": rpath,
+            }
+        )
+        pending_title = None
+        pending_status = ""
+
+    for line in text.splitlines():
+        sm = _STATUS.match(line)
+        if sm:
+            st = _norm_status(sm.group(1))
+            if pending_title:
+                pending_status = st
+            else:
+                file_status = st
+            continue
+        hm = _HEADING.match(line)
+        if hm:
+            flush()
+            pending_title = _clean_title(hm.group(2))
+            inline = _STATUS_INLINE.search(hm.group(2))
+            if inline:
+                pending_status = _norm_status(inline.group(1))
+            continue
+    flush()
+    # File with status but no heading: use stem as title (real path-derived).
+    if not decisions and (file_status or text.strip()):
+        stem = Path(rpath).stem
+        if stem:
+            decisions.append(
+                {
+                    "id": _id_for(rpath, stem, 0),
+                    "title": stem.replace("-", " ").replace("_", " "),
+                    "status": file_status or "unknown",
+                    "path": rpath,
+                }
+            )
+    return decisions
+
+
+def collect_decisions(root: Path, depth: int, path_hint: str = "") -> list[dict[str, str]]:
+    if path_hint:
+        target = root / path_hint
+        if target.is_file():
+            return parse_file_decisions(target, root)
+        if target.is_dir():
+            files = [
+                p
+                for p in iter_files(target, depth)
+                if is_decision_file(rel(p, root))
+            ]
+        else:
+            files = []
+    else:
+        files = [p for p in iter_files(root, depth) if is_decision_file(rel(p, root))]
+    files.sort(key=lambda p: rel(p, root))
+    out: list[dict[str, str]] = []
+    for f in files:
+        out.extend(parse_file_decisions(f, root))
+    return out
+
+
+def parse_decision_log(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    path_s = str(data.get("path") or data.get("file") or data.get("log_path") or "").strip()
+    decisions = collect_decisions(root, depth, path_s)
+    # content: deterministic key listing (ids + titles from files only)
+    lines = [f"{d['id']}\t{d['title']}\t{d['status']}\t{d['path']}" for d in decisions]
+    return {
+        "loaded": bool(decisions),
+        "content": "\n".join(lines),
+        "path": path_s or (decisions[0]["path"] if decisions else ""),
+        "decisions": decisions,
+        "count": len(decisions),
+        "tool": "parse_decision_log",
+    }
+
+
+def search_decisions(root: Path, data: dict[str, Any]) -> dict[str, Any]:
     depth = int(data.get("depth", 3))
     query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
-    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
+    path_s = str(data.get("path") or data.get("file") or data.get("log_path") or "").strip()
     limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
+    decisions = collect_decisions(root, depth, path_s)
+    q = query.lower()
+    items: list[dict[str, Any]] = []
+    for d in decisions:
+        blob = f"{d['id']} {d['title']} {d['status']} {d['path']}".lower()
+        if q and q not in blob:
+            continue
+        score = 1.0 if not q else round(min(1.0, len(q) / max(len(d["title"]), 1)), 4)
+        items.append(
+            {
+                "path": d["path"],
+                "id": d["id"],
+                "title": d["title"],
+                "status": d["status"],
+                "score": score,
+            }
+        )
+        if len(items) >= limit:
+            break
+    return {
+        "items": items,
+        "count": len(items),
+        "truncated": False,
+        "tool": "search_decisions",
+    }
 
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
-                continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
-            if len(items) >= limit:
+
+def check_decision_conflicts(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    path_s = str(data.get("path") or data.get("file") or data.get("log_path") or "").strip()
+    decisions = collect_decisions(root, depth, path_s)
+    by_title: dict[str, list[dict[str, str]]] = {}
+    for d in decisions:
+        key = d["title"].strip().lower()
+        by_title.setdefault(key, []).append(d)
+    violations: list[dict[str, Any]] = []
+    conflicts: list[dict[str, Any]] = []
+    related_ids: list[str] = []
+    for title_key, group in sorted(by_title.items()):
+        if len(group) < 2:
+            continue
+        # duplicate titles
+        ids = [g["id"] for g in group]
+        paths = [g["path"] for g in group]
+        statuses = {_norm_status(g["status"]) for g in group}
+        rule = "duplicate_title"
+        for pair in _CONTRADICT:
+            if pair.issubset(statuses):
+                rule = "contradictory_status"
                 break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+        if len(statuses) > 1 and rule == "duplicate_title":
+            # different statuses for same title → treat as conflict
+            rule = "contradictory_status"
+        row = {
+            "rule": rule,
+            "title": group[0]["title"],
+            "ids": ids,
+            "paths": paths,
+            "statuses": sorted(statuses),
+        }
+        conflicts.append(row)
+        violations.append(
+            {
+                "path": paths[0],
+                "rule": rule,
+                "message": f"{rule}: {group[0]['title']}",
+                "ids": ids,
+            }
+        )
+        related_ids.extend(ids)
+    # unique related ids preserving order
+    seen: set[str] = set()
+    uniq_ids: list[str] = []
+    for i in related_ids:
+        if i not in seen:
+            seen.add(i)
+            uniq_ids.append(i)
+    return {
+        "ok": len(violations) == 0,
+        "violations": violations,
+        "count": len(violations),
+        "conflicts": conflicts,
+        "related_ids": uniq_ids,
+        "tool": "check_decision_conflicts",
+    }
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
 
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
+def summarize_decisions(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    query = str(
+        data.get("topic") or data.get("query") or data.get("pattern") or ""
+    ).strip()
+    path_s = str(data.get("path") or data.get("file") or data.get("log_path") or "").strip()
+    limit = max(1, min(int(data.get("limit", 20)), 100))
+    decisions = collect_decisions(root, depth, path_s)
+    q = query.lower()
+    filtered = [
+        d
+        for d in decisions
+        if not q
+        or q in d["title"].lower()
+        or q in d["status"].lower()
+        or q in d["path"].lower()
+        or q in d["id"].lower()
+    ][:limit]
+    titles = [d["title"] for d in filtered]
+    ids = [d["id"] for d in filtered]
+    by_status: dict[str, int] = {}
+    for d in filtered:
+        by_status[d["status"]] = by_status.get(d["status"], 0) + 1
+    # summary uses only real titles (no invented prose names)
+    summary = "; ".join(titles) if titles else ""
+    return {
+        "ok": True,
+        "tool": "summarize_decisions",
+        "summary": summary,
+        "decision_ids": ids,
+        "titles": titles,
+        "items": [
+            {"path": d["path"], "id": d["id"], "title": d["title"], "status": d["status"]}
+            for d in filtered
+        ],
+        "result": {
+            "count": len(filtered),
+            "by_status": dict(sorted(by_status.items())),
+            "titles": titles,
+        },
+    }
 
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
 
-    if tool.startswith(("load_", "parse_", "fetch_")):
-        target = root / path_s
-        if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
-                }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
-
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "decision-log-runner"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
-
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if tool == "parse_decision_log":
+        return parse_decision_log(root, data)
+    if tool == "search_decisions":
+        return search_decisions(root, data)
+    if tool == "check_decision_conflicts":
+        return check_decision_conflicts(root, data)
+    if tool == "summarize_decisions":
+        return summarize_decisions(root, data)
+    return {"ok": False, "tool": tool, "error": "unknown tool"}
 
 
 def main() -> None:

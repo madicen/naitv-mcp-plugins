@@ -1,9 +1,13 @@
 {
+  "count": 0,
+  "env_path": "",
+  "extra": [],
+  "missing": [],
   "ok": true,
   "result": {
-    "files": 1,
-    "root": "empty"
+    "extra": [],
+    "missing": []
   },
-  "tool": "compare_env_templates",
-  "truncated": false
+  "template_path": "",
+  "tool": "compare_env_templates"
 }

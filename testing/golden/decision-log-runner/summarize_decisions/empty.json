@@ -1,9 +1,13 @@
 {
+  "decision_ids": [],
+  "items": [],
   "ok": true,
   "result": {
-    "files": 1,
-    "root": "empty"
+    "by_status": {},
+    "count": 0,
+    "titles": []
   },
-  "tool": "summarize_decisions",
-  "truncated": false
+  "summary": "",
+  "titles": [],
+  "tool": "summarize_decisions"
 }

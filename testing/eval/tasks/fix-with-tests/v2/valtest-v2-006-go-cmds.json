@@ -1,0 +1,19 @@
+{
+  "id": "valtest-v2-006-go-cmds",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using validate-and-test detect_build_system, report commands include go test ./....",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "go test ./..."
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ]
+}

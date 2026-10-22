@@ -1,6 +1,6 @@
 {
-  "edge_count": 0,
+  "edge_count": 1,
   "format": "dot",
-  "graph": "digraph imports {\n}\n",
-  "node_count": 1
+  "graph": "digraph imports {\n  \"pkg/greeter\" -> \"testing\";\n}\n",
+  "node_count": 2
 }

@@ -1,0 +1,19 @@
+{
+  "id": "codegen-v2-003-greeter",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper list_templates, report path pkg/greeter.py among items.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

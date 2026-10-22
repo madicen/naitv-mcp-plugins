@@ -1,0 +1,20 @@
+{
+  "id": "invar-v2-004-tool-load",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker load_invariants, report tool load_invariants and loaded true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "load_invariants",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

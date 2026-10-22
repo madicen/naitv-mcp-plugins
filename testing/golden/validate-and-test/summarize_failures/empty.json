@@ -1,9 +1,12 @@
 {
+  "count": 0,
+  "first_failure": null,
+  "items": [],
   "ok": true,
   "result": {
-    "files": 1,
-    "root": "empty"
+    "failures": [],
+    "first_failure": null
   },
-  "tool": "summarize_failures",
-  "truncated": false
+  "summary": "no FAIL lines found",
+  "tool": "summarize_failures"
 }

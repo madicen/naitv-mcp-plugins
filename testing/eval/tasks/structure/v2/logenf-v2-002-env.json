@@ -1,0 +1,19 @@
+{
+  "id": "logenf-v2-002-env",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer logging_summary, report path .env.example among items.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

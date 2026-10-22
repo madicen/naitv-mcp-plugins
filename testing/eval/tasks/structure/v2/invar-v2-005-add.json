@@ -1,0 +1,19 @@
+{
+  "id": "invar-v2-005-add",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker add_invariant, report stored true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

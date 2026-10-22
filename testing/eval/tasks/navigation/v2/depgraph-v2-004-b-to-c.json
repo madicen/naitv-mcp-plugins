@@ -1,0 +1,20 @@
+{
+  "id": "depgraph-v2-004-b-to-c",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using dependency-graph-analyzer build_import_graph, confirm edge from pkg.greeter to pkg.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg.greeter",
+      "pkg"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ]
+}
