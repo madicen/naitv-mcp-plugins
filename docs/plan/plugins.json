@@ -584,7 +584,7 @@
     {
       "name": "tdd-runner",
       "phase": 3,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -597,7 +597,7 @@
       ],
       "eval_category": "fix-with-tests",
       "l5": "pending",
-      "notes": "Known tool: run_tests (< 5s target). Full tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: run_tests (< 5s target). Full tool list needed. Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "Test framework",
       "perf": "< 5s",

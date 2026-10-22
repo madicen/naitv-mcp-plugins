@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 1,
+    "root": "empty"
+  },
+  "tool": "select_tests_for_change",
+  "truncated": false
+}
