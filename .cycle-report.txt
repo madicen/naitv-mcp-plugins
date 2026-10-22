@@ -77,3 +77,4 @@ OK logging-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/42 base=pl
 catalog: 66 entries  blocked=0  exists=39  needs-spec=0  planned=27
 OK code-review-simulator https://github.com/madicen/naitv-mcp-plugins/pull/43 base=plugin/logging-enforcer
 === BUILD type-safety-enhancer ===
+catalog: 66 entries  blocked=0  exists=40  needs-spec=0  planned=26

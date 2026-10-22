@@ -1,0 +1,71 @@
+{
+  "name": "type-safety-enhancer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "type-safety-enhancer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "infer_types",
+      "delivery": "on-demand",
+      "tags": [
+        "type-safety-enhancer"
+      ],
+      "body": "infer_types for type-safety-enhancer.",
+      "fields": {
+        "exec": "TOOL_NAME=infer_types python3 ~/.config/naitv-mcp/tools/type-safety-enhancer/type_safety_enhancer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_untyped_symbols",
+      "delivery": "on-demand",
+      "tags": [
+        "type-safety-enhancer"
+      ],
+      "body": "find_untyped_symbols for type-safety-enhancer.",
+      "fields": {
+        "exec": "TOOL_NAME=find_untyped_symbols python3 ~/.config/naitv-mcp/tools/type-safety-enhancer/type_safety_enhancer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_annotations",
+      "delivery": "on-demand",
+      "tags": [
+        "type-safety-enhancer"
+      ],
+      "body": "suggest_annotations for type-safety-enhancer.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_annotations python3 ~/.config/naitv-mcp/tools/type-safety-enhancer/type_safety_enhancer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "type_coverage_report",
+      "delivery": "on-demand",
+      "tags": [
+        "type-safety-enhancer"
+      ],
+      "body": "type_coverage_report for type-safety-enhancer.",
+      "fields": {
+        "exec": "TOOL_NAME=type_coverage_report python3 ~/.config/naitv-mcp/tools/type-safety-enhancer/type_safety_enhancer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

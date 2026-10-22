@@ -1,0 +1,19 @@
+{
+  "id": "type-004-type-safety-",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using type-safety-enhancer tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "type-safety-enhancer"
+  ]
+}
