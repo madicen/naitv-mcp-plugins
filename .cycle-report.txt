@@ -1,1 +1,4 @@
 === BUILD error-matcher ===
+catalog: 66 entries  blocked=0  exists=14  needs-spec=0  planned=52
+OK error-matcher https://github.com/madicen/naitv-mcp-plugins/pull/18 base=plugin/pattern-recognizer
+=== BUILD golden-example-injector ===
