@@ -93,6 +93,14 @@
       "max_control_regression_pp": 2,
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
     }
   }
 }

@@ -95,6 +95,14 @@
       "collect_review_metrics",
       "aggregate_metrics",
       "export_metrics"
-    ]
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
   }
 }

@@ -77,7 +77,22 @@ Text-mode tools (`working_dir`, no `io_mode=json`) skip L2/L4 (see `loop-enginee
   },
   "l5": {
     "treatment_plugins": ["my-plugin"],
-    "tool_names": ["my_hot_tool"]
+    "tool_names": ["my_hot_tool"],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    },
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
   }
 }
 ```

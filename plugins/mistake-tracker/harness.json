@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "mistake_tracker",
-    "search_paths": ["tools/mistake-tracker", "plugins/mistake-tracker"],
+    "search_paths": [
+      "tools/mistake-tracker",
+      "plugins/mistake-tracker"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,10 +16,18 @@
     "l5": true
   },
   "golden": {
-    "fixtures": ["empty", "py-small"],
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
     "queries": {
-      "search_mistakes": { "query": "null", "limit": 10 },
-      "list_recurring_mistakes": { "min_count": 2 },
+      "search_mistakes": {
+        "query": "null",
+        "limit": 10
+      },
+      "list_recurring_mistakes": {
+        "min_count": 2
+      },
       "mistake_stats": {},
       "record_mistake": {
         "description": "forgot null check",
@@ -26,7 +37,9 @@
       }
     }
   },
-  "perf": { "enabled": false },
+  "perf": {
+    "enabled": false
+  },
   "l4": {
     "smoke_args": {
       "root_path": "FIXTURE:empty",
@@ -38,10 +51,23 @@
       "limit": 10
     },
     "expect_keys": {
-      "search_mistakes": ["matches", "count", "scores"],
-      "list_recurring_mistakes": ["recurring", "counts"],
-      "mistake_stats": ["total", "by_category"],
-      "record_mistake": ["id", "stored"]
+      "search_mistakes": [
+        "matches",
+        "count",
+        "scores"
+      ],
+      "list_recurring_mistakes": [
+        "recurring",
+        "counts"
+      ],
+      "mistake_stats": [
+        "total",
+        "by_category"
+      ],
+      "record_mistake": [
+        "id",
+        "stored"
+      ]
     },
     "invalid_tool": "search_mistakes",
     "invalid_args": {},
@@ -51,7 +77,9 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["mistake-tracker"],
+    "treatment_plugins": [
+      "mistake-tracker"
+    ],
     "tool_names": [
       "record_mistake",
       "search_mistakes",
@@ -64,6 +92,14 @@
       "max_control_regression_pp": 2,
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
     }
   }
 }

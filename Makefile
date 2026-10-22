@@ -9,6 +9,9 @@ AGENT ?= stub
 SUITE ?= navigation
 SEEDS ?= 3
 HELD_OUT ?= 0
+# Reference L5 model (must match harness.json → l5.model.name)
+OLLAMA_MODEL ?= qwen3:8b
+OLLAMA_HOST ?= http://127.0.0.1:11434
 
 help: ## Show targets
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z0-9_-]+:.*##/ {printf "  %-18s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -42,10 +45,10 @@ perf: ## L3 50k perf: make perf PLUGIN=structural-anchor
 	./scripts/perf.sh "$(PLUGIN)"
 
 eval-baseline: ## L5 baseline (AGENT=stub|ollama SUITE=navigation SEEDS=3)
-	HELD_OUT=$(HELD_OUT) AGENT=$(AGENT) SUITE=$(SUITE) SEEDS=$(SEEDS) ./scripts/eval.sh baseline
+	HELD_OUT=$(HELD_OUT) AGENT=$(AGENT) SUITE=$(SUITE) SEEDS=$(SEEDS) OLLAMA_MODEL=$(OLLAMA_MODEL) OLLAMA_HOST=$(OLLAMA_HOST) ./scripts/eval.sh baseline
 
 eval-treatment: ## L5 treatment + compare (needs baseline for navigation)
-	HELD_OUT=$(HELD_OUT) AGENT=$(AGENT) SUITE=$(SUITE) SEEDS=$(SEEDS) ./scripts/eval.sh treatment
+	HELD_OUT=$(HELD_OUT) AGENT=$(AGENT) SUITE=$(SUITE) SEEDS=$(SEEDS) OLLAMA_MODEL=$(OLLAMA_MODEL) OLLAMA_HOST=$(OLLAMA_HOST) ./scripts/eval.sh treatment
 
 ablation: ## Leave-one-out ablation (stub; needs naitv-mcp)
 	$(PYTHON) testing/eval/run_ablation.py --suite $(SUITE) --seeds $(SEEDS)

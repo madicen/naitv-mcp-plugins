@@ -112,7 +112,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green. L5 pending (no l5.model pinned). 10 dev + 2 control tasks under fix-with-tests. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green. L5 pending (l5.model=qwen3:8b). 10 dev + 2 control tasks under fix-with-tests. Approved first-draft tools from draft_tools.",
       "order": 6,
       "draft_tools": [
         "detect_build_tool",
@@ -208,7 +208,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "navigation",
-      "notes": "L1\u2013L4 green; L5 pending (no pinned l5.model). Navigation tasks dep-001..010 + dep-ctl-001/002.",
+      "notes": "L1\u2013L4 green; L5 pending (l5.model=qwen3:8b). Navigation tasks dep-001..010 + dep-ctl-001/002.",
       "order": 9,
       "draft_tools": [
         "build_import_graph",
@@ -274,7 +274,7 @@
       ],
       "depends_on_raw": "cache-manager",
       "eval_category": "fix-with-tests",
-      "notes": "L1\u2013L4 green; L5 pending (no pinned model). SQLite per root under ~/.cache; lazy: no git mining/ML. Tasks mist-001..010 + mist-ctl-001/002.",
+      "notes": "L1\u2013L4 green; L5 pending (l5.model=qwen3:8b; eval not yet run). SQLite per root under ~/.cache; lazy: no git mining/ML. Tasks mist-001..010 + mist-ctl-001/002.",
       "order": 11,
       "draft_tools": [
         "record_mistake",

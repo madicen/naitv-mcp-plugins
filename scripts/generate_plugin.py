@@ -439,6 +439,14 @@ def generate(plugin_name: str) -> dict:
         "l5": {
             "treatment_plugins": [plugin_name],
             "tool_names": ordered,
+            "model": {
+                "name": "qwen3:8b",
+                "provider": "ollama",
+                "quantization": "default",
+                "context": 8192,
+                "temperature": 0,
+                "seed": 0,
+            },
         },
     }
     if not l5_na:

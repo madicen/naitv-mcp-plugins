@@ -107,5 +107,5 @@ Per plugin, a `measured-helpful` result is sufficient for "offered by default." 
 ## 5. Known state (as of this plan)
 
 - Harness: L1 to L4 wired for `structural-anchor`, `symbol-navigator`, `lazy-dev`, and `loop-engineering-go`.
-- L5: the navigation baseline and ablation exist, but the runs were made with `AGENT=stub`, on 5 tasks, with 1 seed. They prove the wiring works, not that either plugin helps a model. Re-run with `AGENT=ollama` and a pinned model before making any claim.
+- L5: reference model pinned as `qwen3:8b` (`harness.json` → `l5.model`, Makefile `OLLAMA_MODEL`). Prior navigation baseline/ablation used `AGENT=stub` and are not evidence. Re-run with `AGENT=ollama` before any `measured-*` claim.
 - No plugin currently has `measured-helpful`.

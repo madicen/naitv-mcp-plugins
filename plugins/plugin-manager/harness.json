@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "plugin_manager",
-    "search_paths": ["tools/plugin-manager", "plugins/plugin-manager"],
+    "search_paths": [
+      "tools/plugin-manager",
+      "plugins/plugin-manager"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -13,11 +16,20 @@
     "l5": false
   },
   "golden": {
-    "fixtures": ["plugins-mini", "empty", "hostile"],
+    "fixtures": [
+      "plugins-mini",
+      "empty",
+      "hostile"
+    ],
     "queries": {
       "list_plugins": {},
-      "validate_plugin": { "plugin": "sample" },
-      "test_plugin": { "plugin": "sample", "layers": "lint" }
+      "validate_plugin": {
+        "plugin": "sample"
+      },
+      "test_plugin": {
+        "plugin": "sample",
+        "layers": "lint"
+      }
     }
   },
   "perf": {
@@ -30,19 +42,47 @@
       "layers": "lint"
     },
     "expect_keys": {
-      "list_plugins": ["plugins", "count"],
-      "validate_plugin": ["ok", "plugin", "errors"],
-      "test_plugin": ["ok", "plugin", "layers", "errors"]
+      "list_plugins": [
+        "plugins",
+        "count"
+      ],
+      "validate_plugin": [
+        "ok",
+        "plugin",
+        "errors"
+      ],
+      "test_plugin": [
+        "ok",
+        "plugin",
+        "layers",
+        "errors"
+      ]
     },
     "invalid_tool": "validate_plugin",
-    "invalid_args": { "plugin": "sample" },
+    "invalid_args": {
+      "plugin": "sample"
+    },
     "post_timeout_tool": "list_plugins",
     "post_timeout_args": {
       "root_path": "FIXTURE:empty"
     }
   },
   "l5": {
-    "treatment_plugins": ["plugin-manager"],
-    "tool_names": ["list_plugins", "validate_plugin", "test_plugin"]
+    "treatment_plugins": [
+      "plugin-manager"
+    ],
+    "tool_names": [
+      "list_plugins",
+      "validate_plugin",
+      "test_plugin"
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
   }
 }
