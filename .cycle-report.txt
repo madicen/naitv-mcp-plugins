@@ -8,3 +8,6 @@ OK golden-example-injector https://github.com/madicen/naitv-mcp-plugins/pull/19 
 catalog: 66 entries  blocked=0  exists=16  needs-spec=0  planned=50
 OK decision-log-runner https://github.com/madicen/naitv-mcp-plugins/pull/20 base=plugin/golden-example-injector
 === BUILD task-decomposer ===
+catalog: 66 entries  blocked=0  exists=17  needs-spec=0  planned=49
+OK task-decomposer https://github.com/madicen/naitv-mcp-plugins/pull/21 base=plugin/decision-log-runner
+=== BUILD think-before-write ===
