@@ -1,0 +1,71 @@
+{
+  "name": "language-idioms-enforcer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'code-style' normalized to 'code-style-enforcer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "language-idioms-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "check_idioms",
+      "delivery": "on-demand",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "body": "check_idioms for language-idioms-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_idioms python3 ~/.config/naitv-mcp/tools/language-idioms-enforcer/language_idioms_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "load_idiom_pack",
+      "delivery": "on-demand",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "body": "load_idiom_pack for language-idioms-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=load_idiom_pack python3 ~/.config/naitv-mcp/tools/language-idioms-enforcer/language_idioms_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_idiom_fix",
+      "delivery": "on-demand",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "body": "suggest_idiom_fix for language-idioms-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_idiom_fix python3 ~/.config/naitv-mcp/tools/language-idioms-enforcer/language_idioms_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "idiom_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "body": "idiom_summary for language-idioms-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=idiom_summary python3 ~/.config/naitv-mcp/tools/language-idioms-enforcer/language_idioms_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
