@@ -1,0 +1,108 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "environment_validator",
+    "search_paths": [
+      "tools/environment-validator",
+      "plugins/environment-validator"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "check_env_vars": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "parse_env_files": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "compare_env_templates": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "env_summary": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "check_env_vars": [
+        "ok",
+        "violations",
+        "count"
+      ],
+      "parse_env_files": [
+        "loaded",
+        "content"
+      ],
+      "compare_env_templates": [
+        "ok",
+        "tool"
+      ],
+      "env_summary": [
+        "items",
+        "count"
+      ]
+    },
+    "invalid_tool": "check_env_vars",
+    "invalid_args": {},
+    "post_timeout_tool": "check_env_vars",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "environment-validator"
+    ],
+    "tool_names": [
+      "check_env_vars",
+      "parse_env_files",
+      "compare_env_templates",
+      "env_summary"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}

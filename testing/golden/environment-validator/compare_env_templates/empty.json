@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 1,
+    "root": "empty"
+  },
+  "tool": "compare_env_templates",
+  "truncated": false
+}

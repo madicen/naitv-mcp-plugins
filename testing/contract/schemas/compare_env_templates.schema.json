@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/compare_env_templates.schema.json",
+  "title": "compare_env_templates",
+  "type": "object",
+  "required": [
+    "ok",
+    "tool"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "tool": {
+      "type": "string"
+    },
+    "result": {}
+  },
+  "additionalProperties": true
+}
