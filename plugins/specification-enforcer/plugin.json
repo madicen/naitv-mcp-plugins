@@ -1,0 +1,71 @@
+{
+  "name": "specification-enforcer",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "specification-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "load_spec",
+      "delivery": "on-demand",
+      "tags": [
+        "specification-enforcer"
+      ],
+      "body": "load_spec for specification-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=load_spec python3 ~/.config/naitv-mcp/tools/specification-enforcer/specification_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "extract_requirements",
+      "delivery": "on-demand",
+      "tags": [
+        "specification-enforcer"
+      ],
+      "body": "extract_requirements for specification-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=extract_requirements python3 ~/.config/naitv-mcp/tools/specification-enforcer/specification_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_coverage",
+      "delivery": "on-demand",
+      "tags": [
+        "specification-enforcer"
+      ],
+      "body": "check_coverage for specification-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_coverage python3 ~/.config/naitv-mcp/tools/specification-enforcer/specification_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "report_violations",
+      "delivery": "on-demand",
+      "tags": [
+        "specification-enforcer"
+      ],
+      "body": "report_violations for specification-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=report_violations python3 ~/.config/naitv-mcp/tools/specification-enforcer/specification_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
