@@ -162,6 +162,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "golden-example-injector",
+      "description": "golden-example-injector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/golden-example-injector/plugin.json",
+      "tags": [
+        "golden-example-injector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

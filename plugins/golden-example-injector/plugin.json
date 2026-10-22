@@ -1,0 +1,56 @@
+{
+  "name": "golden-example-injector",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "golden-example-injector"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_golden_examples",
+      "delivery": "on-demand",
+      "tags": [
+        "golden-example-injector"
+      ],
+      "body": "find_golden_examples for golden-example-injector.",
+      "fields": {
+        "exec": "TOOL_NAME=find_golden_examples python3 ~/.config/naitv-mcp/tools/golden-example-injector/golden_example_injector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "rank_golden_examples",
+      "delivery": "on-demand",
+      "tags": [
+        "golden-example-injector"
+      ],
+      "body": "rank_golden_examples for golden-example-injector.",
+      "fields": {
+        "exec": "TOOL_NAME=rank_golden_examples python3 ~/.config/naitv-mcp/tools/golden-example-injector/golden_example_injector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "inject_example",
+      "delivery": "on-demand",
+      "tags": [
+        "golden-example-injector"
+      ],
+      "body": "inject_example for golden-example-injector.",
+      "fields": {
+        "exec": "TOOL_NAME=inject_example python3 ~/.config/naitv-mcp/tools/golden-example-injector/golden_example_injector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
