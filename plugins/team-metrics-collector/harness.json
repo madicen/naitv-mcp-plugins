@@ -1,0 +1,100 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "team_metrics_collector",
+    "search_paths": [
+      "tools/team-metrics-collector",
+      "plugins/team-metrics-collector"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": false
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "collect_commit_metrics": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "collect_review_metrics": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "aggregate_metrics": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "export_metrics": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "collect_commit_metrics": [
+        "ok",
+        "tool"
+      ],
+      "collect_review_metrics": [
+        "ok",
+        "tool"
+      ],
+      "aggregate_metrics": [
+        "ok",
+        "tool"
+      ],
+      "export_metrics": [
+        "ok",
+        "tool"
+      ]
+    },
+    "invalid_tool": "collect_commit_metrics",
+    "invalid_args": {},
+    "post_timeout_tool": "collect_commit_metrics",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "team-metrics-collector"
+    ],
+    "tool_names": [
+      "collect_commit_metrics",
+      "collect_review_metrics",
+      "aggregate_metrics",
+      "export_metrics"
+    ]
+  }
+}

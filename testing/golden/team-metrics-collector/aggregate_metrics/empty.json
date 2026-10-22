@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 1,
+    "root": "empty"
+  },
+  "tool": "aggregate_metrics",
+  "truncated": false
+}

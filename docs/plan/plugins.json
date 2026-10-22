@@ -1625,7 +1625,7 @@
     },
     {
       "name": "team-metrics-collector",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "collect_commit_metrics",
@@ -1645,7 +1645,7 @@
       ],
       "depends_on_raw": "cache-manager",
       "eval_category": null,
-      "notes": "Infrastructure, not model-facing. Matrix row has no direct model effect. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 not-applicable. Generated deterministic tools. Infrastructure, not model-facing. Matrix row has no direct model effect. Approved first-draft tools from draft_tools.",
       "order": 52,
       "draft_tools": [
         "collect_commit_metrics",
@@ -1654,7 +1654,8 @@
         "export_metrics"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-team-metrics-collector-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-team-metrics-collector-design.md",
+      "language": "python"
     },
     {
       "name": "concurrency-checker",

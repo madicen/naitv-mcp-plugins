@@ -532,6 +532,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "team-metrics-collector",
+      "description": "team-metrics-collector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/team-metrics-collector/plugin.json",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
