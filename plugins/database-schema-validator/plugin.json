@@ -1,0 +1,86 @@
+{
+  "name": "database-schema-validator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "database-schema-validator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "parse_schema",
+      "delivery": "on-demand",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "body": "parse_schema for database-schema-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=parse_schema python3 ~/.config/naitv-mcp/tools/database-schema-validator/database_schema_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_schema",
+      "delivery": "on-demand",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "body": "validate_schema for database-schema-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_schema python3 ~/.config/naitv-mcp/tools/database-schema-validator/database_schema_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_migrations",
+      "delivery": "on-demand",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "body": "check_migrations for database-schema-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=check_migrations python3 ~/.config/naitv-mcp/tools/database-schema-validator/database_schema_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_orm_usage",
+      "delivery": "on-demand",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "body": "check_orm_usage for database-schema-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=check_orm_usage python3 ~/.config/naitv-mcp/tools/database-schema-validator/database_schema_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "schema_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "body": "schema_summary for database-schema-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=schema_summary python3 ~/.config/naitv-mcp/tools/database-schema-validator/database_schema_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
