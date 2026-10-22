@@ -542,6 +542,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "concurrency-checker",
+      "description": "concurrency-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/concurrency-checker/plugin.json",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
