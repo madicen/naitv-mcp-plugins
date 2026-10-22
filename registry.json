@@ -71,6 +71,14 @@
       "tags": ["dependency-graph-analyzer", "imports", "navigation"],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "cache-manager",
+      "description": "Namespaced key/value cache with TTL, stats, and prune (SQLite under ~/.cache).",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/cache-manager/plugin.json",
+      "tags": ["cache-manager", "cache", "infrastructure"],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

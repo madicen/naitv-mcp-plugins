@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/cache_prune.schema.json",
+  "title": "cache_prune",
+  "type": "object",
+  "required": ["namespace", "removed", "remaining", "remaining_bytes"],
+  "properties": {
+    "namespace": { "type": "string" },
+    "removed": { "type": "integer", "minimum": 0 },
+    "remaining": { "type": "integer", "minimum": 0 },
+    "remaining_bytes": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

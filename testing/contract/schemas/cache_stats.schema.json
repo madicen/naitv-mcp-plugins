@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/cache_stats.schema.json",
+  "title": "cache_stats",
+  "type": "object",
+  "required": ["namespace", "entries", "bytes", "hit_rate", "hits", "misses"],
+  "properties": {
+    "namespace": { "type": "string" },
+    "entries": { "type": "integer", "minimum": 0 },
+    "bytes": { "type": "integer", "minimum": 0 },
+    "hit_rate": { "type": "number", "minimum": 0 },
+    "hits": { "type": "integer", "minimum": 0 },
+    "misses": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}
