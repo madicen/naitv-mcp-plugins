@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 7,
+    "root": "py-small"
+  },
+  "tool": "export_knowledge_base",
+  "truncated": false
+}

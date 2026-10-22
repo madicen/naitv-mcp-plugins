@@ -59,3 +59,6 @@ OK test-coverage-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/36 b
 catalog: 66 entries  blocked=0  exists=33  needs-spec=0  planned=33
 OK license-compliance-checker https://github.com/madicen/naitv-mcp-plugins/pull/37 base=plugin/test-coverage-analyzer
 === BUILD team-knowledge-extractor ===
+catalog: 66 entries  blocked=0  exists=34  needs-spec=0  planned=32
+OK team-knowledge-extractor https://github.com/madicen/naitv-mcp-plugins/pull/38 base=plugin/license-compliance-checker
+=== BUILD invariant-checker ===
