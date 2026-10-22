@@ -1047,12 +1047,12 @@
     },
     {
       "name": "invariant-checker",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "load_invariants",
         "check_invariants",
-        "report_violations",
+        "report_invariant_violations",
         "add_invariant"
       ],
       "l5": "pending",
@@ -1067,7 +1067,7 @@
       ],
       "depends_on_raw": "team-knowledge",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'report_violations': 'report_invariant_violations'}.",
       "order": 35,
       "draft_tools": [
         "load_invariants",
@@ -1076,7 +1076,8 @@
         "add_invariant"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-invariant-checker-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-invariant-checker-design.md",
+      "language": "python"
     },
     {
       "name": "code-style-enforcer",
