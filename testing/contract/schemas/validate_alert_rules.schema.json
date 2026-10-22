@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/validate_alert_rules.schema.json",
+  "title": "validate_alert_rules",
+  "type": "object",
+  "required": [
+    "ok",
+    "violations",
+    "count"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "violations": {
+      "type": "array"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": true
+}

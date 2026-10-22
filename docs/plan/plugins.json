@@ -2103,7 +2103,7 @@
     },
     {
       "name": "monitoring-alerting-setup",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "detect_metrics",
@@ -2123,7 +2123,7 @@
       ],
       "depends_on_raw": "performance-profiler",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 66,
       "draft_tools": [
         "detect_metrics",
@@ -2132,7 +2132,8 @@
         "render_dashboard_config"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-monitoring-alerting-setup-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-monitoring-alerting-setup-design.md",
+      "language": "python"
     }
   ],
   "_order_note": "order is the build sequence: dependencies first, then tier (MATRIX implementation order), then priority (1 critical), then complexity (L before M before H), then phase. Existing plugins take the first slots; plugin-manager is pinned as the first new build."

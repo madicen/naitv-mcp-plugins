@@ -1,0 +1,19 @@
+{
+  "id": "monito-006-monitoring-a",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using monitoring-alerting-setup tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "monitoring-alerting-setup"
+  ]
+}
