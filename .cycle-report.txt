@@ -56,3 +56,6 @@ OK deprecation-manager https://github.com/madicen/naitv-mcp-plugins/pull/35 base
 catalog: 66 entries  blocked=0  exists=32  needs-spec=0  planned=34
 OK test-coverage-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/36 base=plugin/deprecation-manager
 === BUILD license-compliance-checker ===
+catalog: 66 entries  blocked=0  exists=33  needs-spec=0  planned=33
+OK license-compliance-checker https://github.com/madicen/naitv-mcp-plugins/pull/37 base=plugin/test-coverage-analyzer
+=== BUILD team-knowledge-extractor ===
