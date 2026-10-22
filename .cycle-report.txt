@@ -47,3 +47,4 @@ OK regression-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/3
 catalog: 66 entries  blocked=0  exists=29  needs-spec=0  planned=37
 OK documentation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/33 base=plugin/regression-test-generator
 === BUILD mock-stub-generator ===
+catalog: 66 entries  blocked=0  exists=30  needs-spec=0  planned=36

@@ -1,0 +1,19 @@
+{
+  "id": "mock-001-mock-stub-ge",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using mock-stub-generator tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "mock-stub-generator"
+  ]
+}

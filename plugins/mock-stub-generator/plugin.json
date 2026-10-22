@@ -1,0 +1,71 @@
+{
+  "name": "mock-stub-generator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "mock-stub-generator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "generate_mock",
+      "delivery": "on-demand",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "body": "generate_mock for mock-stub-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_mock python3 ~/.config/naitv-mcp/tools/mock-stub-generator/mock_stub_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_stub",
+      "delivery": "on-demand",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "body": "generate_stub for mock-stub-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_stub python3 ~/.config/naitv-mcp/tools/mock-stub-generator/mock_stub_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_mockable_deps",
+      "delivery": "on-demand",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "body": "list_mockable_deps for mock-stub-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_mockable_deps python3 ~/.config/naitv-mcp/tools/mock-stub-generator/mock_stub_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_stub",
+      "delivery": "on-demand",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "body": "validate_stub for mock-stub-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_stub python3 ~/.config/naitv-mcp/tools/mock-stub-generator/mock_stub_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

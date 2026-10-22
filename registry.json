@@ -312,6 +312,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "mock-stub-generator",
+      "description": "mock-stub-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/mock-stub-generator/plugin.json",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
