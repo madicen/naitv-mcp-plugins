@@ -1,0 +1,19 @@
+{
+  "id": "perfor-007-performance-",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Using performance-regression-detector tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "performance-regression-detector"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "performance-regression-detector",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "performance-regression-detector"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "load_baseline",
+      "delivery": "on-demand",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "body": "load_baseline for performance-regression-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=load_baseline python3 ~/.config/naitv-mcp/tools/performance-regression-detector/performance_regression_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "compare_to_baseline",
+      "delivery": "on-demand",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "body": "compare_to_baseline for performance-regression-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=compare_to_baseline python3 ~/.config/naitv-mcp/tools/performance-regression-detector/performance_regression_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "flag_regressions",
+      "delivery": "on-demand",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "body": "flag_regressions for performance-regression-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=flag_regressions python3 ~/.config/naitv-mcp/tools/performance-regression-detector/performance_regression_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "update_baseline",
+      "delivery": "on-demand",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "body": "update_baseline for performance-regression-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=update_baseline python3 ~/.config/naitv-mcp/tools/performance-regression-detector/performance_regression_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

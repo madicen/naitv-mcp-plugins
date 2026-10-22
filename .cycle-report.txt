@@ -107,3 +107,6 @@ OK interface-segregation-enforcer https://github.com/madicen/naitv-mcp-plugins/p
 catalog: 66 entries  blocked=0  exists=49  needs-spec=0  planned=17
 OK language-idioms-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/53 base=plugin/interface-segregation-enforcer
 === BUILD performance-regression-detector ===
+catalog: 66 entries  blocked=0  exists=50  needs-spec=0  planned=16
+OK performance-regression-detector https://github.com/madicen/naitv-mcp-plugins/pull/54 base=plugin/language-idioms-enforcer
+=== BUILD stale-code-identifier ===
