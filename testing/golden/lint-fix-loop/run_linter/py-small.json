@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "run_linter dry-run on py-small",
+  "tool": "run_linter"
+}
