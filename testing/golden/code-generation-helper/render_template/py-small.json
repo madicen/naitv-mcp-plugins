@@ -1,0 +1,10 @@
+{
+  "generated": "# render_template\n# root=py-small\n# query=Greeter\n",
+  "items": [
+    {
+      "text": "# render_template\n# root=py-small\n# query=Greeter\n"
+    }
+  ],
+  "ok": true,
+  "tool": "render_template"
+}
