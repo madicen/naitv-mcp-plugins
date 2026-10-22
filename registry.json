@@ -622,6 +622,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "accessibility-checker",
+      "description": "accessibility-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/accessibility-checker/plugin.json",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
