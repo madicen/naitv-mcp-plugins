@@ -1,0 +1,71 @@
+{
+  "name": "license-compliance-checker",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "license-compliance-checker"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "list_dependency_licenses",
+      "delivery": "on-demand",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "body": "list_dependency_licenses for license-compliance-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=list_dependency_licenses python3 ~/.config/naitv-mcp/tools/license-compliance-checker/license_compliance_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_license_policy",
+      "delivery": "on-demand",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "body": "check_license_policy for license-compliance-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=check_license_policy python3 ~/.config/naitv-mcp/tools/license-compliance-checker/license_compliance_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_license_conflicts",
+      "delivery": "on-demand",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "body": "find_license_conflicts for license-compliance-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=find_license_conflicts python3 ~/.config/naitv-mcp/tools/license-compliance-checker/license_compliance_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "license_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "body": "license_summary for license-compliance-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=license_summary python3 ~/.config/naitv-mcp/tools/license-compliance-checker/license_compliance_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

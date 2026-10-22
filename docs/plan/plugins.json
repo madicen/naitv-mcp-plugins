@@ -981,7 +981,7 @@
     },
     {
       "name": "license-compliance-checker",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "list_dependency_licenses",
@@ -999,7 +999,7 @@
       "depends_on": [],
       "depends_on_raw": "Plugin framework",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 33,
       "draft_tools": [
         "list_dependency_licenses",
@@ -1008,7 +1008,8 @@
         "license_summary"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-license-compliance-checker-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-license-compliance-checker-design.md",
+      "language": "python"
     },
     {
       "name": "team-knowledge-extractor",

@@ -342,6 +342,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "license-compliance-checker",
+      "description": "license-compliance-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/license-compliance-checker/plugin.json",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
