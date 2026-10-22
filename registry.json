@@ -202,6 +202,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "validate-and-test",
+      "description": "validate-and-test JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/validate-and-test/plugin.json",
+      "tags": [
+        "validate-and-test"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

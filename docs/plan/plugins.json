@@ -520,7 +520,7 @@
     {
       "name": "validate-and-test",
       "phase": 3,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -533,7 +533,7 @@
       ],
       "eval_category": "fix-with-tests",
       "l5": "pending",
-      "notes": "Tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "Build tools",
       "perf": "< 5s",

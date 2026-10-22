@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 7,
+    "root": "py-small"
+  },
+  "tool": "detect_build_system",
+  "truncated": false
+}
