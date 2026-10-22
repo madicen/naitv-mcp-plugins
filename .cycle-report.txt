@@ -146,3 +146,6 @@ OK accessibility-checker https://github.com/madicen/naitv-mcp-plugins/pull/65 ba
 catalog: 66 entries  blocked=0  exists=62  needs-spec=0  planned=4
 OK rollback-plan-generator https://github.com/madicen/naitv-mcp-plugins/pull/66 base=plugin/accessibility-checker
 === BUILD contract-testing-helper ===
+catalog: 66 entries  blocked=0  exists=63  needs-spec=0  planned=3
+OK contract-testing-helper https://github.com/madicen/naitv-mcp-plugins/pull/67 base=plugin/rollback-plan-generator
+=== BUILD incremental-refactoring-helper ===

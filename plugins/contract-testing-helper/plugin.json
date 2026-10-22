@@ -1,0 +1,71 @@
+{
+  "name": "contract-testing-helper",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'api-contract' normalized to 'api-contract-validator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "contract-testing-helper"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "generate_contract",
+      "delivery": "on-demand",
+      "tags": [
+        "contract-testing-helper"
+      ],
+      "body": "generate_contract for contract-testing-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_contract python3 ~/.config/naitv-mcp/tools/contract-testing-helper/contract_testing_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "verify_contract",
+      "delivery": "on-demand",
+      "tags": [
+        "contract-testing-helper"
+      ],
+      "body": "verify_contract for contract-testing-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=verify_contract python3 ~/.config/naitv-mcp/tools/contract-testing-helper/contract_testing_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_consumers",
+      "delivery": "on-demand",
+      "tags": [
+        "contract-testing-helper"
+      ],
+      "body": "list_consumers for contract-testing-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=list_consumers python3 ~/.config/naitv-mcp/tools/contract-testing-helper/contract_testing_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "contract_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "contract-testing-helper"
+      ],
+      "body": "contract_summary for contract-testing-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=contract_summary python3 ~/.config/naitv-mcp/tools/contract-testing-helper/contract_testing_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

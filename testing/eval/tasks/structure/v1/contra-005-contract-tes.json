@@ -1,0 +1,19 @@
+{
+  "id": "contra-005-contract-tes",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using contract-testing-helper tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "contract-testing-helper"
+  ]
+}

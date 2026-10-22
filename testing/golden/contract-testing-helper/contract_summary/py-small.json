@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "items": [
+    {
+      "path": "pkg/greeter.py",
+      "score": 0.5
+    }
+  ],
+  "tool": "contract_summary",
+  "truncated": false
+}

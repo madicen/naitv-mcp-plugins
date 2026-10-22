@@ -1,0 +1,108 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "contract_testing_helper",
+    "search_paths": [
+      "tools/contract-testing-helper",
+      "plugins/contract-testing-helper"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "generate_contract": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "verify_contract": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "list_consumers": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "contract_summary": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "generate_contract": [
+        "generated",
+        "ok"
+      ],
+      "verify_contract": [
+        "ok",
+        "violations",
+        "count"
+      ],
+      "list_consumers": [
+        "items",
+        "count"
+      ],
+      "contract_summary": [
+        "items",
+        "count"
+      ]
+    },
+    "invalid_tool": "generate_contract",
+    "invalid_args": {},
+    "post_timeout_tool": "generate_contract",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "contract-testing-helper"
+    ],
+    "tool_names": [
+      "generate_contract",
+      "verify_contract",
+      "list_consumers",
+      "contract_summary"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}
