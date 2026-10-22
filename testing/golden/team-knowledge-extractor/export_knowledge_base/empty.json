@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 1,
+    "root": "empty"
+  },
+  "tool": "export_knowledge_base",
+  "truncated": false
+}

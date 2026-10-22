@@ -1,0 +1,71 @@
+{
+  "name": "team-knowledge-extractor",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "team-knowledge-extractor"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "mine_conventions",
+      "delivery": "on-demand",
+      "tags": [
+        "team-knowledge-extractor"
+      ],
+      "body": "mine_conventions for team-knowledge-extractor.",
+      "fields": {
+        "exec": "TOOL_NAME=mine_conventions python3 ~/.config/naitv-mcp/tools/team-knowledge-extractor/team_knowledge_extractor.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "extract_ownership",
+      "delivery": "on-demand",
+      "tags": [
+        "team-knowledge-extractor"
+      ],
+      "body": "extract_ownership for team-knowledge-extractor.",
+      "fields": {
+        "exec": "TOOL_NAME=extract_ownership python3 ~/.config/naitv-mcp/tools/team-knowledge-extractor/team_knowledge_extractor.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "extract_review_patterns",
+      "delivery": "on-demand",
+      "tags": [
+        "team-knowledge-extractor"
+      ],
+      "body": "extract_review_patterns for team-knowledge-extractor.",
+      "fields": {
+        "exec": "TOOL_NAME=extract_review_patterns python3 ~/.config/naitv-mcp/tools/team-knowledge-extractor/team_knowledge_extractor.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "export_knowledge_base",
+      "delivery": "on-demand",
+      "tags": [
+        "team-knowledge-extractor"
+      ],
+      "body": "export_knowledge_base for team-knowledge-extractor.",
+      "fields": {
+        "exec": "TOOL_NAME=export_knowledge_base python3 ~/.config/naitv-mcp/tools/team-knowledge-extractor/team_knowledge_extractor.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
