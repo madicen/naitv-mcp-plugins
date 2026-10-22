@@ -495,6 +495,21 @@ def test_handle_py_small() -> None:
     out = mod.handle({ordered[0]!r}, FIXTURES / "py-small", {{"query": "Greeter", "depth": 3}})
     assert isinstance(out, dict)
 
+def test_handle_all_branches() -> None:
+    root = FIXTURES / "py-small"
+    data = {{"query": "Greeter", "path": "README.md", "depth": 3, "limit": 5}}
+    for fake in (
+        "list_things",
+        "check_things",
+        "generate_things",
+        "run_things",
+        "load_things",
+        "add_things",
+        "custom_op",
+    ):
+        out = mod.handle(fake, root, data)
+        assert isinstance(out, dict)
+
 def test_validate_traversal() -> None:
     with pytest.raises(SystemExit):
         mod.validate_root_path("/tmp/../etc")

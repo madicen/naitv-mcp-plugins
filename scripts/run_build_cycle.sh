@@ -79,13 +79,16 @@ PY
   python3 scripts/catalog_check.py >/tmp/catalog_check.out || true
   tail -1 /tmp/catalog_check.out | tee -a "$REPORT"
   rm -rf "plugins/$NAME/tests/__pycache__" "tools/$NAME/__pycache__" || true
-  BASE="$(stack_base)"
-  # if @- is a plugin bookmark tip, use that as PR base
-  PARENT_BM="$(jj log -r '@-' -T 'bookmarks' --no-graph 2>/dev/null | tr -d '"' | awk '{print $1}' | head -1)"
-  if [[ "$PARENT_BM" == plugin/* ]]; then
+  # PR stacks on parent change's plugin bookmark when present
+  PARENT_BM="$(jj bookmark list -r '@-' 2>/dev/null | awk -F: '/^plugin\//{print $1; exit}')"
+  if [[ -z "$PARENT_BM" ]]; then
+    PARENT_BM="$(jj log -r '@-' -T 'combined_bookmark_names()' --no-graph 2>/dev/null | tr ' ' '\n' | grep '^plugin/' | head -1 || true)"
+  fi
+  if [[ -n "$PARENT_BM" ]]; then
     BASE="$PARENT_BM"
-  elif [[ -z "$BASE" ]]; then
-    BASE="main"
+  else
+    BASE="$(stack_base)"
+    [[ -z "$BASE" ]] && BASE="main"
   fi
   jj describe -m "feat($NAME): generated JSON tools" -m "L1-L4 green; L5 pending or not-applicable. Auto-built." -m "Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>" -m "Claude-Session: https://claude.ai/code/session_012NGuAhdyW7FCdG1ahcWwqd"
   jj bookmark set "plugin/$NAME" -r @

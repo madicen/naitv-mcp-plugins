@@ -1,1 +1,1 @@
-=== BUILD pattern-recognizer ===
+=== BUILD error-matcher ===
