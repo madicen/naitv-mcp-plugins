@@ -1252,7 +1252,7 @@
     {
       "name": "doc-scraper",
       "phase": 4,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -1263,7 +1263,7 @@
       "depends_on": [],
       "eval_category": "navigation",
       "l5": "pending",
-      "notes": "Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access. Approved first-draft tools from draft_tools.",
       "tool_count": 3,
       "implementation": "Markdown + HTML",
       "perf": "< 3s",

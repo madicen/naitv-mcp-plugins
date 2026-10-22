@@ -80,3 +80,4 @@ OK code-review-simulator https://github.com/madicen/naitv-mcp-plugins/pull/43 ba
 catalog: 66 entries  blocked=0  exists=40  needs-spec=0  planned=26
 OK type-safety-enhancer https://github.com/madicen/naitv-mcp-plugins/pull/44 base=plugin/code-review-simulator
 === BUILD doc-scraper ===
+catalog: 66 entries  blocked=0  exists=41  needs-spec=0  planned=25
