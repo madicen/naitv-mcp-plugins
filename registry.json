@@ -512,6 +512,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "performance-regression-detector",
+      "description": "performance-regression-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/performance-regression-detector/plugin.json",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

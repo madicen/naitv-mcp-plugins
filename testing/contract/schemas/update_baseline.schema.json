@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/update_baseline.schema.json",
+  "title": "update_baseline",
+  "type": "object",
+  "required": [
+    "stored",
+    "id"
+  ],
+  "properties": {
+    "stored": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

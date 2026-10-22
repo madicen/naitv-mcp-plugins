@@ -1557,7 +1557,7 @@
     },
     {
       "name": "performance-regression-detector",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "load_baseline",
@@ -1577,7 +1577,7 @@
       ],
       "depends_on_raw": "benchmark-generator",
       "eval_category": "fix-with-tests",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 50,
       "draft_tools": [
         "load_baseline",
@@ -1586,7 +1586,8 @@
         "update_baseline"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-performance-regression-detector-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-performance-regression-detector-design.md",
+      "language": "python"
     },
     {
       "name": "stale-code-identifier",
