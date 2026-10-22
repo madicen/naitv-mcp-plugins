@@ -1,0 +1,10 @@
+{
+  "generated": "# generate_doc_stub\n# root=py-small\n# query=Greeter\n",
+  "items": [
+    {
+      "text": "# generate_doc_stub\n# root=py-small\n# query=Greeter\n"
+    }
+  ],
+  "ok": true,
+  "tool": "generate_doc_stub"
+}

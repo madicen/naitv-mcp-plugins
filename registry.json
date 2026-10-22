@@ -302,6 +302,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "documentation-enforcer",
+      "description": "documentation-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/documentation-enforcer/plugin.json",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
