@@ -1,0 +1,71 @@
+{
+  "name": "api-contract-validator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "api-contract-validator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "extract_api",
+      "delivery": "on-demand",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "body": "extract_api for api-contract-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=extract_api python3 ~/.config/naitv-mcp/tools/api-contract-validator/api_contract_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "diff_api",
+      "delivery": "on-demand",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "body": "diff_api for api-contract-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=diff_api python3 ~/.config/naitv-mcp/tools/api-contract-validator/api_contract_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_breaking_changes",
+      "delivery": "on-demand",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "body": "check_breaking_changes for api-contract-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=check_breaking_changes python3 ~/.config/naitv-mcp/tools/api-contract-validator/api_contract_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_contracts",
+      "delivery": "on-demand",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "body": "list_contracts for api-contract-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_contracts python3 ~/.config/naitv-mcp/tools/api-contract-validator/api_contract_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

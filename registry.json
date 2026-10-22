@@ -272,6 +272,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "api-contract-validator",
+      "description": "api-contract-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/api-contract-validator/plugin.json",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
