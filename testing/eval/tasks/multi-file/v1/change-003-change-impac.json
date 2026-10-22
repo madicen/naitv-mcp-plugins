@@ -1,0 +1,19 @@
+{
+  "id": "change-003-change-impac",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using change-impact-analyzer tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "change-impact-analyzer"
+  ]
+}
