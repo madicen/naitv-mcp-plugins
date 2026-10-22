@@ -1863,7 +1863,7 @@
     },
     {
       "name": "feature-flag-manager",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "find_flags",
@@ -1883,7 +1883,7 @@
       ],
       "depends_on_raw": "validate-and-test",
       "eval_category": "refactor",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 59,
       "draft_tools": [
         "find_flags",
@@ -1892,7 +1892,8 @@
         "flag_summary"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-feature-flag-manager-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-feature-flag-manager-design.md",
+      "language": "python"
     },
     {
       "name": "code-generation-helper",

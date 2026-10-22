@@ -602,6 +602,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "feature-flag-manager",
+      "description": "feature-flag-manager JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/feature-flag-manager/plugin.json",
+      "tags": [
+        "feature-flag-manager"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
