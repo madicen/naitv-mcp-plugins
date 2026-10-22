@@ -232,6 +232,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "security-checker",
+      "description": "security-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/security-checker/plugin.json",
+      "tags": [
+        "security-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
