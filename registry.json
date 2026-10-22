@@ -612,6 +612,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "code-generation-helper",
+      "description": "code-generation-helper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/code-generation-helper/plugin.json",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

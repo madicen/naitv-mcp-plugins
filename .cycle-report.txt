@@ -137,3 +137,6 @@ OK blame-context-historian https://github.com/madicen/naitv-mcp-plugins/pull/62 
 catalog: 66 entries  blocked=0  exists=59  needs-spec=0  planned=7
 OK feature-flag-manager https://github.com/madicen/naitv-mcp-plugins/pull/63 base=plugin/blame-context-historian
 === BUILD code-generation-helper ===
+catalog: 66 entries  blocked=0  exists=60  needs-spec=0  planned=6
+OK code-generation-helper https://github.com/madicen/naitv-mcp-plugins/pull/64 base=plugin/feature-flag-manager
+=== BUILD accessibility-checker ===
