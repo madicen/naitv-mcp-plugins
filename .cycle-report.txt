@@ -83,3 +83,4 @@ OK type-safety-enhancer https://github.com/madicen/naitv-mcp-plugins/pull/44 bas
 catalog: 66 entries  blocked=0  exists=41  needs-spec=0  planned=25
 OK doc-scraper https://github.com/madicen/naitv-mcp-plugins/pull/45 base=plugin/type-safety-enhancer
 === BUILD performance-profiler ===
+catalog: 66 entries  blocked=0  exists=42  needs-spec=0  planned=24

@@ -1,0 +1,19 @@
+{
+  "id": "perfor-008-performance-",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using performance-profiler tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "performance-profiler"
+  ]
+}
