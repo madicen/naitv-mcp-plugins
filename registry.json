@@ -222,6 +222,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "tdd-runner",
+      "description": "tdd-runner JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/tdd-runner/plugin.json",
+      "tags": [
+        "tdd-runner"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

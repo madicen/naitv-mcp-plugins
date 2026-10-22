@@ -20,3 +20,6 @@ OK validate-and-test https://github.com/madicen/naitv-mcp-plugins/pull/23 base=p
 catalog: 66 entries  blocked=0  exists=20  needs-spec=0  planned=46
 OK lint-fix-loop https://github.com/madicen/naitv-mcp-plugins/pull/24 base=plugin/validate-and-test
 === BUILD tdd-runner ===
+catalog: 66 entries  blocked=0  exists=21  needs-spec=0  planned=45
+OK tdd-runner https://github.com/madicen/naitv-mcp-plugins/pull/25 base=plugin/lint-fix-loop
+=== BUILD security-checker ===
