@@ -152,6 +152,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "error-matcher",
+      "description": "error-matcher JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/error-matcher/plugin.json",
+      "tags": [
+        "error-matcher"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

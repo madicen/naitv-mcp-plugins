@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/add_error_signature.schema.json",
+  "title": "add_error_signature",
+  "type": "object",
+  "required": [
+    "stored",
+    "id"
+  ],
+  "properties": {
+    "stored": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
