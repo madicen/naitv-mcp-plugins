@@ -1,0 +1,71 @@
+{
+  "name": "environment-validator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "environment-validator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "check_env_vars",
+      "delivery": "on-demand",
+      "tags": [
+        "environment-validator"
+      ],
+      "body": "check_env_vars for environment-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=check_env_vars python3 ~/.config/naitv-mcp/tools/environment-validator/environment_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "parse_env_files",
+      "delivery": "on-demand",
+      "tags": [
+        "environment-validator"
+      ],
+      "body": "parse_env_files for environment-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=parse_env_files python3 ~/.config/naitv-mcp/tools/environment-validator/environment_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "compare_env_templates",
+      "delivery": "on-demand",
+      "tags": [
+        "environment-validator"
+      ],
+      "body": "compare_env_templates for environment-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=compare_env_templates python3 ~/.config/naitv-mcp/tools/environment-validator/environment_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "env_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "environment-validator"
+      ],
+      "body": "env_summary for environment-validator.",
+      "fields": {
+        "exec": "TOOL_NAME=env_summary python3 ~/.config/naitv-mcp/tools/environment-validator/environment_validator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

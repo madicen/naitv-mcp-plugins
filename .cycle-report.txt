@@ -98,3 +98,4 @@ OK change-impact-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/49 b
 catalog: 66 entries  blocked=0  exists=46  needs-spec=0  planned=20
 OK documentation-sync-manager https://github.com/madicen/naitv-mcp-plugins/pull/50 base=plugin/change-impact-analyzer
 === BUILD environment-validator ===
+catalog: 66 entries  blocked=0  exists=47  needs-spec=0  planned=19
