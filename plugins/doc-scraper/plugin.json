@@ -1,0 +1,56 @@
+{
+  "name": "doc-scraper",
+  "version": "0.1.0",
+  "description": "Known tool: fetch_and_parse (< 3s target). Network use needs an explicit design decision because the contract forbids implicit network access. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "doc-scraper"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "fetch_and_parse",
+      "delivery": "on-demand",
+      "tags": [
+        "doc-scraper"
+      ],
+      "body": "fetch_and_parse for doc-scraper.",
+      "fields": {
+        "exec": "TOOL_NAME=fetch_and_parse python3 ~/.config/naitv-mcp/tools/doc-scraper/doc_scraper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "extract_sections",
+      "delivery": "on-demand",
+      "tags": [
+        "doc-scraper"
+      ],
+      "body": "extract_sections for doc-scraper.",
+      "fields": {
+        "exec": "TOOL_NAME=extract_sections python3 ~/.config/naitv-mcp/tools/doc-scraper/doc_scraper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "search_doc_index",
+      "delivery": "on-demand",
+      "tags": [
+        "doc-scraper"
+      ],
+      "body": "search_doc_index for doc-scraper.",
+      "fields": {
+        "exec": "TOOL_NAME=search_doc_index python3 ~/.config/naitv-mcp/tools/doc-scraper/doc_scraper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

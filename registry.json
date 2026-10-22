@@ -422,6 +422,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "doc-scraper",
+      "description": "doc-scraper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/doc-scraper/plugin.json",
+      "tags": [
+        "doc-scraper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
