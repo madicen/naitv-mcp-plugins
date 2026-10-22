@@ -134,3 +134,4 @@ OK integration-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/
 catalog: 66 entries  blocked=0  exists=58  needs-spec=0  planned=8
 OK blame-context-historian https://github.com/madicen/naitv-mcp-plugins/pull/62 base=plugin/integration-test-generator
 === BUILD feature-flag-manager ===
+catalog: 66 entries  blocked=0  exists=59  needs-spec=0  planned=7
