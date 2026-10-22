@@ -1,0 +1,15 @@
+{
+  "id": "mist-ctl-002-makefile",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Does this repo have a Makefile? Answer yes or no without using mistake tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["yes"]
+  },
+  "control": true,
+  "plugins_expected": []
+}

@@ -1,0 +1,69 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "mistake_tracker",
+    "search_paths": ["tools/mistake-tracker", "plugins/mistake-tracker"],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": ["empty", "py-small"],
+    "queries": {
+      "search_mistakes": { "query": "null", "limit": 10 },
+      "list_recurring_mistakes": { "min_count": 2 },
+      "mistake_stats": {},
+      "record_mistake": {
+        "description": "forgot null check",
+        "category": "null",
+        "file": "pkg/greeter.py",
+        "recorded_at": 1700000000
+      }
+    }
+  },
+  "perf": { "enabled": false },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "null",
+      "description": "forgot null check",
+      "category": "null",
+      "file": "pkg/greeter.py",
+      "min_count": 2,
+      "limit": 10
+    },
+    "expect_keys": {
+      "search_mistakes": ["matches", "count", "scores"],
+      "list_recurring_mistakes": ["recurring", "counts"],
+      "mistake_stats": ["total", "by_category"],
+      "record_mistake": ["id", "stored"]
+    },
+    "invalid_tool": "search_mistakes",
+    "invalid_args": {},
+    "post_timeout_tool": "mistake_stats",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty"
+    }
+  },
+  "l5": {
+    "treatment_plugins": ["mistake-tracker"],
+    "tool_names": [
+      "record_mistake",
+      "search_mistakes",
+      "list_recurring_mistakes",
+      "mistake_stats"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}

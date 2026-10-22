@@ -1,0 +1,15 @@
+{
+  "id": "mist-004-category-logic",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Record mistake description 'off by one' category 'logic' file 'main.c'. What category was stored?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["logic"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

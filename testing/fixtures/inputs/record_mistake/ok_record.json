@@ -1,0 +1,1 @@
+{"root_path": "$FIXTURE/empty", "description": "forgot null check", "category": "null", "file": "pkg/greeter.py", "recorded_at": 1700000000}

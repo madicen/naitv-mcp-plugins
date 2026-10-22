@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/record_mistake.schema.json",
+  "title": "record_mistake",
+  "type": "object",
+  "required": ["id", "stored", "category", "file"],
+  "properties": {
+    "id": { "type": "string" },
+    "stored": { "type": "boolean" },
+    "category": { "type": "string" },
+    "file": { "type": "string" }
+  },
+  "additionalProperties": false
+}

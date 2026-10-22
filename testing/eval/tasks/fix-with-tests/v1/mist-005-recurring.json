@@ -1,0 +1,15 @@
+{
+  "id": "mist-005-recurring",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Record the same mistake description 'typo in target' category 'typo' twice with files 'Makefile' and 'README.md'. Then list_recurring_mistakes with min_count 2. Is typo listed as recurring? Answer yes or no.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["yes"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}
