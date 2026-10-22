@@ -1,0 +1,19 @@
+{
+  "id": "patter-006-pattern-reco",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using pattern-recognizer tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

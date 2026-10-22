@@ -1,1 +1,4 @@
 === BUILD pattern-recognizer ===
+FAIL_TEST pattern-recognizer
+BLOCKED pattern-recognizer — stopping cycle
+DONE built=0
