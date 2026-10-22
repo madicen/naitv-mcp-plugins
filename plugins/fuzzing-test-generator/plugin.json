@@ -1,0 +1,71 @@
+{
+  "name": "fuzzing-test-generator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "fuzzing-test-generator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_fuzz_targets",
+      "delivery": "on-demand",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "body": "find_fuzz_targets for fuzzing-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=find_fuzz_targets python3 ~/.config/naitv-mcp/tools/fuzzing-test-generator/fuzzing_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_fuzz_target",
+      "delivery": "on-demand",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "body": "generate_fuzz_target for fuzzing-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_fuzz_target python3 ~/.config/naitv-mcp/tools/fuzzing-test-generator/fuzzing_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_fuzz_target",
+      "delivery": "on-demand",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "body": "validate_fuzz_target for fuzzing-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_fuzz_target python3 ~/.config/naitv-mcp/tools/fuzzing-test-generator/fuzzing_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "run_fuzz_smoke",
+      "delivery": "on-demand",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "body": "run_fuzz_smoke for fuzzing-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=run_fuzz_smoke python3 ~/.config/naitv-mcp/tools/fuzzing-test-generator/fuzzing_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

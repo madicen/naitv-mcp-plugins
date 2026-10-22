@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "run_fuzz_smoke dry-run on empty",
+  "tool": "run_fuzz_smoke"
+}
