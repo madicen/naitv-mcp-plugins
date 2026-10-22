@@ -1,0 +1,19 @@
+{
+  "id": "surgic-010-surgical-pat",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using surgical-patch tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

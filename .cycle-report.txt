@@ -38,3 +38,6 @@ OK circular-dependency-detector https://github.com/madicen/naitv-mcp-plugins/pul
 catalog: 66 entries  blocked=0  exists=26  needs-spec=0  planned=40
 OK api-contract-validator https://github.com/madicen/naitv-mcp-plugins/pull/30 base=plugin/circular-dependency-detector
 === BUILD surgical-patch ===
+catalog: 66 entries  blocked=0  exists=27  needs-spec=0  planned=39
+OK surgical-patch https://github.com/madicen/naitv-mcp-plugins/pull/31 base=plugin/api-contract-validator
+=== BUILD regression-test-generator ===

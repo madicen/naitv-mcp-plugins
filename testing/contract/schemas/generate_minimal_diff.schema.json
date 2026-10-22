@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/generate_minimal_diff.schema.json",
+  "title": "generate_minimal_diff",
+  "type": "object",
+  "required": [
+    "generated",
+    "ok"
+  ],
+  "properties": {
+    "generated": {
+      "type": "string"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "items": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

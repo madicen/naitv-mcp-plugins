@@ -282,6 +282,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "surgical-patch",
+      "description": "surgical-patch JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/surgical-patch/plugin.json",
+      "tags": [
+        "surgical-patch"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
