@@ -14,3 +14,4 @@ OK task-decomposer https://github.com/madicen/naitv-mcp-plugins/pull/21 base=plu
 catalog: 66 entries  blocked=0  exists=18  needs-spec=0  planned=48
 OK think-before-write https://github.com/madicen/naitv-mcp-plugins/pull/22 base=plugin/task-decomposer
 === BUILD validate-and-test ===
+catalog: 66 entries  blocked=0  exists=19  needs-spec=0  planned=47

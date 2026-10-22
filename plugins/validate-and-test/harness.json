@@ -1,0 +1,97 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "validate_and_test",
+    "search_paths": [
+      "tools/validate-and-test",
+      "plugins/validate-and-test"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "detect_build_system": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "run_validation": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "summarize_failures": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "detect_build_system": [
+        "ok",
+        "tool"
+      ],
+      "run_validation": [
+        "ok",
+        "exit_code",
+        "summary"
+      ],
+      "summarize_failures": [
+        "ok",
+        "tool"
+      ]
+    },
+    "invalid_tool": "detect_build_system",
+    "invalid_args": {},
+    "post_timeout_tool": "detect_build_system",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "validate-and-test"
+    ],
+    "tool_names": [
+      "detect_build_system",
+      "run_validation",
+      "summarize_failures"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}
