@@ -1,0 +1,71 @@
+{
+  "name": "code-review-simulator",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "code-review-simulator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "review_diff",
+      "delivery": "on-demand",
+      "tags": [
+        "code-review-simulator"
+      ],
+      "body": "review_diff for code-review-simulator.",
+      "fields": {
+        "exec": "TOOL_NAME=review_diff python3 ~/.config/naitv-mcp/tools/code-review-simulator/code_review_simulator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "score_risk",
+      "delivery": "on-demand",
+      "tags": [
+        "code-review-simulator"
+      ],
+      "body": "score_risk for code-review-simulator.",
+      "fields": {
+        "exec": "TOOL_NAME=score_risk python3 ~/.config/naitv-mcp/tools/code-review-simulator/code_review_simulator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_reviewer_questions",
+      "delivery": "on-demand",
+      "tags": [
+        "code-review-simulator"
+      ],
+      "body": "list_reviewer_questions for code-review-simulator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_reviewer_questions python3 ~/.config/naitv-mcp/tools/code-review-simulator/code_review_simulator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_tests",
+      "delivery": "on-demand",
+      "tags": [
+        "code-review-simulator"
+      ],
+      "body": "suggest_tests for code-review-simulator.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_tests python3 ~/.config/naitv-mcp/tools/code-review-simulator/code_review_simulator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

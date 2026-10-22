@@ -74,3 +74,4 @@ OK naming-validator https://github.com/madicen/naitv-mcp-plugins/pull/41 base=pl
 catalog: 66 entries  blocked=0  exists=38  needs-spec=0  planned=28
 OK logging-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/42 base=plugin/naming-validator
 === BUILD code-review-simulator ===
+catalog: 66 entries  blocked=0  exists=39  needs-spec=0  planned=27

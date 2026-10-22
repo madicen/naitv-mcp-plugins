@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 1,
+    "root": "empty"
+  },
+  "tool": "score_risk",
+  "truncated": false
+}
