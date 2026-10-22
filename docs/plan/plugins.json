@@ -1281,7 +1281,7 @@
     },
     {
       "name": "performance-profiler",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "run_benchmark",
@@ -1301,7 +1301,7 @@
       ],
       "depends_on_raw": "build-system",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'build-system' normalized to 'build-system-integrator' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
       "order": 42,
       "draft_tools": [
         "run_benchmark",
@@ -1310,7 +1310,8 @@
         "summarize_profile"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-performance-profiler-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-performance-profiler-design.md",
+      "language": "python"
     },
     {
       "name": "refactoring-suggester",

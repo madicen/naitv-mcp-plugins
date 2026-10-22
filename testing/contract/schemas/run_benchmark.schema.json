@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/run_benchmark.schema.json",
+  "title": "run_benchmark",
+  "type": "object",
+  "required": [
+    "ok",
+    "exit_code",
+    "summary"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "exit_code": {
+      "type": "integer"
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
