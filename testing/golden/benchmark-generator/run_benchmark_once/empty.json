@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "run_benchmark_once dry-run on empty",
+  "tool": "run_benchmark_once"
+}

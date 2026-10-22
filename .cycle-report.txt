@@ -89,3 +89,4 @@ OK performance-profiler https://github.com/madicen/naitv-mcp-plugins/pull/46 bas
 catalog: 66 entries  blocked=0  exists=43  needs-spec=0  planned=23
 OK refactoring-suggester https://github.com/madicen/naitv-mcp-plugins/pull/47 base=plugin/performance-profiler
 === BUILD benchmark-generator ===
+catalog: 66 entries  blocked=0  exists=44  needs-spec=0  planned=22
