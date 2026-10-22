@@ -1,0 +1,15 @@
+{
+  "id": "mist-ctl-001-readme",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Read README.md and say whether it exists. Do not use mistake tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["README"]
+  },
+  "control": true,
+  "plugins_expected": []
+}

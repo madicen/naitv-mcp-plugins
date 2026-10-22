@@ -1,0 +1,15 @@
+{
+  "id": "mist-002-record-null",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Record a mistake with description 'forgot null check', category 'null', file 'Makefile'. Did it store successfully? Answer yes or no.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["yes"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

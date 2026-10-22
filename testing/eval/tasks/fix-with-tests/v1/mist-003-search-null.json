@@ -1,0 +1,15 @@
+{
+  "id": "mist-003-search-null",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Record a mistake description 'forgot null check' category 'null' file 'Makefile', then search_mistakes for 'null'. Does a match mention null? Answer yes or no.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["yes"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}
