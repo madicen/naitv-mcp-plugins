@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/track_refactor_state.schema.json",
+  "title": "track_refactor_state",
+  "type": "object",
+  "required": [
+    "stored",
+    "id"
+  ],
+  "properties": {
+    "stored": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
