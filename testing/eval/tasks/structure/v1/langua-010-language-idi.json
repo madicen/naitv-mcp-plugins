@@ -1,0 +1,19 @@
+{
+  "id": "langua-010-language-idi",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using language-idioms-enforcer tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "language-idioms-enforcer"
+  ]
+}

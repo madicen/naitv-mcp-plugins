@@ -104,3 +104,6 @@ OK environment-validator https://github.com/madicen/naitv-mcp-plugins/pull/51 ba
 catalog: 66 entries  blocked=0  exists=48  needs-spec=0  planned=18
 OK interface-segregation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/52 base=plugin/environment-validator
 === BUILD language-idioms-enforcer ===
+catalog: 66 entries  blocked=0  exists=49  needs-spec=0  planned=17
+OK language-idioms-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/53 base=plugin/interface-segregation-enforcer
+=== BUILD performance-regression-detector ===

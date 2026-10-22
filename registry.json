@@ -502,6 +502,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "language-idioms-enforcer",
+      "description": "language-idioms-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/language-idioms-enforcer/plugin.json",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
