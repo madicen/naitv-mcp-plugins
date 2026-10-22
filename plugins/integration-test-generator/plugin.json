@@ -1,0 +1,71 @@
+{
+  "name": "integration-test-generator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "integration-test-generator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_integration_points",
+      "delivery": "on-demand",
+      "tags": [
+        "integration-test-generator"
+      ],
+      "body": "find_integration_points for integration-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=find_integration_points python3 ~/.config/naitv-mcp/tools/integration-test-generator/integration_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_integration_test",
+      "delivery": "on-demand",
+      "tags": [
+        "integration-test-generator"
+      ],
+      "body": "generate_integration_test for integration-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_integration_test python3 ~/.config/naitv-mcp/tools/integration-test-generator/integration_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_test_file",
+      "delivery": "on-demand",
+      "tags": [
+        "integration-test-generator"
+      ],
+      "body": "validate_test_file for integration-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_test_file python3 ~/.config/naitv-mcp/tools/integration-test-generator/integration_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_fixtures",
+      "delivery": "on-demand",
+      "tags": [
+        "integration-test-generator"
+      ],
+      "body": "list_fixtures for integration-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=list_fixtures python3 ~/.config/naitv-mcp/tools/integration-test-generator/integration_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
