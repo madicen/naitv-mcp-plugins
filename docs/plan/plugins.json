@@ -713,7 +713,7 @@
     },
     {
       "name": "circular-dependency-detector",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "find_cycles",
@@ -733,7 +733,7 @@
       ],
       "depends_on_raw": "dependency-graph",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
       "order": 25,
       "draft_tools": [
         "find_cycles",
@@ -742,7 +742,8 @@
         "check_change_cycles"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-circular-dependency-detector-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-circular-dependency-detector-design.md",
+      "language": "python"
     },
     {
       "name": "api-contract-validator",

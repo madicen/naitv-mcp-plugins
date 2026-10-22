@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/suggest_break_points.schema.json",
+  "title": "suggest_break_points",
+  "type": "object",
+  "required": [
+    "generated",
+    "ok"
+  ],
+  "properties": {
+    "generated": {
+      "type": "string"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "items": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}
