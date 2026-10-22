@@ -101,3 +101,6 @@ OK documentation-sync-manager https://github.com/madicen/naitv-mcp-plugins/pull/
 catalog: 66 entries  blocked=0  exists=47  needs-spec=0  planned=19
 OK environment-validator https://github.com/madicen/naitv-mcp-plugins/pull/51 base=plugin/documentation-sync-manager
 === BUILD interface-segregation-enforcer ===
+catalog: 66 entries  blocked=0  exists=48  needs-spec=0  planned=18
+OK interface-segregation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/52 base=plugin/environment-validator
+=== BUILD language-idioms-enforcer ===
