@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 7,
+    "root": "py-small"
+  },
+  "tool": "order_subtasks",
+  "truncated": false
+}

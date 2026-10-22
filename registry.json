@@ -182,6 +182,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "task-decomposer",
+      "description": "task-decomposer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/task-decomposer/plugin.json",
+      "tags": [
+        "task-decomposer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

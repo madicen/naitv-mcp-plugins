@@ -453,7 +453,7 @@
     },
     {
       "name": "task-decomposer",
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "tools": [
         "decompose_task",
@@ -473,7 +473,7 @@
       ],
       "depends_on_raw": "structural-anchor",
       "eval_category": "structure",
-      "notes": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
       "order": 17,
       "draft_tools": [
         "decompose_task",
@@ -482,7 +482,8 @@
         "validate_plan"
       ],
       "spec_status": "approved",
-      "spec_path": "docs/superpowers/specs/2026-10-14-task-decomposer-design.md"
+      "spec_path": "docs/superpowers/specs/2026-10-14-task-decomposer-design.md",
+      "language": "python"
     },
     {
       "name": "think-before-write",
