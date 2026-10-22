@@ -122,3 +122,6 @@ OK concurrency-checker https://github.com/madicen/naitv-mcp-plugins/pull/57 base
 catalog: 66 entries  blocked=0  exists=54  needs-spec=0  planned=12
 OK database-schema-validator https://github.com/madicen/naitv-mcp-plugins/pull/58 base=plugin/concurrency-checker
 === BUILD fuzzing-test-generator ===
+catalog: 66 entries  blocked=0  exists=55  needs-spec=0  planned=11
+OK fuzzing-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/59 base=plugin/database-schema-validator
+=== BUILD goroutine-leak-detector ===

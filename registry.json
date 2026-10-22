@@ -562,6 +562,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "fuzzing-test-generator",
+      "description": "fuzzing-test-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/fuzzing-test-generator/plugin.json",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
