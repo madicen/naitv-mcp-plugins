@@ -388,12 +388,12 @@
     {
       "name": "golden-example-injector",
       "phase": 5,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
         "find_golden_examples",
-        "rank_examples",
+        "rank_golden_examples",
         "inject_example"
       ],
       "depends_on": [
@@ -401,7 +401,7 @@
       ],
       "eval_category": "multi-file",
       "l5": "pending",
-      "notes": "Tool list needed. Approved first-draft tools from draft_tools.",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. Tool renames for global uniqueness: {'rank_examples': 'rank_golden_examples'}.",
       "tool_count": 3,
       "implementation": "Code search + rank",
       "perf": "< 1s",
