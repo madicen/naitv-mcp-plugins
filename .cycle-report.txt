@@ -23,3 +23,4 @@ OK lint-fix-loop https://github.com/madicen/naitv-mcp-plugins/pull/24 base=plugi
 catalog: 66 entries  blocked=0  exists=21  needs-spec=0  planned=45
 OK tdd-runner https://github.com/madicen/naitv-mcp-plugins/pull/25 base=plugin/lint-fix-loop
 === BUILD security-checker ===
+catalog: 66 entries  blocked=0  exists=22  needs-spec=0  planned=44

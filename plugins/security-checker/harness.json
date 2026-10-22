@@ -1,0 +1,108 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "security_checker",
+    "search_paths": [
+      "tools/security-checker",
+      "plugins/security-checker"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "scan_security_patterns": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "scan_file": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "list_rules": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "check_unsafe_calls": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "scan_security_patterns": [
+        "items",
+        "count"
+      ],
+      "scan_file": [
+        "items",
+        "count"
+      ],
+      "list_rules": [
+        "items",
+        "count"
+      ],
+      "check_unsafe_calls": [
+        "ok",
+        "violations",
+        "count"
+      ]
+    },
+    "invalid_tool": "scan_security_patterns",
+    "invalid_args": {},
+    "post_timeout_tool": "scan_security_patterns",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "security-checker"
+    ],
+    "tool_names": [
+      "scan_security_patterns",
+      "scan_file",
+      "list_rules",
+      "check_unsafe_calls"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    }
+  }
+}
