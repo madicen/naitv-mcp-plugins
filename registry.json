@@ -572,6 +572,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "goroutine-leak-detector",
+      "description": "goroutine-leak-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/goroutine-leak-detector/plugin.json",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

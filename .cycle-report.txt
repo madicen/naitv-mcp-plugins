@@ -125,3 +125,6 @@ OK database-schema-validator https://github.com/madicen/naitv-mcp-plugins/pull/5
 catalog: 66 entries  blocked=0  exists=55  needs-spec=0  planned=11
 OK fuzzing-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/59 base=plugin/database-schema-validator
 === BUILD goroutine-leak-detector ===
+catalog: 66 entries  blocked=0  exists=56  needs-spec=0  planned=10
+OK goroutine-leak-detector https://github.com/madicen/naitv-mcp-plugins/pull/60 base=plugin/fuzzing-test-generator
+=== BUILD integration-test-generator ===
