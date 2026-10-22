@@ -382,6 +382,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "naming-validator",
+      "description": "naming-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/naming-validator/plugin.json",
+      "tags": [
+        "naming-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }
