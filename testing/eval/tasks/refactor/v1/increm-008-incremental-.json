@@ -1,0 +1,19 @@
+{
+  "id": "increm-008-incremental-",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using incremental-refactoring-helper tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "incremental-refactoring-helper"
+  ]
+}

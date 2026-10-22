@@ -1,0 +1,71 @@
+{
+  "name": "incremental-refactoring-helper",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "incremental-refactoring-helper"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "plan_refactor_steps",
+      "delivery": "on-demand",
+      "tags": [
+        "incremental-refactoring-helper"
+      ],
+      "body": "plan_refactor_steps for incremental-refactoring-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=plan_refactor_steps python3 ~/.config/naitv-mcp/tools/incremental-refactoring-helper/incremental_refactoring_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "next_step",
+      "delivery": "on-demand",
+      "tags": [
+        "incremental-refactoring-helper"
+      ],
+      "body": "next_step for incremental-refactoring-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=next_step python3 ~/.config/naitv-mcp/tools/incremental-refactoring-helper/incremental_refactoring_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "track_refactor_state",
+      "delivery": "on-demand",
+      "tags": [
+        "incremental-refactoring-helper"
+      ],
+      "body": "track_refactor_state for incremental-refactoring-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=track_refactor_state python3 ~/.config/naitv-mcp/tools/incremental-refactoring-helper/incremental_refactoring_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "mark_step_done",
+      "delivery": "on-demand",
+      "tags": [
+        "incremental-refactoring-helper"
+      ],
+      "body": "mark_step_done for incremental-refactoring-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=mark_step_done python3 ~/.config/naitv-mcp/tools/incremental-refactoring-helper/incremental_refactoring_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

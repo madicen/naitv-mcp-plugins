@@ -149,3 +149,6 @@ OK rollback-plan-generator https://github.com/madicen/naitv-mcp-plugins/pull/66 
 catalog: 66 entries  blocked=0  exists=63  needs-spec=0  planned=3
 OK contract-testing-helper https://github.com/madicen/naitv-mcp-plugins/pull/67 base=plugin/rollback-plan-generator
 === BUILD incremental-refactoring-helper ===
+catalog: 66 entries  blocked=0  exists=64  needs-spec=0  planned=2
+OK incremental-refactoring-helper https://github.com/madicen/naitv-mcp-plugins/pull/68 base=plugin/contract-testing-helper
+=== BUILD memory-profiler ===
