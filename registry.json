@@ -672,6 +672,16 @@
       ],
       "version": "0.1.0",
       "author": "madicen"
+    },
+    {
+      "name": "monitoring-alerting-setup",
+      "description": "monitoring-alerting-setup JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/monitoring-alerting-setup/plugin.json",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
     }
   ]
 }

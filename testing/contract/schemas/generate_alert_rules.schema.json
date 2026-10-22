@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/generate_alert_rules.schema.json",
+  "title": "generate_alert_rules",
+  "type": "object",
+  "required": [
+    "generated",
+    "ok"
+  ],
+  "properties": {
+    "generated": {
+      "type": "string"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "items": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

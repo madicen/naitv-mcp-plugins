@@ -155,3 +155,7 @@ OK incremental-refactoring-helper https://github.com/madicen/naitv-mcp-plugins/p
 catalog: 66 entries  blocked=0  exists=65  needs-spec=0  planned=1
 OK memory-profiler https://github.com/madicen/naitv-mcp-plugins/pull/69 base=plugin/incremental-refactoring-helper
 === BUILD monitoring-alerting-setup ===
+catalog: 66 entries  blocked=0  exists=66  needs-spec=0  planned=0
+OK monitoring-alerting-setup https://github.com/madicen/naitv-mcp-plugins/pull/70 base=plugin/memory-profiler
+NO_MORE_BUILDABLE
+DONE built=53
