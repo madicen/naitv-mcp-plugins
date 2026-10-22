@@ -86,3 +86,6 @@ OK doc-scraper https://github.com/madicen/naitv-mcp-plugins/pull/45 base=plugin/
 catalog: 66 entries  blocked=0  exists=42  needs-spec=0  planned=24
 OK performance-profiler https://github.com/madicen/naitv-mcp-plugins/pull/46 base=plugin/doc-scraper
 === BUILD refactoring-suggester ===
+catalog: 66 entries  blocked=0  exists=43  needs-spec=0  planned=23
+OK refactoring-suggester https://github.com/madicen/naitv-mcp-plugins/pull/47 base=plugin/performance-profiler
+=== BUILD benchmark-generator ===

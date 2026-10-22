@@ -1,0 +1,19 @@
+{
+  "id": "refact-010-refactoring-",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using refactoring-suggester tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "refactoring-suggester"
+  ]
+}
