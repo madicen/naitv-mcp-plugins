@@ -1,0 +1,19 @@
+{
+  "id": "deprec-007-deprecation-",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Using deprecation-manager tools, inspect this repo and report whether README exists (yes/no).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "yes"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "deprecation-manager"
+  ]
+}

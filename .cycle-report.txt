@@ -50,3 +50,6 @@ OK documentation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/33 b
 catalog: 66 entries  blocked=0  exists=30  needs-spec=0  planned=36
 OK mock-stub-generator https://github.com/madicen/naitv-mcp-plugins/pull/34 base=plugin/documentation-enforcer
 === BUILD deprecation-manager ===
+catalog: 66 entries  blocked=0  exists=31  needs-spec=0  planned=35
+OK deprecation-manager https://github.com/madicen/naitv-mcp-plugins/pull/35 base=plugin/mock-stub-generator
+=== BUILD test-coverage-analyzer ===
