@@ -1,0 +1,71 @@
+{
+  "name": "team-metrics-collector",
+  "version": "0.1.0",
+  "description": "Infrastructure, not model-facing. Matrix row has no direct model effect. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "team-metrics-collector"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "collect_commit_metrics",
+      "delivery": "on-demand",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "body": "collect_commit_metrics for team-metrics-collector.",
+      "fields": {
+        "exec": "TOOL_NAME=collect_commit_metrics python3 ~/.config/naitv-mcp/tools/team-metrics-collector/team_metrics_collector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "collect_review_metrics",
+      "delivery": "on-demand",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "body": "collect_review_metrics for team-metrics-collector.",
+      "fields": {
+        "exec": "TOOL_NAME=collect_review_metrics python3 ~/.config/naitv-mcp/tools/team-metrics-collector/team_metrics_collector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "aggregate_metrics",
+      "delivery": "on-demand",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "body": "aggregate_metrics for team-metrics-collector.",
+      "fields": {
+        "exec": "TOOL_NAME=aggregate_metrics python3 ~/.config/naitv-mcp/tools/team-metrics-collector/team_metrics_collector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "export_metrics",
+      "delivery": "on-demand",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "body": "export_metrics for team-metrics-collector.",
+      "fields": {
+        "exec": "TOOL_NAME=export_metrics python3 ~/.config/naitv-mcp/tools/team-metrics-collector/team_metrics_collector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

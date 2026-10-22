@@ -113,3 +113,6 @@ OK performance-regression-detector https://github.com/madicen/naitv-mcp-plugins/
 catalog: 66 entries  blocked=0  exists=51  needs-spec=0  planned=15
 OK stale-code-identifier https://github.com/madicen/naitv-mcp-plugins/pull/55 base=plugin/performance-regression-detector
 === BUILD team-metrics-collector ===
+catalog: 66 entries  blocked=0  exists=52  needs-spec=0  planned=14
+OK team-metrics-collector https://github.com/madicen/naitv-mcp-plugins/pull/56 base=plugin/stale-code-identifier
+=== BUILD concurrency-checker ===
