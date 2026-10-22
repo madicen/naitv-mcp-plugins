@@ -5,7 +5,7 @@
   "category": "structure",
   "difficulty": "easy",
   "fixture": "py-small",
-  "request": "Using documentation-enforcer tools, inspect this repo and report whether README exists (yes/no).",
+  "request": "Using documentation-sync-manager tools, inspect this repo and report whether README exists (yes/no).",
   "success": {
     "type": "answer_contains_all",
     "values": [
@@ -14,6 +14,6 @@
   },
   "control": false,
   "plugins_expected": [
-    "documentation-enforcer"
+    "documentation-sync-manager"
   ]
 }
