@@ -1,0 +1,71 @@
+{
+  "name": "invariant-checker",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "invariant-checker"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "load_invariants",
+      "delivery": "on-demand",
+      "tags": [
+        "invariant-checker"
+      ],
+      "body": "load_invariants for invariant-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=load_invariants python3 ~/.config/naitv-mcp/tools/invariant-checker/invariant_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_invariants",
+      "delivery": "on-demand",
+      "tags": [
+        "invariant-checker"
+      ],
+      "body": "check_invariants for invariant-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=check_invariants python3 ~/.config/naitv-mcp/tools/invariant-checker/invariant_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "report_invariant_violations",
+      "delivery": "on-demand",
+      "tags": [
+        "invariant-checker"
+      ],
+      "body": "report_invariant_violations for invariant-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=report_invariant_violations python3 ~/.config/naitv-mcp/tools/invariant-checker/invariant_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "add_invariant",
+      "delivery": "on-demand",
+      "tags": [
+        "invariant-checker"
+      ],
+      "body": "add_invariant for invariant-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=add_invariant python3 ~/.config/naitv-mcp/tools/invariant-checker/invariant_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}
