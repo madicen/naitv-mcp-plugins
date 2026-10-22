@@ -1,0 +1,61 @@
+{
+  "name": "cache-manager",
+  "version": "0.1.0",
+  "description": "Namespaced key/value cache with TTL, stats, and prune (SQLite under ~/.cache).",
+  "author": "madicen",
+  "tags": ["cache-manager", "cache", "infrastructure"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "cache_get",
+      "delivery": "on-demand",
+      "tags": ["cache-manager"],
+      "body": "Get a cached value by key (hit/miss).",
+      "fields": {
+        "exec": "TOOL_NAME=cache_get python3 ~/.config/naitv-mcp/tools/cache-manager/cache_manager.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"key\",\"description\":\"Cache key\",\"required\":true},{\"name\":\"namespace\",\"description\":\"Namespace (default default)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "cache_put",
+      "delivery": "on-demand",
+      "tags": ["cache-manager"],
+      "body": "Store a JSON-serializable value with optional TTL seconds (0 = no expiry).",
+      "fields": {
+        "exec": "TOOL_NAME=cache_put python3 ~/.config/naitv-mcp/tools/cache-manager/cache_manager.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"key\",\"description\":\"Cache key\",\"required\":true},{\"name\":\"value\",\"description\":\"JSON value\",\"required\":true},{\"name\":\"namespace\",\"description\":\"Namespace\",\"required\":false},{\"name\":\"ttl\",\"description\":\"TTL seconds (default 3600, 0=no expiry)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "cache_stats",
+      "delivery": "on-demand",
+      "tags": ["cache-manager"],
+      "body": "Report entry count, bytes, and hit_rate for a namespace.",
+      "fields": {
+        "exec": "TOOL_NAME=cache_stats python3 ~/.config/naitv-mcp/tools/cache-manager/cache_manager.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"namespace\",\"description\":\"Namespace (default default)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "cache_prune",
+      "delivery": "on-demand",
+      "tags": ["cache-manager"],
+      "body": "Prune expired entries; if max_bytes set, LRU-evict until under budget (0 clears all).",
+      "fields": {
+        "exec": "TOOL_NAME=cache_prune python3 ~/.config/naitv-mcp/tools/cache-manager/cache_manager.py",
+        "io_mode": "json",
+        "timeout": "1s",
+        "params": "[{\"name\":\"namespace\",\"description\":\"Namespace\",\"required\":false},{\"name\":\"max_bytes\",\"description\":\"Max bytes to keep (0 clears all)\",\"required\":false}]"
+      }
+    }
+  ]
+}

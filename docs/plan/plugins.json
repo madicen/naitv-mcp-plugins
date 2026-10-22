@@ -222,7 +222,7 @@
     {
       "name": "cache-manager",
       "phase": 4,
-      "status": "planned",
+      "status": "exists",
       "profile": "json_tools",
       "language": "python",
       "tools": [
@@ -233,8 +233,8 @@
       ],
       "depends_on": [],
       "eval_category": null,
-      "l5": "pending",
-      "notes": "Tool list needed. Approved first-draft tools from draft_tools.",
+      "l5": "not-applicable",
+      "notes": "L1–L4 green; L5 not-applicable (no eval category). SQLite under ~/.cache/naitv-mcp/cache-manager/.",
       "tool_count": 4,
       "implementation": "In-memory + SQLite",
       "perf": "< 100ms",
