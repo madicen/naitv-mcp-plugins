@@ -2,25 +2,38 @@
   "plugins": [
     {
       "name": "loop-engineering-go",
-      "description": "Loop Engineering for Go projects — rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
+      "description": "Loop Engineering for Go projects \u2014 rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go/plugin.json",
-      "tags": ["go", "loop-engineering", "verification"],
+      "tags": [
+        "go",
+        "loop-engineering",
+        "verification"
+      ],
       "version": "1.1.0",
       "author": "madicen"
     },
     {
       "name": "lazy-dev",
-      "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) — YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
+      "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) \u2014 YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lazy-dev/plugin.json",
-      "tags": ["lazy-dev", "yagni", "minimalism", "code-quality"],
+      "tags": [
+        "lazy-dev",
+        "yagni",
+        "minimalism",
+        "code-quality"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
     {
       "name": "structural-anchor",
-      "description": "Codebase structural map — packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
+      "description": "Codebase structural map \u2014 packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/structural-anchor/plugin.json",
-      "tags": ["structural-anchor", "context", "codebase-map"],
+      "tags": [
+        "structural-anchor",
+        "context",
+        "codebase-map"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
@@ -28,7 +41,12 @@
       "name": "symbol-navigator",
       "description": "AST-based symbol definition, pattern search, and heuristic references (Go + Python) for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/symbol-navigator/plugin.json",
-      "tags": ["symbol-navigator", "context", "definitions", "references"],
+      "tags": [
+        "symbol-navigator",
+        "context",
+        "definitions",
+        "references"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
@@ -36,7 +54,10 @@
       "name": "plugin-manager",
       "description": "List, validate, and test naitv-mcp plugin manifests under a filesystem root (developer tooling).",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/plugin-manager/plugin.json",
-      "tags": ["plugin-manager", "developer-tools"],
+      "tags": [
+        "plugin-manager",
+        "developer-tools"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -44,7 +65,11 @@
       "name": "build-system-integrator",
       "description": "Detect local build systems, list targets, run a bounded target, and parse compiler-style errors.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/build-system-integrator/plugin.json",
-      "tags": ["build-system-integrator", "build", "fix-with-tests"],
+      "tags": [
+        "build-system-integrator",
+        "build",
+        "fix-with-tests"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -52,7 +77,11 @@
       "name": "workspace-search",
       "description": "Workspace text search, lightweight semantic ranking, and result re-ranking for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/workspace-search/plugin.json",
-      "tags": ["workspace-search", "search", "navigation"],
+      "tags": [
+        "workspace-search",
+        "search",
+        "navigation"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -60,7 +89,11 @@
       "name": "context-injector",
       "description": "Extract code slices, relevant snippets, and file outlines for agent context.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/context-injector/plugin.json",
-      "tags": ["context-injector", "context", "multi-file"],
+      "tags": [
+        "context-injector",
+        "context",
+        "multi-file"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -68,7 +101,11 @@
       "name": "dependency-graph-analyzer",
       "description": "Build and query Python/Go import graphs: hubs, dependencies, and DOT/JSON export.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/dependency-graph-analyzer/plugin.json",
-      "tags": ["dependency-graph-analyzer", "imports", "navigation"],
+      "tags": [
+        "dependency-graph-analyzer",
+        "imports",
+        "navigation"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -76,7 +113,11 @@
       "name": "cache-manager",
       "description": "Namespaced key/value cache with TTL, stats, and prune (SQLite under ~/.cache).",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/cache-manager/plugin.json",
-      "tags": ["cache-manager", "cache", "infrastructure"],
+      "tags": [
+        "cache-manager",
+        "cache",
+        "infrastructure"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -84,7 +125,21 @@
       "name": "mistake-tracker",
       "description": "Record, search, and summarize recurring coding mistakes per project root.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/mistake-tracker/plugin.json",
-      "tags": ["mistake-tracker", "mistakes", "fix-with-tests"],
+      "tags": [
+        "mistake-tracker",
+        "mistakes",
+        "fix-with-tests"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "specification-enforcer",
+      "description": "specification-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/specification-enforcer/plugin.json",
+      "tags": [
+        "specification-enforcer"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     }

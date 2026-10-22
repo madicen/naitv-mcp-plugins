@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 7,
+    "root": "py-small"
+  },
+  "tool": "report_violations",
+  "truncated": false
+}
