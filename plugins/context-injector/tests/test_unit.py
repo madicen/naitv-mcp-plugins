@@ -22,7 +22,8 @@ class _FakeStdin:
 
 
 def test_get_code_slice() -> None:
-    out = ci.get_code_slice(FIXTURES / "py-small", "pkg/greeter.py", 1, 3)
+    # greeter.py leads with an import; class Greeter starts at line 4
+    out = ci.get_code_slice(FIXTURES / "py-small", "pkg/greeter.py", 4, 6)
     assert out["found"] is True
     assert "Greeter" in out["code"]
     assert out["hash"]

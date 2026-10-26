@@ -125,3 +125,66 @@ def test_rank_and_summary(tmp_path: Path) -> None:
     summary = mod.handle("pattern_summary", tmp_path, {"limit": 5, "depth": 2})
     assert "items" in summary
     assert summary["instance_count"] >= 1
+
+
+def test_go_functions_and_imports() -> None:
+    text = (
+        'package greeter\n\n'
+        'import (\n\t"fmt"\n\t"strings"\n)\n\n'
+        'import "os"\n\n'
+        "func (g Greeter) Hello(name string) string {\n"
+        '\treturn "hi " + name\n}\n\n'
+        "func Add(a, b int) int {\n\treturn a + b\n}\n"
+    )
+    funcs = mod._go_functions(text)
+    names = {n for n, _, _ in funcs}
+    assert "Hello" in names
+    assert "Add" in names
+    imports = mod._import_keys(text, ".go")
+    keys = {k for k, _ in imports}
+    assert 'import "fmt"' in keys
+    assert 'import "os"' in keys
+
+
+def test_find_on_go_small_and_empty_query() -> None:
+    out = mod.handle(
+        "find_pattern_instances",
+        FIXTURES / "go-small",
+        {"query": "Hello", "depth": 4, "limit": 10},
+    )
+    assert out["count"] >= 1
+    # empty query lists defs via _go_functions / _py_functions
+    listed = mod.handle(
+        "find_pattern_instances",
+        FIXTURES / "go-small",
+        {"query": "", "depth": 4, "limit": 10},
+    )
+    assert listed["count"] >= 1
+    assert all(i.get("name") for i in listed["items"])
+
+
+def test_py_functions_skips_short_and_syntax_errors(tmp_path: Path) -> None:
+    assert mod._py_functions("def x():\n  return 1\n") == []  # body too short
+    assert mod._py_functions("def broken(:\n") == []
+    (tmp_path / "a.go").write_text(
+        'package main\nimport "fmt"\nfunc Main() int {\n\treturn 1\n}\n'
+    )
+    (tmp_path / "b.go").write_text(
+        'package main\nimport "fmt"\nfunc Other() int {\n\treturn 2\n}\n'
+    )
+    out = mod.handle("detect_repeated_patterns", tmp_path, {"depth": 2, "limit": 10})
+    assert out["ok"] is True
+    assert any("fmt" in p["name"] for p in out["items"])
+
+
+def test_rank_examples_bad_min_and_read_errors(tmp_path: Path) -> None:
+    out = mod.handle(
+        "detect_repeated_patterns",
+        tmp_path,
+        {"depth": 1, "min_occurrences": "nope", "limit": 0},
+    )
+    assert out["ok"] is True
+    # unreadable path skipped via read_text
+    assert mod.read_text(tmp_path / "missing.py") == ""
+    assert mod._limit("bad", default=7) == 7
+    assert mod._norm_ws("a   b\n") == "a b"

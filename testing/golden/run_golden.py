@@ -22,7 +22,8 @@ sys.path.insert(0, str(REPO_ROOT / "testing"))
 
 from plugin_harness import link_tools_lib, load_harness, load_manifest  # noqa: E402
 
-MASK_KEYS = frozenset({"cached", "commit"})
+# id: store tools hash abs(root) into the fingerprint — machine-local, not semantic
+MASK_KEYS = frozenset({"cached", "commit", "id"})
 DEFAULT_FIXTURES = ("py-small", "go-small", "empty", "mixed-polyglot", "hostile")
 
 
@@ -196,7 +197,7 @@ def main() -> int:
                     updated += 1
                     print(f"UPDATE {name}/{fixture}")
                     continue
-                expected = json.loads(path.read_text(encoding="utf-8"))
+                expected = mask(json.loads(path.read_text(encoding="utf-8")))
                 if actual != expected:
                     print(f"FAIL {name}/{fixture}: golden mismatch")
                     failures += 1
