@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "1.22"
+    ]
+  },
+  "id": "ho-str-005-go-mod-ver",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "go-small",
+  "request": "Which go version does go.mod declare?"
+}

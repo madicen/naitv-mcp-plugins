@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "py-small package root"
+    ]
+  },
+  "id": "ho-str-002-pkg-init",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "py-small",
+  "request": "What docstring text is in pkg/__init__.py?"
+}

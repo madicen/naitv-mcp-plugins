@@ -1,0 +1,20 @@
+{
+  "id": "think-v2-009-mul",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write plan_checklist with query mul, report query=mul and root=py-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "query=mul",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

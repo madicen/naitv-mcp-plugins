@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "apply_safe_fixes dry-run on empty",
+  "tool": "apply_safe_fixes"
+}

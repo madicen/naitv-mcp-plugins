@@ -1,0 +1,20 @@
+{
+  "id": "surg-v2-001-diff",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch generate_minimal_diff with query add, report generate_minimal_diff and root=py-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "generate_minimal_diff",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

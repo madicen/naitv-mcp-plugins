@@ -1,0 +1,20 @@
+{
+  "id": "stale-v2-008-go",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using stale-code-identifier stale_summary on go-small, report count 4 and go.mod.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "4",
+      "go.mod"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

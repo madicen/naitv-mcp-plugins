@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-008-content",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator parse_env_files, report content lists DATABASE_URL and LOG_LEVEL.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "DATABASE_URL",
+      "LOG_LEVEL"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

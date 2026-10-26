@@ -1,0 +1,21 @@
+{
+  "id": "envval-v2-001-keys",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator parse_env_files, report path .env.example and keys DATABASE_URL and APP_ENV.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example",
+      "DATABASE_URL",
+      "APP_ENV"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

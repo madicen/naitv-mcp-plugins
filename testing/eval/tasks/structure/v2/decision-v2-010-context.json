@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-010-context",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner summarize_decisions, report titles include Context.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Context"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

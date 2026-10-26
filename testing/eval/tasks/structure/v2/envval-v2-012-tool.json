@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-012-tool",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator parse_env_files, report tool parse_env_files and loaded true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "parse_env_files",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

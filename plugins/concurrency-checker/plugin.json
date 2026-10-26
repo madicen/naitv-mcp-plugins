@@ -1,0 +1,71 @@
+{
+  "name": "concurrency-checker",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "concurrency-checker"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_shared_state",
+      "delivery": "on-demand",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "body": "find_shared_state for concurrency-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=find_shared_state python3 ~/.config/naitv-mcp/tools/concurrency-checker/concurrency_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_locking",
+      "delivery": "on-demand",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "body": "check_locking for concurrency-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=check_locking python3 ~/.config/naitv-mcp/tools/concurrency-checker/concurrency_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_race_candidates",
+      "delivery": "on-demand",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "body": "find_race_candidates for concurrency-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=find_race_candidates python3 ~/.config/naitv-mcp/tools/concurrency-checker/concurrency_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "concurrency_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "body": "concurrency_summary for concurrency-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=concurrency_summary python3 ~/.config/naitv-mcp/tools/concurrency-checker/concurrency_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

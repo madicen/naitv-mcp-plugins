@@ -1,0 +1,21 @@
+{
+  "id": "circ-v2-010-all",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "Using circular-dependency-detector find_cycles, report mod_a.py, mod_b.py, and mod_c.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mod_a.py",
+      "mod_b.py",
+      "mod_c.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

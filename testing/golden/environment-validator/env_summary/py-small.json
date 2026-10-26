@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "file_count": 1,
+  "items": [
+    {
+      "is_template": true,
+      "key_count": 4,
+      "keys": [
+        "DATABASE_URL",
+        "APP_ENV",
+        "API_KEY",
+        "LOG_LEVEL"
+      ],
+      "path": ".env.example"
+    }
+  ],
+  "tool": "env_summary",
+  "truncated": false
+}

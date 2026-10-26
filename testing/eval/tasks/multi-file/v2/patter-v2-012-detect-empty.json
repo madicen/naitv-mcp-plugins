@@ -1,0 +1,20 @@
+{
+  "id": "patter-v2-012-detect-empty",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using pattern-recognizer detect_repeated_patterns, report that patterns is empty (count 0) and ok true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

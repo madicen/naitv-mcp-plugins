@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/fetch_and_parse.schema.json",
+  "title": "fetch_and_parse",
+  "type": "object",
+  "required": [
+    "loaded",
+    "content"
+  ],
+  "properties": {
+    "loaded": {
+      "type": "boolean"
+    },
+    "content": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "run_memory_profile dry-run on empty",
+  "tool": "run_memory_profile"
+}

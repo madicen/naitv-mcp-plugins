@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-008-id",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner parse_decision_log, report decision id 0001.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0001"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-002-adr-path",
+  "difficulty": "medium",
+  "request": "Using doc-scraper fetch_and_parse on the ADR markdown under docs/adr/, what relative path is returned and what Status body value appears in the content?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/0001-record-architecture.md",
+      "Accepted"
+    ]
+  }
+}

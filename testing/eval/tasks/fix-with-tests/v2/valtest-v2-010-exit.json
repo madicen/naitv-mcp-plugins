@@ -1,0 +1,21 @@
+{
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-010-exit",
+  "difficulty": "medium",
+  "fixture": "build-mini",
+  "request": "Using validate-and-test run_validation on this make fixture, report exit_code, ok, and the dry-run summary fragment for make.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0",
+      "true",
+      "dry-run make"
+    ]
+  }
+}

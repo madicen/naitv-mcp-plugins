@@ -1,0 +1,20 @@
+{
+  "id": "think-v2-008-path",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using think-before-write render_pre_write_prompt with path pkg/greeter.py, report query=pkg/greeter.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter.py",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "think-before-write"
+  ]
+}

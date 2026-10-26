@@ -1,0 +1,20 @@
+{
+  "id": "codegen-v2-010-go-count",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using code-generation-helper list_templates on go-small, report count and go.mod.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "4",
+      "go.mod"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

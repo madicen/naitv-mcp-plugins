@@ -1,0 +1,61 @@
+{
+  "name": "dependency-graph-analyzer",
+  "version": "0.1.0",
+  "description": "Build and query Python/Go import graphs: hubs, dependencies, and DOT/JSON export.",
+  "author": "madicen",
+  "tags": ["dependency-graph-analyzer", "imports", "navigation"],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "build_import_graph",
+      "delivery": "on-demand",
+      "tags": ["dependency-graph-analyzer"],
+      "body": "Build an import graph under root_path (python/go/auto).",
+      "fields": {
+        "exec": "TOOL_NAME=build_import_graph python3 ~/.config/naitv-mcp/tools/dependency-graph-analyzer/dependency_graph_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"language\",\"description\":\"python|go|auto (default auto)\",\"required\":false},{\"name\":\"depth\",\"description\":\"Walk depth (default 3)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "query_dependencies",
+      "delivery": "on-demand",
+      "tags": ["dependency-graph-analyzer"],
+      "body": "List imports and importers for a module under root_path.",
+      "fields": {
+        "exec": "TOOL_NAME=query_dependencies python3 ~/.config/naitv-mcp/tools/dependency-graph-analyzer/dependency_graph_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"module\",\"description\":\"Module name\",\"required\":true},{\"name\":\"language\",\"description\":\"python|go|auto\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_hubs",
+      "delivery": "on-demand",
+      "tags": ["dependency-graph-analyzer"],
+      "body": "Rank modules by fan-in (how many others import them).",
+      "fields": {
+        "exec": "TOOL_NAME=find_hubs python3 ~/.config/naitv-mcp/tools/dependency-graph-analyzer/dependency_graph_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"limit\",\"description\":\"Max modules (default 10)\",\"required\":false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "export_graph",
+      "delivery": "on-demand",
+      "tags": ["dependency-graph-analyzer"],
+      "body": "Export the import graph as DOT or JSON text.",
+      "fields": {
+        "exec": "TOOL_NAME=export_graph python3 ~/.config/naitv-mcp/tools/dependency-graph-analyzer/dependency_graph_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\":\"root_path\",\"description\":\"Absolute project root\",\"required\":true},{\"name\":\"format\",\"description\":\"dot (default) or json\",\"required\":false}]"
+      }
+    }
+  ]
+}

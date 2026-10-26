@@ -33,7 +33,7 @@ Authority for the harness mechanics is `testing/PLUGIN_HARNESS.md`. Authority fo
 
 ## Decisions still needed
 
-1. The reference local model and quantization for L5 (`l5.model` in each `harness.json`). Until this is set, L5 stays `pending`.
+1. ~~The reference local model for L5~~ **Decided:** `qwen3:8b` via Ollama (`l5.model` in each `harness.json`; `OLLAMA_MODEL=qwen3:8b`). L5 stays `pending` until measured with `AGENT=ollama`.
 2. Who writes and owns the held-out suite. The cycle never touches it.
 3. Whether `lint-fix-loop` and similar tools may call external linters and test runners. That decides which tools need the timeout and fixture rules tightened.
 4. Confirm the ambiguous dependency names and phase-order exceptions listed in `MATRIX_NOTES.md`.

@@ -1,0 +1,116 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "monitoring_alerting_setup",
+    "search_paths": [
+      "tools/monitoring-alerting-setup",
+      "plugins/monitoring-alerting-setup"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "detect_metrics": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "generate_alert_rules": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "validate_alert_rules": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "render_dashboard_config": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "detect_metrics": [
+        "ok",
+        "tool"
+      ],
+      "generate_alert_rules": [
+        "generated",
+        "ok"
+      ],
+      "validate_alert_rules": [
+        "ok",
+        "violations",
+        "count"
+      ],
+      "render_dashboard_config": [
+        "generated",
+        "ok"
+      ]
+    },
+    "invalid_tool": "detect_metrics",
+    "invalid_args": {},
+    "post_timeout_tool": "detect_metrics",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "monitoring-alerting-setup"
+    ],
+    "tool_names": [
+      "detect_metrics",
+      "generate_alert_rules",
+      "validate_alert_rules",
+      "render_dashboard_config"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
+  }
+}

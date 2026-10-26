@@ -1,0 +1,15 @@
+{
+  "id": "mist-007-search-empty",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Search mistakes for 'zzzz-nonexistent'. How many matches?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["0"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

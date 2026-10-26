@@ -1,0 +1,12 @@
+{
+  "count": 0,
+  "first_failure": null,
+  "items": [],
+  "ok": true,
+  "result": {
+    "failures": [],
+    "first_failure": null
+  },
+  "summary": "no FAIL lines found",
+  "tool": "summarize_failures"
+}

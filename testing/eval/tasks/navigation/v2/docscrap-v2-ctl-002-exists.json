@@ -1,0 +1,17 @@
+{
+  "id": "docscrap-v2-ctl-002-exists",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Confirm the fixture has a root readme file; name that file. Do not use plugin tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md"
+    ]
+  },
+  "control": true,
+  "plugins_expected": []
+}

@@ -1,0 +1,19 @@
+{
+  "id": "circ-v2-008-adr",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using circular-dependency-detector find_cycles, report docs/adr/0001-record-architecture.md.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/0001-record-architecture.md"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

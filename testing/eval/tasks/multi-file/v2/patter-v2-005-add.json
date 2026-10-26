@@ -1,0 +1,21 @@
+{
+  "id": "patter-v2-005-add",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using pattern-recognizer find_pattern_instances with query add, report name, path, and line.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "add",
+      "pkg/greeter.py",
+      "9"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

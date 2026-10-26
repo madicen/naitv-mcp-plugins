@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Missing"
+    ]
+  },
+  "id": "ho-fix-002-make-fail",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "fixture": "build-mini",
+  "request": "What undefined symbol does the fail target print?"
+}

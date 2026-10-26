@@ -1,0 +1,19 @@
+{
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-002-cmds",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Using validate-and-test detect_build_system on this fixture, what test-related make invocation appears in commands?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "make test"
+    ]
+  }
+}

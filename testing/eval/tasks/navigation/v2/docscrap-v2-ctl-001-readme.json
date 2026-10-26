@@ -1,0 +1,17 @@
+{
+  "id": "docscrap-v2-ctl-001-readme",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Open the fixture root readme without plugin tools and quote its filename.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md"
+    ]
+  },
+  "control": true,
+  "plugins_expected": []
+}

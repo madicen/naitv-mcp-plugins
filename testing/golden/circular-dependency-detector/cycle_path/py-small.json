@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "result": {
+    "files": 9,
+    "imports": [
+      "pkg.greeter"
+    ],
+    "path": "pkg/a/b/deep.py",
+    "root": "py-small"
+  },
+  "tool": "cycle_path",
+  "truncated": false
+}

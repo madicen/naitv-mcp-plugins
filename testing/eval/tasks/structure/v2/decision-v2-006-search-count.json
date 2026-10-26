@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-006-search-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner search_decisions with query architecture, report count 5.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "5"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

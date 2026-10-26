@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-001-readme",
+  "difficulty": "easy",
+  "request": "Using doc-scraper fetch_and_parse on this fixture's root readme, what relative path does the tool return and what is the first section name?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md",
+      "py-small fixture"
+    ]
+  }
+}

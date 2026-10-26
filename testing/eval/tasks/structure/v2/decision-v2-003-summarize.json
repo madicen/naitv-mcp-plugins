@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-003-summarize",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner summarize_decisions, report summary includes Record architecture decisions.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Record architecture decisions"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

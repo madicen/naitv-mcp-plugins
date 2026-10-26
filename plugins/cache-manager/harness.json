@@ -1,0 +1,106 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "cache_manager",
+    "search_paths": [
+      "tools/cache-manager",
+      "plugins/cache-manager"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": false
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "cache_get": {
+        "key": "missing-key",
+        "namespace": "golden"
+      },
+      "cache_put": {
+        "key": "greeting",
+        "value": {
+          "hello": "world"
+        },
+        "namespace": "golden",
+        "ttl": 3600
+      },
+      "cache_stats": {
+        "namespace": "golden"
+      },
+      "cache_prune": {
+        "namespace": "golden",
+        "max_bytes": 1000000
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "key": "l4-key",
+      "value": {
+        "ok": true
+      },
+      "namespace": "l4",
+      "ttl": 60,
+      "max_bytes": 0
+    },
+    "expect_keys": {
+      "cache_get": [
+        "hit",
+        "key",
+        "value"
+      ],
+      "cache_put": [
+        "stored",
+        "key",
+        "size_bytes"
+      ],
+      "cache_stats": [
+        "entries",
+        "bytes",
+        "hit_rate"
+      ],
+      "cache_prune": [
+        "removed",
+        "remaining"
+      ]
+    },
+    "invalid_tool": "cache_get",
+    "invalid_args": {},
+    "post_timeout_tool": "cache_stats",
+    "post_timeout_args": {
+      "namespace": "l4"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "cache-manager"
+    ],
+    "tool_names": [
+      "cache_get",
+      "cache_put",
+      "cache_stats",
+      "cache_prune"
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
+  }
+}

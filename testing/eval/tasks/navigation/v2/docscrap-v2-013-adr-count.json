@@ -1,0 +1,21 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-013-adr-count",
+  "difficulty": "hard",
+  "request": "Using doc-scraper extract_sections on the ADR under docs/adr/, how many sections are returned, and which headings cover lifecycle state and background?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "5",
+      "Status",
+      "Context"
+    ]
+  }
+}

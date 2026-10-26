@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-010-context",
+  "difficulty": "medium",
+  "request": "Using doc-scraper fetch_and_parse on the ADR under docs/adr/, what heading covers background/situation, and which short fixture token appears in that section's body?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Context",
+      "py-small"
+    ]
+  }
+}

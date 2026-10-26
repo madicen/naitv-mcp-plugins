@@ -1,0 +1,15 @@
+{
+  "id": "mist-006-stats-after",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "fix-with-tests",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Record one mistake category 'build' description 'wrong target' file 'Makefile'. What is mistake_stats total afterward?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["1"]
+  },
+  "control": false,
+  "plugins_expected": ["mistake-tracker"]
+}

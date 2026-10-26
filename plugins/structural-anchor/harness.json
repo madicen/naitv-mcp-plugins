@@ -2,7 +2,10 @@
   "profile": "json_tools",
   "coverage": {
     "module": "structural_anchor",
-    "search_paths": ["tools/structural-anchor", "plugins/structural-anchor"],
+    "search_paths": [
+      "tools/structural-anchor",
+      "plugins/structural-anchor"
+    ],
     "fail_under": 80
   },
   "layers": {
@@ -30,12 +33,20 @@
       "depth": 3
     },
     "expect_keys": {
-      "get_project_map": ["packages"],
-      "list_languages": ["languages"],
-      "get_codebase_statistics": ["total_files"]
+      "get_project_map": [
+        "packages"
+      ],
+      "list_languages": [
+        "languages"
+      ],
+      "get_codebase_statistics": [
+        "total_files"
+      ]
     },
     "invalid_tool": "get_project_map",
-    "invalid_args": { "depth": 1 },
+    "invalid_args": {
+      "depth": 1
+    },
     "post_timeout_tool": "list_languages",
     "post_timeout_args": {
       "root_path": "FIXTURE:empty",
@@ -43,11 +54,22 @@
     }
   },
   "l5": {
-    "treatment_plugins": ["structural-anchor", "symbol-navigator"],
+    "treatment_plugins": [
+      "structural-anchor",
+      "symbol-navigator"
+    ],
     "tool_names": [
       "get_project_map",
       "list_languages",
       "get_codebase_statistics"
-    ]
+    ],
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
   }
 }

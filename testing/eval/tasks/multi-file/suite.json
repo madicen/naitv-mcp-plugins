@@ -1,0 +1,9 @@
+{
+  "name": "multi-file",
+  "description": "Multi-file uplift: context-injector plus measured-helpful codegen/pattern tools",
+  "treatment_plugins": [
+    "context-injector",
+    "code-generation-helper",
+    "pattern-recognizer"
+  ]
+}

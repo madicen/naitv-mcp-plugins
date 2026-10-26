@@ -1,0 +1,12 @@
+{
+  "generated": "# render_pre_write_prompt\n# root=empty\n# query=Greeter\n- [ ] confirm target paths exist\n",
+  "items": [
+    {
+      "names": [],
+      "paths": [],
+      "text": "# render_pre_write_prompt\n# root=empty\n# query=Greeter\n- [ ] confirm target paths exist\n"
+    }
+  ],
+  "ok": true,
+  "tool": "render_pre_write_prompt"
+}

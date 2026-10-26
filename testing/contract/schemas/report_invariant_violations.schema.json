@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/report_invariant_violations.schema.json",
+  "title": "report_invariant_violations",
+  "type": "object",
+  "required": [
+    "ok",
+    "tool"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "tool": {
+      "type": "string"
+    },
+    "result": {}
+  },
+  "additionalProperties": true
+}

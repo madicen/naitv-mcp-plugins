@@ -1,0 +1,17 @@
+{
+  "id": "lint-ctl-002-exists",
+  "suite": "fix-with-tests",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Read README.md and mention README. Do not use plugin tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README"
+    ]
+  },
+  "control": true,
+  "plugins_expected": []
+}

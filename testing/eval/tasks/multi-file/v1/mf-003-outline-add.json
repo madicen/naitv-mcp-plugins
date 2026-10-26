@@ -1,0 +1,19 @@
+{
+  "id": "mf-003-outline-add",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Outline pkg/greeter.py. Is there a function named add?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "add"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}

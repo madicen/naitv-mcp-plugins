@@ -1,0 +1,17 @@
+{
+  "count": 2,
+  "ok": false,
+  "tool": "check_invariants",
+  "violations": [
+    {
+      "message": "no assert statement",
+      "path": "pkg/a/b/deep.py",
+      "rule": "no_assert"
+    },
+    {
+      "message": "no assert statement",
+      "path": "pkg/greeter.py",
+      "rule": "no_assert"
+    }
+  ]
+}

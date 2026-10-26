@@ -1,0 +1,23 @@
+{
+  "count": 4,
+  "env_path": ".env.example",
+  "extra": [
+    "API_KEY",
+    "APP_ENV",
+    "DATABASE_URL",
+    "LOG_LEVEL"
+  ],
+  "missing": [],
+  "ok": true,
+  "result": {
+    "extra": [
+      "API_KEY",
+      "APP_ENV",
+      "DATABASE_URL",
+      "LOG_LEVEL"
+    ],
+    "missing": []
+  },
+  "template_path": "README.md",
+  "tool": "compare_env_templates"
+}

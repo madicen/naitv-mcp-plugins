@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-009-tool",
+  "difficulty": "medium",
+  "request": "Using doc-scraper search_doc_index with query fixture, what is the hit's section/name field and its numeric score?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "py-small fixture",
+      "1.0"
+    ]
+  }
+}

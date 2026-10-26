@@ -1,0 +1,1 @@
+{"_contract": {"expect": "error", "reason": "traversal"}, "root_path": "$FIXTURE/py-small", "path": "../etc/passwd", "start_line": 1, "end_line": 2}

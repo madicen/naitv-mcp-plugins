@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/broken.py"
+    ]
+  },
+  "id": "ho-mf-004-broken-oops",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "fixture": "py-small",
+  "request": "Which file contains the incomplete oops function? Path only."
+}

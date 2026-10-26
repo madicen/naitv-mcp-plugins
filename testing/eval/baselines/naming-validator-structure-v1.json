@@ -1,0 +1,44 @@
+{
+  "plugin": "naming-validator",
+  "suite": "structure",
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 174,
+    "success_rate": 1.0,
+    "control_n": 144,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 0.8275862068965517,
+    "mean_wall_seconds": 8.168148999041529,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 174,
+    "success_rate": 0.8850574712643678,
+    "control_n": 144,
+    "control_success_rate": 1.0,
+    "mean_nonexistent_symbol_rate": 1.0,
+    "mean_wall_seconds": 8.659013147770974,
+    "total_tool_calls": 20
+  },
+  "verdict": {
+    "baseline_success_rate": 1.0,
+    "treatment_success_rate": 0.8850574712643678,
+    "delta_pp": -11.494252873563216,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.1724137931034483,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": false,
+    "l5": "measured-no-uplift"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/structure-v1-naming-validator-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/structure-v1-naming-validator-treatment-latest.json"
+}

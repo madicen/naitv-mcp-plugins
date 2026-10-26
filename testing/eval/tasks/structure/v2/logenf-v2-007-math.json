@@ -1,0 +1,19 @@
+{
+  "id": "logenf-v2-007-math",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer logging_summary with query mul, report pkg/util/math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

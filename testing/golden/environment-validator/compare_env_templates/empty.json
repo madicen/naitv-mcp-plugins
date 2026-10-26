@@ -1,0 +1,13 @@
+{
+  "count": 0,
+  "env_path": "",
+  "extra": [],
+  "missing": [],
+  "ok": true,
+  "result": {
+    "extra": [],
+    "missing": []
+  },
+  "template_path": "",
+  "tool": "compare_env_templates"
+}

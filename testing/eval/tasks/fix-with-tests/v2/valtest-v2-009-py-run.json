@@ -1,0 +1,19 @@
+{
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-009-py-run",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using validate-and-test run_validation on this Python fixture, what dry-run summary prefix is returned when no build system is detected?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "dry-run unknown"
+    ]
+  }
+}

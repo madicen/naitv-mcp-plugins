@@ -1,0 +1,56 @@
+{
+  "name": "error-matcher",
+  "version": "0.1.0",
+  "description": "Tool list needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "error-matcher"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "match_error",
+      "delivery": "on-demand",
+      "tags": [
+        "error-matcher"
+      ],
+      "body": "match_error for error-matcher.",
+      "fields": {
+        "exec": "TOOL_NAME=match_error python3 ~/.config/naitv-mcp/tools/error-matcher/error_matcher.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_known_errors",
+      "delivery": "on-demand",
+      "tags": [
+        "error-matcher"
+      ],
+      "body": "list_known_errors for error-matcher.",
+      "fields": {
+        "exec": "TOOL_NAME=list_known_errors python3 ~/.config/naitv-mcp/tools/error-matcher/error_matcher.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "add_error_signature",
+      "delivery": "on-demand",
+      "tags": [
+        "error-matcher"
+      ],
+      "body": "add_error_signature for error-matcher.",
+      "fields": {
+        "exec": "TOOL_NAME=add_error_signature python3 ~/.config/naitv-mcp/tools/error-matcher/error_matcher.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "decision-v2-004-titles",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner summarize_decisions, report titles include Status and Decision.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Status",
+      "Decision"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

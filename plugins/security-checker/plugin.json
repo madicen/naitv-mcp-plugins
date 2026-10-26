@@ -1,0 +1,71 @@
+{
+  "name": "security-checker",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "security-checker"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "scan_security_patterns",
+      "delivery": "on-demand",
+      "tags": [
+        "security-checker"
+      ],
+      "body": "scan_security_patterns for security-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=scan_security_patterns python3 ~/.config/naitv-mcp/tools/security-checker/security_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "scan_file",
+      "delivery": "on-demand",
+      "tags": [
+        "security-checker"
+      ],
+      "body": "scan_file for security-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=scan_file python3 ~/.config/naitv-mcp/tools/security-checker/security_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "security-checker"
+      ],
+      "body": "list_rules for security-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=list_rules python3 ~/.config/naitv-mcp/tools/security-checker/security_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_unsafe_calls",
+      "delivery": "on-demand",
+      "tags": [
+        "security-checker"
+      ],
+      "body": "check_unsafe_calls for security-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=check_unsafe_calls python3 ~/.config/naitv-mcp/tools/security-checker/security_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

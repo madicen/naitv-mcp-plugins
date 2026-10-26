@@ -31,8 +31,9 @@ sys.path.insert(0, str(EVAL_ROOT))
 
 from graders.criteria import grade_success  # noqa: E402
 from graders.hallucination import grade_hallucination  # noqa: E402
-from mcp_session import mcp_session  # noqa: E402
+from mcp_session import mcp_session, plugin_tool_names  # noqa: E402
 from tool_loop import ollama_with_mcp, toolstub_with_mcp  # noqa: E402
+
 
 sys.path.insert(0, str(REPO_ROOT / "testing"))
 from plugin_harness import load_harness  # noqa: E402
@@ -63,14 +64,33 @@ def task_dir(suite: str, version: int, *, held_out: bool = False) -> Path:
     return TASKS_ROOT / suite / f"v{version}"
 
 
-def load_tasks(suite: str, version: int, *, held_out: bool = False) -> list[dict[str, Any]]:
+def load_tasks(
+    suite: str,
+    version: int,
+    *,
+    held_out: bool = False,
+    plugin: str | None = None,
+) -> list[dict[str, Any]]:
     directory = task_dir(suite, version, held_out=held_out)
     if not directory.is_dir():
         raise SystemExit(f"missing task suite: {directory}")
-    return [
+    tasks = [
         json.loads(path.read_text(encoding="utf-8"))
         for path in sorted(directory.glob("*.json"))
     ]
+    if not plugin:
+        return tasks
+    # Per-plugin L5: P's tagged tasks + shared suite controls (no plugins_expected).
+    filtered = []
+    for t in tasks:
+        pe = t.get("plugins_expected") or []
+        if plugin in pe:
+            filtered.append(t)
+        elif t.get("control") and not pe:
+            filtered.append(t)
+    if not filtered:
+        raise SystemExit(f"no tasks for plugin={plugin!r} in suite={suite}")
+    return filtered
 
 
 def project_map_for(fixture: str) -> dict[str, Any]:
@@ -139,7 +159,8 @@ def run_task(
     success = grade_success(answer, task.get("success") or {})
     try:
         pmap = project_map_for(task["fixture"])
-        hallu = grade_hallucination(answer, pmap)
+        allowed = set(plugin_tool_names(plugins or []))
+        hallu = grade_hallucination(answer, pmap, extra_allowed=allowed)
     except Exception as exc:  # pragma: no cover
         hallu = {"error": str(exc), "nonexistent_rate": None, "nonexistent": []}
 
@@ -163,10 +184,12 @@ def summarize(results: list[dict[str, Any]]) -> dict[str, Any]:
     successes = [r for r in results if r.get("success", {}).get("passed")]
     controls = [r for r in results if r.get("control")]
     control_ok = [r for r in controls if r.get("success", {}).get("passed")]
+    # Hallucination gate is about tagged-task answers; controls often say README/etc.
     rates = [
         r.get("hallucination", {}).get("nonexistent_rate")
         for r in results
-        if r.get("hallucination", {}).get("nonexistent_rate") is not None
+        if not r.get("control")
+        and r.get("hallucination", {}).get("nonexistent_rate") is not None
     ]
     tool_n = sum(len(r.get("trajectory", {}).get("tool_calls") or []) for r in results)
     return {
@@ -198,17 +221,28 @@ def main() -> int:
         action="store_true",
         help="load tasks/<suite>/held-out/v<version>/ instead of tasks/<suite>/v<version>/",
     )
+    parser.add_argument(
+        "--plugin",
+        default="",
+        help="isolate L5 to one plugin (tasks with plugins_expected + controls; treatment=P only)",
+    )
     args = parser.parse_args()
 
     if args.condition == "treatment" and shutil.which("naitv-mcp") is None:
         raise SystemExit("naitv-mcp required on PATH for treatment condition")
 
-    tasks = load_tasks(args.suite, args.version, held_out=args.held_out)
+    plugin = (args.plugin or "").strip() or None
+    tasks = load_tasks(
+        args.suite, args.version, held_out=args.held_out, plugin=plugin
+    )
     rng = random.Random(args.seed_base)
     order = list(tasks)
     rng.shuffle(order)
 
-    plugins = treatment_plugins_for(args.suite) if args.condition == "treatment" else []
+    if args.condition == "treatment":
+        plugins = [plugin] if plugin else treatment_plugins_for(args.suite)
+    else:
+        plugins = []
     results: list[dict[str, Any]] = []
 
     # One MCP server for the whole run (treatment); baseline needs no plugin server.
@@ -242,6 +276,8 @@ def main() -> int:
     summary = summarize(results)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     label = args.label or args.condition
+    if plugin:
+        label = f"{plugin}-{label}"
     if args.held_out:
         label = f"heldout-{label}"
     out_dir = RUNS_ROOT / f"{args.suite}-v{args.version}-{label}-{stamp}"
@@ -252,6 +288,7 @@ def main() -> int:
         "suite": args.suite,
         "suite_version": args.version,
         "condition": args.condition,
+        "plugin": plugin,
         "plugins": plugins,
         "agent": args.agent,
         "model": os.environ.get("OLLAMA_MODEL", "qwen3:8b")
@@ -276,15 +313,22 @@ def main() -> int:
     (out_dir / "report.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8"
     )
-    latest_name = (
-        f"{args.suite}-v{args.version}-heldout-{args.condition}-latest.json"
-        if args.held_out
-        else f"{args.suite}-v{args.version}-{args.condition}-latest.json"
-    )
+    if args.held_out:
+        latest_name = f"{args.suite}-v{args.version}-heldout-{args.condition}-latest.json"
+    elif plugin:
+        latest_name = f"{args.suite}-v{args.version}-{plugin}-{args.condition}-latest.json"
+    else:
+        latest_name = f"{args.suite}-v{args.version}-{args.condition}-latest.json"
     latest = RUNS_ROOT / latest_name
     latest.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
-    if args.condition == "baseline" and not args.held_out and args.suite == "navigation":
+    # Suite-wide navigation pointers only when not isolating a single plugin.
+    if (
+        args.condition == "baseline"
+        and not args.held_out
+        and args.suite == "navigation"
+        and not plugin
+    ):
         pointer = RUNS_ROOT / "BASELINE_NAVIGATION_V1.json"
         pointer.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         snap = {
@@ -307,7 +351,12 @@ def main() -> int:
         print(f"Wrote baseline pointer {pointer}")
         print(f"Wrote committed snapshot {snap_path}")
 
-    if args.condition == "treatment" and not args.held_out and args.suite == "navigation":
+    if (
+        args.condition == "treatment"
+        and not args.held_out
+        and args.suite == "navigation"
+        and not plugin
+    ):
         treat_ptr = RUNS_ROOT / "TREATMENT_NAVIGATION_V1.json"
         treat_ptr.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(f"Wrote treatment pointer {treat_ptr}")

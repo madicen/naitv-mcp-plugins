@@ -1,0 +1,20 @@
+{
+  "id": "patter-v2-009-go-add",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using pattern-recognizer find_pattern_instances with query Add, report name Add and path pkg/greeter/greeter.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Add",
+      "pkg/greeter/greeter.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "pattern-recognizer"
+  ]
+}

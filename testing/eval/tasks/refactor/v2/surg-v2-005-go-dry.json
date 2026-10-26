@@ -1,0 +1,19 @@
+{
+  "id": "surg-v2-005-go-dry",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using surgical-patch apply_patch_dry_run on go-small, report dry-run on go-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "dry-run on go-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

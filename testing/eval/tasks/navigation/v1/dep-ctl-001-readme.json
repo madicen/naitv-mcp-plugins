@@ -1,0 +1,15 @@
+{
+  "id": "dep-ctl-001-readme",
+  "suite": "navigation",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Read README.md and mention whether it exists. Do not use dependency tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["README"]
+  },
+  "control": true,
+  "plugins_expected": []
+}

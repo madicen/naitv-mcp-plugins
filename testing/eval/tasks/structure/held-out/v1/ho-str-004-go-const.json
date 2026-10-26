@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "1",
+      "ExportedConst"
+    ]
+  },
+  "id": "ho-str-004-go-const",
+  "suite": "structure",
+  "version": 1,
+  "category": "structure",
+  "fixture": "go-small",
+  "request": "What is the value of ExportedConst in the greeter package?"
+}

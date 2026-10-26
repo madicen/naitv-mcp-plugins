@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-007-adr-decision-section",
+  "difficulty": "medium",
+  "request": "Using doc-scraper fetch_and_parse on the ADR under docs/adr/, which section headings cover the chosen approach and what follows from it?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Decision",
+      "Consequences"
+    ]
+  }
+}

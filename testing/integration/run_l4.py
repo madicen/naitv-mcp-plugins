@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = REPO_ROOT / "testing" / "fixtures"
 sys.path.insert(0, str(REPO_ROOT / "testing"))
 
-from plugin_harness import load_harness  # noqa: E402
+from plugin_harness import link_tools_lib, load_harness  # noqa: E402
 
 
 class MCPClient:
@@ -138,6 +138,7 @@ def prepare_home(plugin: str, home: Path) -> None:
     if dest.exists() or dest.is_symlink():
         dest.unlink()
     dest.symlink_to(src, target_is_directory=True)
+    link_tools_lib(home)
 
 
 def start_server(db: Path, home: Path) -> subprocess.Popen[bytes]:

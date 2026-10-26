@@ -1,0 +1,20 @@
+{
+  "id": "fuzzgen-v2-004-go-smoke",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator run_fuzz_smoke, report summary dry-run ok; targets=1 and FuzzHello.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "targets=1",
+      "FuzzHello"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

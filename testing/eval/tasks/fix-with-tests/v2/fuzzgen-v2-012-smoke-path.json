@@ -1,0 +1,19 @@
+{
+  "id": "fuzzgen-v2-012-smoke-path",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator run_fuzz_smoke, report target path pkg/greeter/greeter_fuzz_test.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter/greeter_fuzz_test.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

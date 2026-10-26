@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "a",
+      "b"
+    ]
+  },
+  "id": "ho-ref-001-add-sig",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "py-small",
+  "request": "What are the parameter names of add in pkg/greeter.py?"
+}

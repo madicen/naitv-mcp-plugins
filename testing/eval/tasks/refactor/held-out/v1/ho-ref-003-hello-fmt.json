@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "hi"
+    ]
+  },
+  "id": "ho-ref-003-hello-fmt",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "py-small",
+  "request": "What greeting string prefix does Greeter.hello return?"
+}

@@ -1,0 +1,12 @@
+{
+  "generated": "# plan_checklist\n# root=empty\n# query=Greeter\n- [ ] confirm target paths exist\n",
+  "items": [
+    {
+      "names": [],
+      "paths": [],
+      "text": "# plan_checklist\n# root=empty\n# query=Greeter\n- [ ] confirm target paths exist\n"
+    }
+  ],
+  "ok": true,
+  "tool": "plan_checklist"
+}

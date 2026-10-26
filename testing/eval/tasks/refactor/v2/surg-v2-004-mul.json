@@ -1,0 +1,20 @@
+{
+  "id": "surg-v2-004-mul",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch generate_minimal_diff with query mul, report query=mul.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "query=mul",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

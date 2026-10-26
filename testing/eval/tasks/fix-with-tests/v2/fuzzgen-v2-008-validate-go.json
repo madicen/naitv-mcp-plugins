@@ -1,0 +1,20 @@
+{
+  "id": "fuzzgen-v2-008-validate-go",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator validate_fuzz_target on pkg/greeter/greeter_fuzz_test.go, report matched_symbols include FuzzHello and Add.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "FuzzHello",
+      "Add"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

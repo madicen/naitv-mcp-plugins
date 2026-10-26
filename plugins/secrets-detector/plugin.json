@@ -1,0 +1,71 @@
+{
+  "name": "secrets-detector",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "secrets-detector"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "scan_secrets",
+      "delivery": "on-demand",
+      "tags": [
+        "secrets-detector"
+      ],
+      "body": "scan_secrets for secrets-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=scan_secrets python3 ~/.config/naitv-mcp/tools/secrets-detector/secrets_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "scan_secrets_file",
+      "delivery": "on-demand",
+      "tags": [
+        "secrets-detector"
+      ],
+      "body": "scan_secrets_file for secrets-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=scan_secrets_file python3 ~/.config/naitv-mcp/tools/secrets-detector/secrets_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_patterns",
+      "delivery": "on-demand",
+      "tags": [
+        "secrets-detector"
+      ],
+      "body": "list_patterns for secrets-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=list_patterns python3 ~/.config/naitv-mcp/tools/secrets-detector/secrets_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "allowlist_check",
+      "delivery": "on-demand",
+      "tags": [
+        "secrets-detector"
+      ],
+      "body": "allowlist_check for secrets-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=allowlist_check python3 ~/.config/naitv-mcp/tools/secrets-detector/secrets_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

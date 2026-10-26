@@ -1,0 +1,15 @@
+{
+  "id": "dep-007-export-dot",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "Export the import graph as DOT. Does the DOT mention an edge from mod_a to mod_b?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["mod_a", "mod_b"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

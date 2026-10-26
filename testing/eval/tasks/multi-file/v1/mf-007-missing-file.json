@@ -1,0 +1,19 @@
+{
+  "id": "mf-007-missing-file",
+  "suite": "multi-file",
+  "version": 1,
+  "category": "multi-file",
+  "difficulty": "easy",
+  "fixture": "empty",
+  "request": "Try outlining pkg/greeter.py in an empty tree. Is found false / no symbols?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "found"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "context-injector"
+  ]
+}

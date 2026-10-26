@@ -1,0 +1,20 @@
+{
+  "id": "stale-v2-005-summary",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier stale_summary, report count 9 and skip_me/secret.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      "skip_me/secret.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

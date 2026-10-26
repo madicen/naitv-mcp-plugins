@@ -1,0 +1,17 @@
+{
+  "id": "team-ctl-001-readme",
+  "suite": "navigation",
+  "version": 1,
+  "category": "control",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Read README.md and mention README. Do not use plugin tools.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README"
+    ]
+  },
+  "control": true,
+  "plugins_expected": []
+}

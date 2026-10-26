@@ -1,0 +1,7 @@
+{
+  "key": "greeting",
+  "namespace": "golden",
+  "size_bytes": 17,
+  "stored": true,
+  "ttl": 3600
+}

@@ -1,0 +1,20 @@
+{
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-012-tool",
+  "difficulty": "easy",
+  "fixture": "build-mini",
+  "request": "Call validate-and-test's build-system detection entrypoint on this fixture; report the JSON tool field value and which build system was detected.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "detect_build_system",
+      "make"
+    ]
+  }
+}

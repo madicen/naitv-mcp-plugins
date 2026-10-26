@@ -13,6 +13,21 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PLUGINS_DIR = REPO_ROOT / "plugins"
+TOOLS_DIR = REPO_ROOT / "tools"
+TOOLS_LIB = TOOLS_DIR / "_lib"
+
+
+def link_tools_lib(home: Path) -> Path | None:
+    """Symlink tools/_lib into ~/.config/naitv-mcp/tools/_lib for shared helpers."""
+    if not TOOLS_LIB.is_dir():
+        return None
+    dest_parent = home / ".config" / "naitv-mcp" / "tools"
+    dest_parent.mkdir(parents=True, exist_ok=True)
+    dest = dest_parent / "_lib"
+    if dest.exists() or dest.is_symlink():
+        dest.unlink()
+    dest.symlink_to(TOOLS_LIB, target_is_directory=True)
+    return dest
 
 DEFAULT_LAYERS = {
     "l1": True,

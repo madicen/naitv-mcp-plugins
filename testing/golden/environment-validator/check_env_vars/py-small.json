@@ -1,0 +1,40 @@
+{
+  "count": 4,
+  "missing": [
+    "DATABASE_URL",
+    "APP_ENV",
+    "API_KEY",
+    "LOG_LEVEL"
+  ],
+  "ok": false,
+  "required": [
+    "DATABASE_URL",
+    "APP_ENV",
+    "API_KEY",
+    "LOG_LEVEL"
+  ],
+  "tool": "check_env_vars",
+  "unused": [],
+  "violations": [
+    {
+      "key": "DATABASE_URL",
+      "path": ".env.example",
+      "rule": "missing"
+    },
+    {
+      "key": "APP_ENV",
+      "path": ".env.example",
+      "rule": "missing"
+    },
+    {
+      "key": "API_KEY",
+      "path": ".env.example",
+      "rule": "missing"
+    },
+    {
+      "key": "LOG_LEVEL",
+      "path": ".env.example",
+      "rule": "missing"
+    }
+  ]
+}

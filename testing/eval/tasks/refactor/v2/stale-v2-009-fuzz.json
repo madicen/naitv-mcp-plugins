@@ -1,0 +1,19 @@
+{
+  "id": "stale-v2-009-fuzz",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using stale-code-identifier find_unreferenced on go-small, report pkg/greeter/greeter_fuzz_test.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter/greeter_fuzz_test.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

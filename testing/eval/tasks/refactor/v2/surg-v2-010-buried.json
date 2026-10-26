@@ -1,0 +1,19 @@
+{
+  "id": "surg-v2-010-buried",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch generate_minimal_diff with query buried, report query=buried.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "query=buried"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

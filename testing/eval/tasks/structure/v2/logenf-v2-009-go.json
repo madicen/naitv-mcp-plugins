@@ -1,0 +1,19 @@
+{
+  "id": "logenf-v2-009-go",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using logging-enforcer find_log_calls on go-small, report count 0 (no log call matches in this fixture).",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

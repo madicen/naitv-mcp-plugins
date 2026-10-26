@@ -1,0 +1,71 @@
+{
+  "name": "deprecation-manager",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "deprecation-manager"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_deprecated",
+      "delivery": "on-demand",
+      "tags": [
+        "deprecation-manager"
+      ],
+      "body": "find_deprecated for deprecation-manager.",
+      "fields": {
+        "exec": "TOOL_NAME=find_deprecated python3 ~/.config/naitv-mcp/tools/deprecation-manager/deprecation_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_deprecations",
+      "delivery": "on-demand",
+      "tags": [
+        "deprecation-manager"
+      ],
+      "body": "list_deprecations for deprecation-manager.",
+      "fields": {
+        "exec": "TOOL_NAME=list_deprecations python3 ~/.config/naitv-mcp/tools/deprecation-manager/deprecation_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_deprecated_usage",
+      "delivery": "on-demand",
+      "tags": [
+        "deprecation-manager"
+      ],
+      "body": "check_deprecated_usage for deprecation-manager.",
+      "fields": {
+        "exec": "TOOL_NAME=check_deprecated_usage python3 ~/.config/naitv-mcp/tools/deprecation-manager/deprecation_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "plan_migration",
+      "delivery": "on-demand",
+      "tags": [
+        "deprecation-manager"
+      ],
+      "body": "plan_migration for deprecation-manager.",
+      "fields": {
+        "exec": "TOOL_NAME=plan_migration python3 ~/.config/naitv-mcp/tools/deprecation-manager/deprecation_manager.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

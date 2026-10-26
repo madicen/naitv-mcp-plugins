@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/cache_get.schema.json",
+  "title": "cache_get",
+  "type": "object",
+  "required": ["hit", "key", "namespace", "value"],
+  "properties": {
+    "hit": { "type": "boolean" },
+    "key": { "type": "string" },
+    "namespace": { "type": "string" },
+    "value": {}
+  },
+  "additionalProperties": false
+}

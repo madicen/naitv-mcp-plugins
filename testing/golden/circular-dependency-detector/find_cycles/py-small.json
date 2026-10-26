@@ -1,0 +1,21 @@
+{
+  "count": 2,
+  "items": [
+    {
+      "imports": [
+        "pkg.greeter"
+      ],
+      "path": "pkg/a/b/deep.py",
+      "score": 1.0
+    },
+    {
+      "imports": [
+        "pkg.util.math"
+      ],
+      "path": "pkg/greeter.py",
+      "score": 1.0
+    }
+  ],
+  "tool": "find_cycles",
+  "truncated": false
+}

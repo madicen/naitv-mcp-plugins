@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-003-check-missing",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator check_env_vars, report ok false and that DATABASE_URL is missing.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "false",
+      "DATABASE_URL"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

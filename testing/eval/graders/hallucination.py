@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import re
+from pathlib import PurePosixPath
 from typing import Any
 
-# Code-like identifiers only: CamelCase / snake_case (not plain English words).
+# True CamelCase (Greeter, FakeService) or snake_case (mod_a, get_map).
+# Deliberately excludes ALLCAPS (README, FAIL) and single Title-case English (Final, Path).
 _IDENT = re.compile(
-    r"\b([A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+|[A-Z][a-zA-Z0-9]{2,}|[a-z]+_[a-z0-9_]+)\b"
+    r"\b([A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+|[a-z]+_[a-z0-9_]+)\b"
 )
 _STOP = frozenset(
     {
@@ -23,6 +25,18 @@ _STOP = frozenset(
         "Users",
         "Documents",
         "GitHub",
+        # common JSON / report field names (not code symbols)
+        "node_count",
+        "edge_count",
+        "fan_in",
+        "fan_out",
+        "exit_code",
+        "build_system",
+        "config_files",
+        "file_count",
+        "line_count",
+        "should_skip_test",
+        "baseline_skip",
     }
 )
 
@@ -51,15 +65,31 @@ def real_symbol_names(project_map: dict[str, Any]) -> set[str]:
     return names
 
 
-def grade_hallucination(answer: str, project_map: dict[str, Any]) -> dict[str, Any]:
+def _add_path_tokens(real: set[str], path: str) -> None:
+    for part in path.replace("\\", "/").split("/"):
+        if not part or part in {".", ".."}:
+            continue
+        real.add(part)
+        stem = PurePosixPath(part).stem
+        if stem:
+            real.add(stem)
+
+
+def grade_hallucination(
+    answer: str,
+    project_map: dict[str, Any],
+    *,
+    extra_allowed: set[str] | None = None,
+) -> dict[str, Any]:
     candidates = extract_candidate_symbols(answer)
     real = real_symbol_names(project_map)
-    # Also accept path basenames without extension as real-ish (greeter from greeter.py)
+    # Accept path segments and file stems (greeter_fuzz_test from greeter_fuzz_test.go).
     for pkg in project_map.get("packages") or []:
-        path = str(pkg.get("path", ""))
-        for part in path.split("/"):
-            if part:
-                real.add(part)
+        _add_path_tokens(real, str(pkg.get("path", "")))
+        for sym in pkg.get("symbols") or []:
+            _add_path_tokens(real, str(sym.get("path", "") or ""))
+    if extra_allowed:
+        real |= {str(x) for x in extra_allowed if x}
 
     missing = [c for c in candidates if c not in real and c.lower() not in {r.lower() for r in real}]
     rate = (len(missing) / len(candidates)) if candidates else 0.0

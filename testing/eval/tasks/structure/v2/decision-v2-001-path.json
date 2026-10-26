@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-001-path",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner parse_decision_log, report path docs/adr/0001-record-architecture.md.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/0001-record-architecture.md"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

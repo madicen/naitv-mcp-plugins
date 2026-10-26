@@ -1,0 +1,71 @@
+{
+  "name": "change-impact-analyzer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'dependency-graph' normalized to 'dependency-graph-analyzer' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "change-impact-analyzer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "analyze_change_impact",
+      "delivery": "on-demand",
+      "tags": [
+        "change-impact-analyzer"
+      ],
+      "body": "analyze_change_impact for change-impact-analyzer.",
+      "fields": {
+        "exec": "TOOL_NAME=analyze_change_impact python3 ~/.config/naitv-mcp/tools/change-impact-analyzer/change_impact_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_affected_tests",
+      "delivery": "on-demand",
+      "tags": [
+        "change-impact-analyzer"
+      ],
+      "body": "list_affected_tests for change-impact-analyzer.",
+      "fields": {
+        "exec": "TOOL_NAME=list_affected_tests python3 ~/.config/naitv-mcp/tools/change-impact-analyzer/change_impact_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "affected_modules",
+      "delivery": "on-demand",
+      "tags": [
+        "change-impact-analyzer"
+      ],
+      "body": "affected_modules for change-impact-analyzer.",
+      "fields": {
+        "exec": "TOOL_NAME=affected_modules python3 ~/.config/naitv-mcp/tools/change-impact-analyzer/change_impact_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "impact_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "change-impact-analyzer"
+      ],
+      "body": "impact_summary for change-impact-analyzer.",
+      "fields": {
+        "exec": "TOOL_NAME=impact_summary python3 ~/.config/naitv-mcp/tools/change-impact-analyzer/change_impact_analyzer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

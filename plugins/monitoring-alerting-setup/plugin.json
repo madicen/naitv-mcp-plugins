@@ -1,0 +1,71 @@
+{
+  "name": "monitoring-alerting-setup",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "monitoring-alerting-setup"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "detect_metrics",
+      "delivery": "on-demand",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
+      "body": "detect_metrics for monitoring-alerting-setup.",
+      "fields": {
+        "exec": "TOOL_NAME=detect_metrics python3 ~/.config/naitv-mcp/tools/monitoring-alerting-setup/monitoring_alerting_setup.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_alert_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
+      "body": "generate_alert_rules for monitoring-alerting-setup.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_alert_rules python3 ~/.config/naitv-mcp/tools/monitoring-alerting-setup/monitoring_alerting_setup.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_alert_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
+      "body": "validate_alert_rules for monitoring-alerting-setup.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_alert_rules python3 ~/.config/naitv-mcp/tools/monitoring-alerting-setup/monitoring_alerting_setup.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "render_dashboard_config",
+      "delivery": "on-demand",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
+      "body": "render_dashboard_config for monitoring-alerting-setup.",
+      "fields": {
+        "exec": "TOOL_NAME=render_dashboard_config python3 ~/.config/naitv-mcp/tools/monitoring-alerting-setup/monitoring_alerting_setup.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

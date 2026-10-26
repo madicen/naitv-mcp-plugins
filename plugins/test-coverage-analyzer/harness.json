@@ -1,0 +1,116 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "test_coverage_analyzer",
+    "search_paths": [
+      "tools/test-coverage-analyzer",
+      "plugins/test-coverage-analyzer"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "run_coverage": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "parse_coverage_report": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "find_uncovered_changes": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "coverage_delta": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "run_coverage": [
+        "ok",
+        "exit_code",
+        "summary"
+      ],
+      "parse_coverage_report": [
+        "items",
+        "count"
+      ],
+      "find_uncovered_changes": [
+        "items",
+        "count"
+      ],
+      "coverage_delta": [
+        "ok",
+        "tool"
+      ]
+    },
+    "invalid_tool": "run_coverage",
+    "invalid_args": {},
+    "post_timeout_tool": "run_coverage",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "test-coverage-analyzer"
+    ],
+    "tool_names": [
+      "run_coverage",
+      "parse_coverage_report",
+      "find_uncovered_changes",
+      "coverage_delta"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
+  }
+}

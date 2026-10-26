@@ -1,0 +1,19 @@
+{
+  "id": "surg-v2-006-go-gen",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using surgical-patch generate_minimal_diff on go-small, report root=go-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "root=go-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

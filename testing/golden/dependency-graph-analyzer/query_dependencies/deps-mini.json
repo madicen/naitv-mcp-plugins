@@ -1,0 +1,9 @@
+{
+  "found": true,
+  "imported_by": [],
+  "imports": [
+    "mod_b",
+    "mod_c"
+  ],
+  "module": "mod_a"
+}

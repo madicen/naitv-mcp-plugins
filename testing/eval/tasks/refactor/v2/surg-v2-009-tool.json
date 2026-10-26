@@ -1,0 +1,19 @@
+{
+  "id": "surg-v2-009-tool",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch validate_patch_scope, report tool validate_patch_scope.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "validate_patch_scope"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

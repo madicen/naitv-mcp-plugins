@@ -1,0 +1,16 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "0"
+    ]
+  },
+  "id": "ho-ref-002-mul-zero",
+  "suite": "refactor",
+  "version": 1,
+  "category": "refactor",
+  "fixture": "py-small",
+  "request": "In pkg/util/math.py mul, what does the function return when a or b is falsy?"
+}

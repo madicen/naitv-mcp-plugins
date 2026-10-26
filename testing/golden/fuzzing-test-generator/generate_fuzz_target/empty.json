@@ -1,0 +1,8 @@
+{
+  "generated": "# no callable symbols discovered in repo\n",
+  "items": [],
+  "name": "",
+  "ok": false,
+  "path": "",
+  "tool": "generate_fuzz_target"
+}

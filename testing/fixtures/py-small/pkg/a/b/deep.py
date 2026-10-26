@@ -1,2 +1,5 @@
+from pkg.greeter import Greeter
+
+
 def buried() -> None:
-    pass
+    _ = Greeter()

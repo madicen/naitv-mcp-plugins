@@ -1,0 +1,71 @@
+{
+  "name": "code-style-enforcer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Dependency 'team-knowledge' normalized to 'team-knowledge-extractor' (see MATRIX_NOTES.md). Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "code-style-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "check_style",
+      "delivery": "on-demand",
+      "tags": [
+        "code-style-enforcer"
+      ],
+      "body": "check_style for code-style-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_style python3 ~/.config/naitv-mcp/tools/code-style-enforcer/code_style_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "load_style_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "code-style-enforcer"
+      ],
+      "body": "load_style_rules for code-style-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=load_style_rules python3 ~/.config/naitv-mcp/tools/code-style-enforcer/code_style_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_fixes",
+      "delivery": "on-demand",
+      "tags": [
+        "code-style-enforcer"
+      ],
+      "body": "suggest_fixes for code-style-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_fixes python3 ~/.config/naitv-mcp/tools/code-style-enforcer/code_style_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "style_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "code-style-enforcer"
+      ],
+      "body": "style_summary for code-style-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=style_summary python3 ~/.config/naitv-mcp/tools/code-style-enforcer/code_style_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

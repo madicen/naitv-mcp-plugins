@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/mistake_stats.schema.json",
+  "title": "mistake_stats",
+  "type": "object",
+  "required": ["total", "by_category"],
+  "properties": {
+    "total": { "type": "integer", "minimum": 0 },
+    "by_category": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "count"],
+        "properties": {
+          "category": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "count": 2,
+  "items": [
+    {
+      "path": "pkg/a/b/deep.py",
+      "score": 0.4667
+    },
+    {
+      "path": "pkg/greeter.py",
+      "score": 0.5
+    }
+  ],
+  "tool": "parse_coverage_report",
+  "truncated": false
+}

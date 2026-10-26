@@ -1,0 +1,115 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "stale_code_identifier",
+    "search_paths": [
+      "tools/stale-code-identifier",
+      "plugins/stale-code-identifier"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "find_unreferenced": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "find_unused_exports": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "rank_staleness": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "stale_summary": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "find_unreferenced": [
+        "items",
+        "count"
+      ],
+      "find_unused_exports": [
+        "items",
+        "count"
+      ],
+      "rank_staleness": [
+        "ok",
+        "tool"
+      ],
+      "stale_summary": [
+        "items",
+        "count"
+      ]
+    },
+    "invalid_tool": "find_unreferenced",
+    "invalid_args": {},
+    "post_timeout_tool": "find_unreferenced",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "stale-code-identifier"
+    ],
+    "tool_names": [
+      "find_unreferenced",
+      "find_unused_exports",
+      "rank_staleness",
+      "stale_summary"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
+  }
+}

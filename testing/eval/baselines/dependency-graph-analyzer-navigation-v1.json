@@ -1,0 +1,43 @@
+{
+  "plugin": "dependency-graph-analyzer",
+  "suite": "navigation",
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 1,
+  "baseline_summary": {
+    "n": 21,
+    "success_rate": 0.5714285714285714,
+    "control_n": 11,
+    "control_success_rate": 0.7272727272727273,
+    "mean_nonexistent_symbol_rate": 0.5238095238095238,
+    "mean_wall_seconds": 81.93488477593444,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 21,
+    "success_rate": 0.8095238095238095,
+    "control_n": 11,
+    "control_success_rate": 0.7272727272727273,
+    "mean_nonexistent_symbol_rate": 0.8571428571428571,
+    "mean_wall_seconds": 86.38903701191745,
+    "total_tool_calls": 10
+  },
+  "verdict": {
+    "baseline_success_rate": 0.5714285714285714,
+    "treatment_success_rate": 0.8095238095238095,
+    "delta_pp": 23.809523809523814,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.33333333333333326,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": false,
+    "l5": "measured-no-uplift"
+  },
+  "note": "smoke with SEEDS=1; full campaign uses SEEDS=3"
+}

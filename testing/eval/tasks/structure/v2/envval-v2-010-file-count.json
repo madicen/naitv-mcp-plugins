@@ -1,0 +1,19 @@
+{
+  "id": "envval-v2-010-file-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator env_summary, report file_count 1 and count 1.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "1"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

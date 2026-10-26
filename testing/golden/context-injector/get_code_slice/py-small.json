@@ -1,0 +1,8 @@
+{
+  "code": "from pkg.util.math import mul\n\n",
+  "end_line": 3,
+  "file": "pkg/greeter.py",
+  "found": true,
+  "hash": "b9f92ee02710956f",
+  "start_line": 1
+}

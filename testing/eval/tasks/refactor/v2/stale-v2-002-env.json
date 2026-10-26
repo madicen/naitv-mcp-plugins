@@ -1,0 +1,19 @@
+{
+  "id": "stale-v2-002-env",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier find_unused_exports, report .env.example.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

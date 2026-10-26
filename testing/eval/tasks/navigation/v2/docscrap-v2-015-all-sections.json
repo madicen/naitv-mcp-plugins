@@ -1,0 +1,20 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-015-all-sections",
+  "difficulty": "hard",
+  "request": "Using doc-scraper extract_sections with only root_path (no path filter) on this fixture, how many sections are indexed across all docs, and is the outcomes heading among them?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "6",
+      "Consequences"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "codegen-v2-007-validate",
+  "suite": "multi-file",
+  "version": 2,
+  "category": "multi-file",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using code-generation-helper validate_generated_code on README.md, report ok true and count 0.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "true",
+      "0"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "code-generation-helper"
+  ]
+}

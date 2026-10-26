@@ -1,0 +1,44 @@
+{
+  "plugin": "goroutine-leak-detector",
+  "suite": "fix-with-tests",
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 108,
+    "success_rate": 0.6944444444444444,
+    "control_n": 78,
+    "control_success_rate": 0.9615384615384616,
+    "mean_nonexistent_symbol_rate": 0.9722222222222222,
+    "mean_wall_seconds": 10.689571042398542,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 108,
+    "success_rate": 0.6944444444444444,
+    "control_n": 78,
+    "control_success_rate": 0.9615384615384616,
+    "mean_nonexistent_symbol_rate": 0.9907407407407407,
+    "mean_wall_seconds": 7.351426371124237,
+    "total_tool_calls": 0
+  },
+  "verdict": {
+    "baseline_success_rate": 0.6944444444444444,
+    "treatment_success_rate": 0.6944444444444444,
+    "delta_pp": 0.0,
+    "control_drop_pp": 0.0,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": 0.01851851851851849,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": false,
+    "l5": "measured-no-uplift"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v1-goroutine-leak-detector-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v1-goroutine-leak-detector-treatment-latest.json"
+}

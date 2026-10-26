@@ -1,0 +1,20 @@
+{
+  "id": "circ-v2-007-py-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using circular-dependency-detector find_cycles on py-small, report count 9 and .env.example.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      ".env.example"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

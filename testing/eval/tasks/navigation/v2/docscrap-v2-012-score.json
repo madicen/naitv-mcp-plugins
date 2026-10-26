@@ -1,0 +1,19 @@
+{
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "fixture": "py-small",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-012-score",
+  "difficulty": "medium",
+  "request": "Using doc-scraper search_doc_index with query architecture, what is the name of the highest-scoring hit?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Record architecture decisions"
+    ]
+  }
+}

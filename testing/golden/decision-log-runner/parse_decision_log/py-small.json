@@ -1,0 +1,15 @@
+{
+  "content": "README\tpy-small fixture\tunknown\tREADME.md",
+  "count": 1,
+  "decisions": [
+    {
+      "id": "README",
+      "path": "README.md",
+      "status": "unknown",
+      "title": "py-small fixture"
+    }
+  ],
+  "loaded": true,
+  "path": "README.md",
+  "tool": "parse_decision_log"
+}

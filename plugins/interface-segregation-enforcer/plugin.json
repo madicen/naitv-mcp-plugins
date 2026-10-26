@@ -1,0 +1,71 @@
+{
+  "name": "interface-segregation-enforcer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "interface-segregation-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "list_interfaces",
+      "delivery": "on-demand",
+      "tags": [
+        "interface-segregation-enforcer"
+      ],
+      "body": "list_interfaces for interface-segregation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=list_interfaces python3 ~/.config/naitv-mcp/tools/interface-segregation-enforcer/interface_segregation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_fat_interfaces",
+      "delivery": "on-demand",
+      "tags": [
+        "interface-segregation-enforcer"
+      ],
+      "body": "find_fat_interfaces for interface-segregation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=find_fat_interfaces python3 ~/.config/naitv-mcp/tools/interface-segregation-enforcer/interface_segregation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_split",
+      "delivery": "on-demand",
+      "tags": [
+        "interface-segregation-enforcer"
+      ],
+      "body": "suggest_split for interface-segregation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_split python3 ~/.config/naitv-mcp/tools/interface-segregation-enforcer/interface_segregation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_implementations",
+      "delivery": "on-demand",
+      "tags": [
+        "interface-segregation-enforcer"
+      ],
+      "body": "check_implementations for interface-segregation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_implementations python3 ~/.config/naitv-mcp/tools/interface-segregation-enforcer/interface_segregation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

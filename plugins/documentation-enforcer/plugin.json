@@ -1,0 +1,71 @@
+{
+  "name": "documentation-enforcer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "documentation-enforcer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_undocumented",
+      "delivery": "on-demand",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "body": "find_undocumented for documentation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=find_undocumented python3 ~/.config/naitv-mcp/tools/documentation-enforcer/documentation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "check_doc_comments",
+      "delivery": "on-demand",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "body": "check_doc_comments for documentation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=check_doc_comments python3 ~/.config/naitv-mcp/tools/documentation-enforcer/documentation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_doc_stub",
+      "delivery": "on-demand",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "body": "generate_doc_stub for documentation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_doc_stub python3 ~/.config/naitv-mcp/tools/documentation-enforcer/documentation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "doc_coverage_report",
+      "delivery": "on-demand",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "body": "doc_coverage_report for documentation-enforcer.",
+      "fields": {
+        "exec": "TOOL_NAME=doc_coverage_report python3 ~/.config/naitv-mcp/tools/documentation-enforcer/documentation_enforcer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

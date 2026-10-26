@@ -1,0 +1,19 @@
+{
+  "id": "invar-v2-010-files-again",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker report_invariant_violations, report files 9.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

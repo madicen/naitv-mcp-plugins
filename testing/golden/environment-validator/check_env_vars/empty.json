@@ -1,0 +1,9 @@
+{
+  "count": 0,
+  "missing": [],
+  "ok": true,
+  "required": [],
+  "tool": "check_env_vars",
+  "unused": [],
+  "violations": []
+}

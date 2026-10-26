@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/util/math.py",
+      "mul"
+    ]
+  },
+  "id": "ho-004-where-mul",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "fixture": "py-small",
+  "request": "Where is mul defined? Give file path."
+}

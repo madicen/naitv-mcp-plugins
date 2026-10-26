@@ -1,0 +1,71 @@
+{
+  "name": "pattern-recognizer",
+  "version": "0.1.0",
+  "description": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "pattern-recognizer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "find_pattern_instances",
+      "delivery": "on-demand",
+      "tags": [
+        "pattern-recognizer"
+      ],
+      "body": "find_pattern_instances for pattern-recognizer.",
+      "fields": {
+        "exec": "TOOL_NAME=find_pattern_instances python3 ~/.config/naitv-mcp/tools/pattern-recognizer/pattern_recognizer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "detect_repeated_patterns",
+      "delivery": "on-demand",
+      "tags": [
+        "pattern-recognizer"
+      ],
+      "body": "detect_repeated_patterns for pattern-recognizer.",
+      "fields": {
+        "exec": "TOOL_NAME=detect_repeated_patterns python3 ~/.config/naitv-mcp/tools/pattern-recognizer/pattern_recognizer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "rank_examples",
+      "delivery": "on-demand",
+      "tags": [
+        "pattern-recognizer"
+      ],
+      "body": "rank_examples for pattern-recognizer.",
+      "fields": {
+        "exec": "TOOL_NAME=rank_examples python3 ~/.config/naitv-mcp/tools/pattern-recognizer/pattern_recognizer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "pattern_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "pattern-recognizer"
+      ],
+      "body": "pattern_summary for pattern-recognizer.",
+      "fields": {
+        "exec": "TOOL_NAME=pattern_summary python3 ~/.config/naitv-mcp/tools/pattern-recognizer/pattern_recognizer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

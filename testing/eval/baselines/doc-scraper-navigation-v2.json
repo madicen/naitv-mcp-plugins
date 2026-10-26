@@ -1,0 +1,45 @@
+{
+  "plugin": "doc-scraper",
+  "suite": "navigation",
+  "version": 2,
+  "model": "qwen3:8b",
+  "agent": "ollama",
+  "seeds": 3,
+  "baseline_summary": {
+    "n": 60,
+    "success_rate": 0.18333333333333332,
+    "control_n": 12,
+    "control_success_rate": 0.5,
+    "mean_nonexistent_symbol_rate": 0.3958333333333333,
+    "mean_wall_seconds": 109.87754575343958,
+    "total_tool_calls": 0
+  },
+  "treatment_summary": {
+    "n": 60,
+    "success_rate": 0.5333333333333333,
+    "control_n": 12,
+    "control_success_rate": 0.8333333333333334,
+    "mean_nonexistent_symbol_rate": 0.0,
+    "mean_wall_seconds": 78.66469393196749,
+    "total_tool_calls": 50
+  },
+  "verdict": {
+    "baseline_success_rate": 0.18333333333333332,
+    "treatment_success_rate": 0.5333333333333333,
+    "delta_pp": 35.0,
+    "control_drop_pp": -33.333333333333336,
+    "tool_inflation_pct": null,
+    "nonexistent_rate_increase": -0.3958333333333333,
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "passed": true,
+    "l5": "measured-helpful"
+  },
+  "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/navigation-v2-doc-scraper-baseline-latest.json",
+  "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/navigation-v2-doc-scraper-treatment-latest.json"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "stale-v2-004-rank",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier rank_staleness, report files 9 and root py-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "9",
+      "py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "generated": "# generate_integration_test\n# root=empty\n# query=Greeter\n",
+  "items": [
+    {
+      "text": "# generate_integration_test\n# root=empty\n# query=Greeter\n"
+    }
+  ],
+  "ok": true,
+  "tool": "generate_integration_test"
+}

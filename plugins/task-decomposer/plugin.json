@@ -1,0 +1,71 @@
+{
+  "name": "task-decomposer",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "task-decomposer"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "decompose_task",
+      "delivery": "on-demand",
+      "tags": [
+        "task-decomposer"
+      ],
+      "body": "decompose_task for task-decomposer.",
+      "fields": {
+        "exec": "TOOL_NAME=decompose_task python3 ~/.config/naitv-mcp/tools/task-decomposer/task_decomposer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "estimate_steps",
+      "delivery": "on-demand",
+      "tags": [
+        "task-decomposer"
+      ],
+      "body": "estimate_steps for task-decomposer.",
+      "fields": {
+        "exec": "TOOL_NAME=estimate_steps python3 ~/.config/naitv-mcp/tools/task-decomposer/task_decomposer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "order_subtasks",
+      "delivery": "on-demand",
+      "tags": [
+        "task-decomposer"
+      ],
+      "body": "order_subtasks for task-decomposer.",
+      "fields": {
+        "exec": "TOOL_NAME=order_subtasks python3 ~/.config/naitv-mcp/tools/task-decomposer/task_decomposer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_plan",
+      "delivery": "on-demand",
+      "tags": [
+        "task-decomposer"
+      ],
+      "body": "validate_plan for task-decomposer.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_plan python3 ~/.config/naitv-mcp/tools/task-decomposer/task_decomposer.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

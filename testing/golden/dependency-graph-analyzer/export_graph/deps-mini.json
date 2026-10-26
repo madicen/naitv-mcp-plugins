@@ -1,0 +1,6 @@
+{
+  "edge_count": 3,
+  "format": "dot",
+  "graph": "digraph imports {\n  \"mod_a\" -> \"mod_b\";\n  \"mod_a\" -> \"mod_c\";\n  \"mod_b\" -> \"mod_c\";\n}\n",
+  "node_count": 3
+}

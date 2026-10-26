@@ -1,0 +1,19 @@
+{
+  "id": "decision-v2-009-consequences",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner summarize_decisions, report that titles include Consequences.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Consequences"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

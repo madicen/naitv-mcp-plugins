@@ -26,6 +26,12 @@
           "signature": "var ExportedVar"
         },
         {
+          "kind": "function",
+          "line": 6,
+          "name": "FuzzHello",
+          "signature": "func FuzzHello(f *testing.F)"
+        },
+        {
           "kind": "type",
           "line": 9,
           "name": "Greeter",
@@ -56,14 +62,14 @@
     "by_language": {
       "go": {
         "complexity": 1.0,
-        "files": 2,
-        "lines": 24
+        "files": 3,
+        "lines": 35
       }
     },
     "complexity": 1.0,
     "packages": 1,
     "parse_errors": 0,
-    "total_files": 2,
-    "total_lines": 24
+    "total_files": 3,
+    "total_lines": 35
   }
 }

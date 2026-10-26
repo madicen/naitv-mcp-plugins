@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 9,
+    "root": "py-small"
+  },
+  "tool": "collect_commit_metrics",
+  "truncated": false
+}

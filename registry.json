@@ -2,25 +2,38 @@
   "plugins": [
     {
       "name": "loop-engineering-go",
-      "description": "Loop Engineering for Go projects — rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
+      "description": "Loop Engineering for Go projects \u2014 rules, workflows, and verification tools (build, vet, test, lint) for use with naitv-mcp + Continue.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/loop-engineering-go/plugin.json",
-      "tags": ["go", "loop-engineering", "verification"],
+      "tags": [
+        "go",
+        "loop-engineering",
+        "verification"
+      ],
       "version": "1.1.0",
       "author": "madicen"
     },
     {
       "name": "lazy-dev",
-      "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) — YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
+      "description": "Lazy senior dev mode (modeled after DietrichGebert/ponytail) \u2014 YAGNI ladder, stdlib first, no unrequested abstractions, with review/audit/debt-harvest workflows. Universal AGENTS.md adapter included for non-MCP agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lazy-dev/plugin.json",
-      "tags": ["lazy-dev", "yagni", "minimalism", "code-quality"],
+      "tags": [
+        "lazy-dev",
+        "yagni",
+        "minimalism",
+        "code-quality"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
     {
       "name": "structural-anchor",
-      "description": "Codebase structural map — packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
+      "description": "Codebase structural map \u2014 packages, symbols, languages, and stats (Python + Go) for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/structural-anchor/plugin.json",
-      "tags": ["structural-anchor", "context", "codebase-map"],
+      "tags": [
+        "structural-anchor",
+        "context",
+        "codebase-map"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
@@ -28,7 +41,12 @@
       "name": "symbol-navigator",
       "description": "AST-based symbol definition, pattern search, and heuristic references (Go + Python) for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/symbol-navigator/plugin.json",
-      "tags": ["symbol-navigator", "context", "definitions", "references"],
+      "tags": [
+        "symbol-navigator",
+        "context",
+        "definitions",
+        "references"
+      ],
       "version": "1.0.0",
       "author": "madicen"
     },
@@ -36,7 +54,10 @@
       "name": "plugin-manager",
       "description": "List, validate, and test naitv-mcp plugin manifests under a filesystem root (developer tooling).",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/plugin-manager/plugin.json",
-      "tags": ["plugin-manager", "developer-tools"],
+      "tags": [
+        "plugin-manager",
+        "developer-tools"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -44,7 +65,11 @@
       "name": "build-system-integrator",
       "description": "Detect local build systems, list targets, run a bounded target, and parse compiler-style errors.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/build-system-integrator/plugin.json",
-      "tags": ["build-system-integrator", "build", "fix-with-tests"],
+      "tags": [
+        "build-system-integrator",
+        "build",
+        "fix-with-tests"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     },
@@ -52,7 +77,609 @@
       "name": "workspace-search",
       "description": "Workspace text search, lightweight semantic ranking, and result re-ranking for naitv-mcp agents.",
       "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/workspace-search/plugin.json",
-      "tags": ["workspace-search", "search", "navigation"],
+      "tags": [
+        "workspace-search",
+        "search",
+        "navigation"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "context-injector",
+      "description": "Extract code slices, relevant snippets, and file outlines for agent context.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/context-injector/plugin.json",
+      "tags": [
+        "context-injector",
+        "context",
+        "multi-file"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "dependency-graph-analyzer",
+      "description": "Build and query Python/Go import graphs: hubs, dependencies, and DOT/JSON export.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/dependency-graph-analyzer/plugin.json",
+      "tags": [
+        "dependency-graph-analyzer",
+        "imports",
+        "navigation"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "cache-manager",
+      "description": "Namespaced key/value cache with TTL, stats, and prune (SQLite under ~/.cache).",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/cache-manager/plugin.json",
+      "tags": [
+        "cache-manager",
+        "cache",
+        "infrastructure"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "mistake-tracker",
+      "description": "Record, search, and summarize recurring coding mistakes per project root.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/mistake-tracker/plugin.json",
+      "tags": [
+        "mistake-tracker",
+        "mistakes",
+        "fix-with-tests"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "specification-enforcer",
+      "description": "specification-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/specification-enforcer/plugin.json",
+      "tags": [
+        "specification-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "pattern-recognizer",
+      "description": "pattern-recognizer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/pattern-recognizer/plugin.json",
+      "tags": [
+        "pattern-recognizer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "error-matcher",
+      "description": "error-matcher JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/error-matcher/plugin.json",
+      "tags": [
+        "error-matcher"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "golden-example-injector",
+      "description": "golden-example-injector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/golden-example-injector/plugin.json",
+      "tags": [
+        "golden-example-injector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "decision-log-runner",
+      "description": "decision-log-runner JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/decision-log-runner/plugin.json",
+      "tags": [
+        "decision-log-runner"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "task-decomposer",
+      "description": "task-decomposer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/task-decomposer/plugin.json",
+      "tags": [
+        "task-decomposer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "think-before-write",
+      "description": "think-before-write JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/think-before-write/plugin.json",
+      "tags": [
+        "think-before-write"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "validate-and-test",
+      "description": "validate-and-test JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/validate-and-test/plugin.json",
+      "tags": [
+        "validate-and-test"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "lint-fix-loop",
+      "description": "lint-fix-loop JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/lint-fix-loop/plugin.json",
+      "tags": [
+        "lint-fix-loop"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "tdd-runner",
+      "description": "tdd-runner JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/tdd-runner/plugin.json",
+      "tags": [
+        "tdd-runner"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "security-checker",
+      "description": "security-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/security-checker/plugin.json",
+      "tags": [
+        "security-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "secrets-detector",
+      "description": "secrets-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/secrets-detector/plugin.json",
+      "tags": [
+        "secrets-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "type-import-stubber",
+      "description": "type-import-stubber JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/type-import-stubber/plugin.json",
+      "tags": [
+        "type-import-stubber"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "circular-dependency-detector",
+      "description": "circular-dependency-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/circular-dependency-detector/plugin.json",
+      "tags": [
+        "circular-dependency-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "api-contract-validator",
+      "description": "api-contract-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/api-contract-validator/plugin.json",
+      "tags": [
+        "api-contract-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "surgical-patch",
+      "description": "surgical-patch JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/surgical-patch/plugin.json",
+      "tags": [
+        "surgical-patch"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "regression-test-generator",
+      "description": "regression-test-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/regression-test-generator/plugin.json",
+      "tags": [
+        "regression-test-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "documentation-enforcer",
+      "description": "documentation-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/documentation-enforcer/plugin.json",
+      "tags": [
+        "documentation-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "mock-stub-generator",
+      "description": "mock-stub-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/mock-stub-generator/plugin.json",
+      "tags": [
+        "mock-stub-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "deprecation-manager",
+      "description": "deprecation-manager JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/deprecation-manager/plugin.json",
+      "tags": [
+        "deprecation-manager"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "test-coverage-analyzer",
+      "description": "test-coverage-analyzer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/test-coverage-analyzer/plugin.json",
+      "tags": [
+        "test-coverage-analyzer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "license-compliance-checker",
+      "description": "license-compliance-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/license-compliance-checker/plugin.json",
+      "tags": [
+        "license-compliance-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "team-knowledge-extractor",
+      "description": "team-knowledge-extractor JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/team-knowledge-extractor/plugin.json",
+      "tags": [
+        "team-knowledge-extractor"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "invariant-checker",
+      "description": "invariant-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/invariant-checker/plugin.json",
+      "tags": [
+        "invariant-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "code-style-enforcer",
+      "description": "code-style-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/code-style-enforcer/plugin.json",
+      "tags": [
+        "code-style-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "naming-validator",
+      "description": "naming-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/naming-validator/plugin.json",
+      "tags": [
+        "naming-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "logging-enforcer",
+      "description": "logging-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/logging-enforcer/plugin.json",
+      "tags": [
+        "logging-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "code-review-simulator",
+      "description": "code-review-simulator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/code-review-simulator/plugin.json",
+      "tags": [
+        "code-review-simulator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "type-safety-enhancer",
+      "description": "type-safety-enhancer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/type-safety-enhancer/plugin.json",
+      "tags": [
+        "type-safety-enhancer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "doc-scraper",
+      "description": "doc-scraper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/doc-scraper/plugin.json",
+      "tags": [
+        "doc-scraper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "performance-profiler",
+      "description": "performance-profiler JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/performance-profiler/plugin.json",
+      "tags": [
+        "performance-profiler"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "refactoring-suggester",
+      "description": "refactoring-suggester JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/refactoring-suggester/plugin.json",
+      "tags": [
+        "refactoring-suggester"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "benchmark-generator",
+      "description": "benchmark-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/benchmark-generator/plugin.json",
+      "tags": [
+        "benchmark-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "change-impact-analyzer",
+      "description": "change-impact-analyzer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/change-impact-analyzer/plugin.json",
+      "tags": [
+        "change-impact-analyzer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "documentation-sync-manager",
+      "description": "documentation-sync-manager JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/documentation-sync-manager/plugin.json",
+      "tags": [
+        "documentation-sync-manager"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "environment-validator",
+      "description": "environment-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/environment-validator/plugin.json",
+      "tags": [
+        "environment-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "interface-segregation-enforcer",
+      "description": "interface-segregation-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/interface-segregation-enforcer/plugin.json",
+      "tags": [
+        "interface-segregation-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "language-idioms-enforcer",
+      "description": "language-idioms-enforcer JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/language-idioms-enforcer/plugin.json",
+      "tags": [
+        "language-idioms-enforcer"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "performance-regression-detector",
+      "description": "performance-regression-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/performance-regression-detector/plugin.json",
+      "tags": [
+        "performance-regression-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "stale-code-identifier",
+      "description": "stale-code-identifier JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/stale-code-identifier/plugin.json",
+      "tags": [
+        "stale-code-identifier"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "team-metrics-collector",
+      "description": "team-metrics-collector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/team-metrics-collector/plugin.json",
+      "tags": [
+        "team-metrics-collector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "concurrency-checker",
+      "description": "concurrency-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/concurrency-checker/plugin.json",
+      "tags": [
+        "concurrency-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "database-schema-validator",
+      "description": "database-schema-validator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/database-schema-validator/plugin.json",
+      "tags": [
+        "database-schema-validator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "fuzzing-test-generator",
+      "description": "fuzzing-test-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/fuzzing-test-generator/plugin.json",
+      "tags": [
+        "fuzzing-test-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "goroutine-leak-detector",
+      "description": "goroutine-leak-detector JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/goroutine-leak-detector/plugin.json",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "integration-test-generator",
+      "description": "integration-test-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/integration-test-generator/plugin.json",
+      "tags": [
+        "integration-test-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "blame-context-historian",
+      "description": "blame-context-historian JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/blame-context-historian/plugin.json",
+      "tags": [
+        "blame-context-historian"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "feature-flag-manager",
+      "description": "feature-flag-manager JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/feature-flag-manager/plugin.json",
+      "tags": [
+        "feature-flag-manager"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "code-generation-helper",
+      "description": "code-generation-helper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/code-generation-helper/plugin.json",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "accessibility-checker",
+      "description": "accessibility-checker JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/accessibility-checker/plugin.json",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "rollback-plan-generator",
+      "description": "rollback-plan-generator JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/rollback-plan-generator/plugin.json",
+      "tags": [
+        "rollback-plan-generator"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "contract-testing-helper",
+      "description": "contract-testing-helper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/contract-testing-helper/plugin.json",
+      "tags": [
+        "contract-testing-helper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "incremental-refactoring-helper",
+      "description": "incremental-refactoring-helper JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/incremental-refactoring-helper/plugin.json",
+      "tags": [
+        "incremental-refactoring-helper"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "memory-profiler",
+      "description": "memory-profiler JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/memory-profiler/plugin.json",
+      "tags": [
+        "memory-profiler"
+      ],
+      "version": "0.1.0",
+      "author": "madicen"
+    },
+    {
+      "name": "monitoring-alerting-setup",
+      "description": "monitoring-alerting-setup JSON tools for naitv-mcp agents.",
+      "url": "https://raw.githubusercontent.com/madicen/naitv-mcp-plugins/main/plugins/monitoring-alerting-setup/plugin.json",
+      "tags": [
+        "monitoring-alerting-setup"
+      ],
       "version": "0.1.0",
       "author": "madicen"
     }

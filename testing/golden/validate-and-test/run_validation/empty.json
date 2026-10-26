@@ -1,0 +1,11 @@
+{
+  "build_system": "unknown",
+  "count": 0,
+  "dry_run": true,
+  "exit_code": 0,
+  "items": [],
+  "ok": true,
+  "summary": "dry-run unknown: 0 test file(s) listed",
+  "tool": "run_validation",
+  "truncated": false
+}

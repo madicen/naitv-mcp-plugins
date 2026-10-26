@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Leave-one-out ablation over suite treatment_plugins (stub agent)."""
+"""Leave-one-out ablation over suite treatment_plugins.
+
+Agents:
+  stub   — deterministic; default for CI safety
+  ollama — local model; function-calling tool loop (same as run_eval.py)
+"""
 from __future__ import annotations
 
 import argparse
@@ -31,14 +36,18 @@ def leave_one_out_sets(plugins: list[str]) -> list[tuple[str, list[str]]]:
     return [(p, [x for x in plugins if x != p]) for p in plugins]
 
 
-def main() -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", default="navigation")
     parser.add_argument("--version", type=int, default=1)
     parser.add_argument("--seeds", type=int, default=1)
     parser.add_argument("--seed-base", type=int, default=42)
-    parser.add_argument("--agent", choices=("stub",), default="stub")
-    args = parser.parse_args()
+    parser.add_argument("--agent", choices=("stub", "ollama"), default="stub")
+    return parser
+
+
+def main() -> int:
+    args = build_parser().parse_args()
 
     if shutil.which("naitv-mcp") is None:
         print("warn: naitv-mcp not on PATH; ablation skipped", file=sys.stderr)
@@ -88,6 +97,9 @@ def main() -> int:
         "suite_version": args.version,
         "full_plugins": full,
         "agent": args.agent,
+        "model": os.environ.get("OLLAMA_MODEL", "qwen3:8b")
+        if args.agent == "ollama"
+        else None,
         "seeds": args.seeds,
         "arms": arms,
         "recorded_at": datetime.now(timezone.utc).isoformat(),

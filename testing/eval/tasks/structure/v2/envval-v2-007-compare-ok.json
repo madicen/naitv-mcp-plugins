@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-007-compare-ok",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator compare_env_templates, report ok false and missing APP_ENV.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "false",
+      "APP_ENV"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

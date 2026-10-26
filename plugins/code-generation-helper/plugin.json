@@ -1,0 +1,86 @@
+{
+  "name": "code-generation-helper",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (5) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "code-generation-helper"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "list_templates",
+      "delivery": "on-demand",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "body": "list_templates for code-generation-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=list_templates python3 ~/.config/naitv-mcp/tools/code-generation-helper/code_generation_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "render_template",
+      "delivery": "on-demand",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "body": "render_template for code-generation-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=render_template python3 ~/.config/naitv-mcp/tools/code-generation-helper/code_generation_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_generated_code",
+      "delivery": "on-demand",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "body": "validate_generated_code for code-generation-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_generated_code python3 ~/.config/naitv-mcp/tools/code-generation-helper/code_generation_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_template",
+      "delivery": "on-demand",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "body": "suggest_template for code-generation-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_template python3 ~/.config/naitv-mcp/tools/code-generation-helper/code_generation_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generation_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "code-generation-helper"
+      ],
+      "body": "generation_summary for code-generation-helper.",
+      "fields": {
+        "exec": "TOOL_NAME=generation_summary python3 ~/.config/naitv-mcp/tools/code-generation-helper/code_generation_helper.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "dep-003-imported-by-mod-c",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "Which modules import mod_c?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["mod_a", "mod_b"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

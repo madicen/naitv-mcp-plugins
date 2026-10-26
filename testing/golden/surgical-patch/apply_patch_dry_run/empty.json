@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "ok": true,
+  "summary": "apply_patch_dry_run dry-run on empty",
+  "tool": "apply_patch_dry_run"
+}

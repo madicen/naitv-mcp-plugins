@@ -1,0 +1,15 @@
+{
+  "id": "dep-010-second-hub",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "deps-mini",
+  "request": "After mod_c, which module has the next-highest fan-in?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["mod_b"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "result": {
+    "files": 9,
+    "root": "py-small"
+  },
+  "tool": "analyze_change_risk",
+  "truncated": false
+}

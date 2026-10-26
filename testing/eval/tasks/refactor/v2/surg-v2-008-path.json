@@ -1,0 +1,20 @@
+{
+  "id": "surg-v2-008-path",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using surgical-patch generate_minimal_diff with path pkg/greeter.py, report pkg/greeter.py and root=py-small.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/greeter.py",
+      "root=py-small"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "surgical-patch"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "regression-test-generator",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (3) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "regression-test-generator"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "suggest_regression_tests",
+      "delivery": "on-demand",
+      "tags": [
+        "regression-test-generator"
+      ],
+      "body": "suggest_regression_tests for regression-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_regression_tests python3 ~/.config/naitv-mcp/tools/regression-test-generator/regression_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "generate_test_stub",
+      "delivery": "on-demand",
+      "tags": [
+        "regression-test-generator"
+      ],
+      "body": "generate_test_stub for regression-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=generate_test_stub python3 ~/.config/naitv-mcp/tools/regression-test-generator/regression_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "validate_generated_test",
+      "delivery": "on-demand",
+      "tags": [
+        "regression-test-generator"
+      ],
+      "body": "validate_generated_test for regression-test-generator.",
+      "fields": {
+        "exec": "TOOL_NAME=validate_generated_test python3 ~/.config/naitv-mcp/tools/regression-test-generator/regression_test_generator.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

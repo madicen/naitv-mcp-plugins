@@ -1,0 +1,13 @@
+{
+  "decision_ids": [],
+  "items": [],
+  "ok": true,
+  "result": {
+    "by_status": {},
+    "count": 0,
+    "titles": []
+  },
+  "summary": "",
+  "titles": [],
+  "tool": "summarize_decisions"
+}

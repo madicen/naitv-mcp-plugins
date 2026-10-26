@@ -1,0 +1,19 @@
+{
+  "id": "circ-v2-009-deep",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using circular-dependency-detector find_cycles with query buried, report pkg/a/b/deep.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/a/b/deep.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "circular-dependency-detector"
+  ]
+}

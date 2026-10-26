@@ -1,0 +1,11 @@
+{
+  "build_system": "unknown",
+  "commands": [],
+  "config_files": [],
+  "ok": true,
+  "result": {
+    "build_system": "unknown",
+    "config_files": []
+  },
+  "tool": "detect_build_system"
+}

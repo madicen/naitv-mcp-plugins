@@ -1,0 +1,116 @@
+{
+  "profile": "json_tools",
+  "coverage": {
+    "module": "concurrency_checker",
+    "search_paths": [
+      "tools/concurrency-checker",
+      "plugins/concurrency-checker"
+    ],
+    "fail_under": 80
+  },
+  "layers": {
+    "l1": true,
+    "l2": true,
+    "l3_golden": true,
+    "l4": true,
+    "l5": true
+  },
+  "golden": {
+    "fixtures": [
+      "empty",
+      "py-small"
+    ],
+    "queries": {
+      "find_shared_state": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "check_locking": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "find_race_candidates": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      },
+      "concurrency_summary": {
+        "query": "Greeter",
+        "path": "README.md",
+        "limit": 10,
+        "depth": 3
+      }
+    }
+  },
+  "perf": {
+    "enabled": false
+  },
+  "l4": {
+    "smoke_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "Greeter",
+      "path": "README.md",
+      "limit": 10,
+      "depth": 3,
+      "pattern": "Greeter",
+      "text": "sample"
+    },
+    "expect_keys": {
+      "find_shared_state": [
+        "items",
+        "count"
+      ],
+      "check_locking": [
+        "ok",
+        "violations",
+        "count"
+      ],
+      "find_race_candidates": [
+        "items",
+        "count"
+      ],
+      "concurrency_summary": [
+        "items",
+        "count"
+      ]
+    },
+    "invalid_tool": "find_shared_state",
+    "invalid_args": {},
+    "post_timeout_tool": "find_shared_state",
+    "post_timeout_args": {
+      "root_path": "FIXTURE:empty",
+      "query": "x"
+    }
+  },
+  "l5": {
+    "treatment_plugins": [
+      "concurrency-checker"
+    ],
+    "tool_names": [
+      "find_shared_state",
+      "check_locking",
+      "find_race_candidates",
+      "concurrency_summary"
+    ],
+    "gate": {
+      "min_success_delta_pp": 10,
+      "ci_must_exclude_zero": true,
+      "max_control_regression_pp": 2,
+      "max_nonexistent_symbol_rate_increase": 0,
+      "max_tool_call_inflation_pct": 25
+    },
+    "model": {
+      "name": "qwen3:8b",
+      "provider": "ollama",
+      "quantization": "default",
+      "context": 8192,
+      "temperature": 0,
+      "seed": 0
+    }
+  }
+}

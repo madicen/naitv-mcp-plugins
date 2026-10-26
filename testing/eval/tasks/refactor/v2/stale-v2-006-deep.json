@@ -1,0 +1,19 @@
+{
+  "id": "stale-v2-006-deep",
+  "suite": "refactor",
+  "version": 2,
+  "category": "refactor",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using stale-code-identifier find_unreferenced with query buried, report pkg/a/b/deep.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/a/b/deep.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "stale-code-identifier"
+  ]
+}

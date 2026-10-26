@@ -1,0 +1,19 @@
+{
+  "id": "logenf-v2-006-deep",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer find_log_calls with query buried, report pkg/a/b/deep.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "pkg/a/b/deep.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

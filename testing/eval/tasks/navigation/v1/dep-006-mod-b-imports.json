@@ -1,0 +1,15 @@
+{
+  "id": "dep-006-mod-b-imports",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "deps-mini",
+  "request": "What does mod_b import?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": ["mod_c"]
+  },
+  "control": false,
+  "plugins_expected": ["dependency-graph-analyzer"]
+}

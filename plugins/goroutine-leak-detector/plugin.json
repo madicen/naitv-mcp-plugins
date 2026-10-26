@@ -1,0 +1,71 @@
+{
+  "name": "goroutine-leak-detector",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "goroutine-leak-detector"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "parse_goroutine_dump",
+      "delivery": "on-demand",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "body": "parse_goroutine_dump for goroutine-leak-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=parse_goroutine_dump python3 ~/.config/naitv-mcp/tools/goroutine-leak-detector/goroutine_leak_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "find_leak_candidates",
+      "delivery": "on-demand",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "body": "find_leak_candidates for goroutine-leak-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=find_leak_candidates python3 ~/.config/naitv-mcp/tools/goroutine-leak-detector/goroutine_leak_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "explain_goroutine",
+      "delivery": "on-demand",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "body": "explain_goroutine for goroutine-leak-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=explain_goroutine python3 ~/.config/naitv-mcp/tools/goroutine-leak-detector/goroutine_leak_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "leak_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "goroutine-leak-detector"
+      ],
+      "body": "leak_summary for goroutine-leak-detector.",
+      "fields": {
+        "exec": "TOOL_NAME=leak_summary python3 ~/.config/naitv-mcp/tools/goroutine-leak-detector/goroutine_leak_detector.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

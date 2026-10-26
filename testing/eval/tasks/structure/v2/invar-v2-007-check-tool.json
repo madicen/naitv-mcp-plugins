@@ -1,0 +1,19 @@
+{
+  "id": "invar-v2-007-check-tool",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker check_invariants, report tool check_invariants.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "check_invariants"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

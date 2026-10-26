@@ -1,0 +1,19 @@
+{
+  "id": "fuzzgen-v2-009-existing",
+  "suite": "fix-with-tests",
+  "version": 2,
+  "category": "fix-with-tests",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using fuzzing-test-generator generate_fuzz_target, report existing_targets includes FuzzHello.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "FuzzHello"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "fuzzing-test-generator"
+  ]
+}

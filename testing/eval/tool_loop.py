@@ -212,8 +212,10 @@ def ollama_with_mcp(
 
     system = (
         "You are a careful coding assistant working on a local fixture repo. "
-        "Answer briefly and only name symbols that exist. "
-        "When tools are available, use them before answering navigation questions. "
+        "Answer briefly. Copy paths and names exactly from tool JSON fields "
+        "(path, name, title, key) — do not invent CamelCase identifiers. "
+        "Do not narrate tool names in the final answer; just state the facts. "
+        "When tools are available, use them before answering. "
         "When you are done, reply with the final answer as plain text (no tool call)."
     )
     user = (

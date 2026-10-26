@@ -107,5 +107,7 @@ Per plugin, a `measured-helpful` result is sufficient for "offered by default." 
 ## 5. Known state (as of this plan)
 
 - Harness: L1 to L4 wired for `structural-anchor`, `symbol-navigator`, `lazy-dev`, and `loop-engineering-go`.
-- L5: the navigation baseline and ablation exist, but the runs were made with `AGENT=stub`, on 5 tasks, with 1 seed. They prove the wiring works, not that either plugin helps a model. Re-run with `AGENT=ollama` and a pinned model before making any claim.
-- No plugin currently has `measured-helpful`.
+- L5 campaign completed with `qwen3:8b`, `SEEDS=3` (`harness.json` → `l5.model`, Makefile `OLLAMA_MODEL`).
+- `measured-helpful`: `code-generation-helper` only.
+- Most plugins are `measured-no-uplift`; dominant failure mode is hallucination rate up (`hall↑`).
+- Held-out suite and ollama leave-one-out ablation (`testing/eval/run_ablation.py --agent ollama`) are still required before any plugin is **Certified**.

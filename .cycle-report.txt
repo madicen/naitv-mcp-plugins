@@ -1,0 +1,161 @@
+=== BUILD error-matcher ===
+catalog: 66 entries  blocked=0  exists=14  needs-spec=0  planned=52
+OK error-matcher https://github.com/madicen/naitv-mcp-plugins/pull/18 base=plugin/pattern-recognizer
+=== BUILD golden-example-injector ===
+catalog: 66 entries  blocked=0  exists=15  needs-spec=0  planned=51
+OK golden-example-injector https://github.com/madicen/naitv-mcp-plugins/pull/19 base=plugin/error-matcher
+=== BUILD decision-log-runner ===
+catalog: 66 entries  blocked=0  exists=16  needs-spec=0  planned=50
+OK decision-log-runner https://github.com/madicen/naitv-mcp-plugins/pull/20 base=plugin/golden-example-injector
+=== BUILD task-decomposer ===
+catalog: 66 entries  blocked=0  exists=17  needs-spec=0  planned=49
+OK task-decomposer https://github.com/madicen/naitv-mcp-plugins/pull/21 base=plugin/decision-log-runner
+=== BUILD think-before-write ===
+catalog: 66 entries  blocked=0  exists=18  needs-spec=0  planned=48
+OK think-before-write https://github.com/madicen/naitv-mcp-plugins/pull/22 base=plugin/task-decomposer
+=== BUILD validate-and-test ===
+catalog: 66 entries  blocked=0  exists=19  needs-spec=0  planned=47
+OK validate-and-test https://github.com/madicen/naitv-mcp-plugins/pull/23 base=plugin/think-before-write
+=== BUILD lint-fix-loop ===
+catalog: 66 entries  blocked=0  exists=20  needs-spec=0  planned=46
+OK lint-fix-loop https://github.com/madicen/naitv-mcp-plugins/pull/24 base=plugin/validate-and-test
+=== BUILD tdd-runner ===
+catalog: 66 entries  blocked=0  exists=21  needs-spec=0  planned=45
+OK tdd-runner https://github.com/madicen/naitv-mcp-plugins/pull/25 base=plugin/lint-fix-loop
+=== BUILD security-checker ===
+catalog: 66 entries  blocked=0  exists=22  needs-spec=0  planned=44
+OK security-checker https://github.com/madicen/naitv-mcp-plugins/pull/26 base=plugin/tdd-runner
+=== BUILD secrets-detector ===
+catalog: 66 entries  blocked=0  exists=23  needs-spec=0  planned=43
+OK secrets-detector https://github.com/madicen/naitv-mcp-plugins/pull/27 base=plugin/security-checker
+=== BUILD type-import-stubber ===
+catalog: 66 entries  blocked=0  exists=24  needs-spec=0  planned=42
+OK type-import-stubber https://github.com/madicen/naitv-mcp-plugins/pull/28 base=plugin/secrets-detector
+=== BUILD circular-dependency-detector ===
+catalog: 66 entries  blocked=0  exists=25  needs-spec=0  planned=41
+OK circular-dependency-detector https://github.com/madicen/naitv-mcp-plugins/pull/29 base=plugin/type-import-stubber
+=== BUILD api-contract-validator ===
+catalog: 66 entries  blocked=0  exists=26  needs-spec=0  planned=40
+OK api-contract-validator https://github.com/madicen/naitv-mcp-plugins/pull/30 base=plugin/circular-dependency-detector
+=== BUILD surgical-patch ===
+catalog: 66 entries  blocked=0  exists=27  needs-spec=0  planned=39
+OK surgical-patch https://github.com/madicen/naitv-mcp-plugins/pull/31 base=plugin/api-contract-validator
+=== BUILD regression-test-generator ===
+catalog: 66 entries  blocked=0  exists=28  needs-spec=0  planned=38
+OK regression-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/32 base=plugin/surgical-patch
+=== BUILD documentation-enforcer ===
+catalog: 66 entries  blocked=0  exists=29  needs-spec=0  planned=37
+OK documentation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/33 base=plugin/regression-test-generator
+=== BUILD mock-stub-generator ===
+catalog: 66 entries  blocked=0  exists=30  needs-spec=0  planned=36
+OK mock-stub-generator https://github.com/madicen/naitv-mcp-plugins/pull/34 base=plugin/documentation-enforcer
+=== BUILD deprecation-manager ===
+catalog: 66 entries  blocked=0  exists=31  needs-spec=0  planned=35
+OK deprecation-manager https://github.com/madicen/naitv-mcp-plugins/pull/35 base=plugin/mock-stub-generator
+=== BUILD test-coverage-analyzer ===
+catalog: 66 entries  blocked=0  exists=32  needs-spec=0  planned=34
+OK test-coverage-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/36 base=plugin/deprecation-manager
+=== BUILD license-compliance-checker ===
+catalog: 66 entries  blocked=0  exists=33  needs-spec=0  planned=33
+OK license-compliance-checker https://github.com/madicen/naitv-mcp-plugins/pull/37 base=plugin/test-coverage-analyzer
+=== BUILD team-knowledge-extractor ===
+catalog: 66 entries  blocked=0  exists=34  needs-spec=0  planned=32
+OK team-knowledge-extractor https://github.com/madicen/naitv-mcp-plugins/pull/38 base=plugin/license-compliance-checker
+=== BUILD invariant-checker ===
+catalog: 66 entries  blocked=0  exists=35  needs-spec=0  planned=31
+OK invariant-checker https://github.com/madicen/naitv-mcp-plugins/pull/39 base=plugin/team-knowledge-extractor
+=== BUILD code-style-enforcer ===
+catalog: 66 entries  blocked=0  exists=36  needs-spec=0  planned=30
+OK code-style-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/40 base=plugin/invariant-checker
+=== BUILD naming-validator ===
+catalog: 66 entries  blocked=0  exists=37  needs-spec=0  planned=29
+OK naming-validator https://github.com/madicen/naitv-mcp-plugins/pull/41 base=plugin/code-style-enforcer
+=== BUILD logging-enforcer ===
+catalog: 66 entries  blocked=0  exists=38  needs-spec=0  planned=28
+OK logging-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/42 base=plugin/naming-validator
+=== BUILD code-review-simulator ===
+catalog: 66 entries  blocked=0  exists=39  needs-spec=0  planned=27
+OK code-review-simulator https://github.com/madicen/naitv-mcp-plugins/pull/43 base=plugin/logging-enforcer
+=== BUILD type-safety-enhancer ===
+catalog: 66 entries  blocked=0  exists=40  needs-spec=0  planned=26
+OK type-safety-enhancer https://github.com/madicen/naitv-mcp-plugins/pull/44 base=plugin/code-review-simulator
+=== BUILD doc-scraper ===
+catalog: 66 entries  blocked=0  exists=41  needs-spec=0  planned=25
+OK doc-scraper https://github.com/madicen/naitv-mcp-plugins/pull/45 base=plugin/type-safety-enhancer
+=== BUILD performance-profiler ===
+catalog: 66 entries  blocked=0  exists=42  needs-spec=0  planned=24
+OK performance-profiler https://github.com/madicen/naitv-mcp-plugins/pull/46 base=plugin/doc-scraper
+=== BUILD refactoring-suggester ===
+catalog: 66 entries  blocked=0  exists=43  needs-spec=0  planned=23
+OK refactoring-suggester https://github.com/madicen/naitv-mcp-plugins/pull/47 base=plugin/performance-profiler
+=== BUILD benchmark-generator ===
+catalog: 66 entries  blocked=0  exists=44  needs-spec=0  planned=22
+OK benchmark-generator https://github.com/madicen/naitv-mcp-plugins/pull/48 base=plugin/refactoring-suggester
+=== BUILD change-impact-analyzer ===
+catalog: 66 entries  blocked=0  exists=45  needs-spec=0  planned=21
+OK change-impact-analyzer https://github.com/madicen/naitv-mcp-plugins/pull/49 base=plugin/benchmark-generator
+=== BUILD documentation-sync-manager ===
+catalog: 66 entries  blocked=0  exists=46  needs-spec=0  planned=20
+OK documentation-sync-manager https://github.com/madicen/naitv-mcp-plugins/pull/50 base=plugin/change-impact-analyzer
+=== BUILD environment-validator ===
+catalog: 66 entries  blocked=0  exists=47  needs-spec=0  planned=19
+OK environment-validator https://github.com/madicen/naitv-mcp-plugins/pull/51 base=plugin/documentation-sync-manager
+=== BUILD interface-segregation-enforcer ===
+catalog: 66 entries  blocked=0  exists=48  needs-spec=0  planned=18
+OK interface-segregation-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/52 base=plugin/environment-validator
+=== BUILD language-idioms-enforcer ===
+catalog: 66 entries  blocked=0  exists=49  needs-spec=0  planned=17
+OK language-idioms-enforcer https://github.com/madicen/naitv-mcp-plugins/pull/53 base=plugin/interface-segregation-enforcer
+=== BUILD performance-regression-detector ===
+catalog: 66 entries  blocked=0  exists=50  needs-spec=0  planned=16
+OK performance-regression-detector https://github.com/madicen/naitv-mcp-plugins/pull/54 base=plugin/language-idioms-enforcer
+=== BUILD stale-code-identifier ===
+catalog: 66 entries  blocked=0  exists=51  needs-spec=0  planned=15
+OK stale-code-identifier https://github.com/madicen/naitv-mcp-plugins/pull/55 base=plugin/performance-regression-detector
+=== BUILD team-metrics-collector ===
+catalog: 66 entries  blocked=0  exists=52  needs-spec=0  planned=14
+OK team-metrics-collector https://github.com/madicen/naitv-mcp-plugins/pull/56 base=plugin/stale-code-identifier
+=== BUILD concurrency-checker ===
+catalog: 66 entries  blocked=0  exists=53  needs-spec=0  planned=13
+OK concurrency-checker https://github.com/madicen/naitv-mcp-plugins/pull/57 base=plugin/team-metrics-collector
+=== BUILD database-schema-validator ===
+catalog: 66 entries  blocked=0  exists=54  needs-spec=0  planned=12
+OK database-schema-validator https://github.com/madicen/naitv-mcp-plugins/pull/58 base=plugin/concurrency-checker
+=== BUILD fuzzing-test-generator ===
+catalog: 66 entries  blocked=0  exists=55  needs-spec=0  planned=11
+OK fuzzing-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/59 base=plugin/database-schema-validator
+=== BUILD goroutine-leak-detector ===
+catalog: 66 entries  blocked=0  exists=56  needs-spec=0  planned=10
+OK goroutine-leak-detector https://github.com/madicen/naitv-mcp-plugins/pull/60 base=plugin/fuzzing-test-generator
+=== BUILD integration-test-generator ===
+catalog: 66 entries  blocked=0  exists=57  needs-spec=0  planned=9
+OK integration-test-generator https://github.com/madicen/naitv-mcp-plugins/pull/61 base=plugin/goroutine-leak-detector
+=== BUILD blame-context-historian ===
+catalog: 66 entries  blocked=0  exists=58  needs-spec=0  planned=8
+OK blame-context-historian https://github.com/madicen/naitv-mcp-plugins/pull/62 base=plugin/integration-test-generator
+=== BUILD feature-flag-manager ===
+catalog: 66 entries  blocked=0  exists=59  needs-spec=0  planned=7
+OK feature-flag-manager https://github.com/madicen/naitv-mcp-plugins/pull/63 base=plugin/blame-context-historian
+=== BUILD code-generation-helper ===
+catalog: 66 entries  blocked=0  exists=60  needs-spec=0  planned=6
+OK code-generation-helper https://github.com/madicen/naitv-mcp-plugins/pull/64 base=plugin/feature-flag-manager
+=== BUILD accessibility-checker ===
+catalog: 66 entries  blocked=0  exists=61  needs-spec=0  planned=5
+OK accessibility-checker https://github.com/madicen/naitv-mcp-plugins/pull/65 base=plugin/code-generation-helper
+=== BUILD rollback-plan-generator ===
+catalog: 66 entries  blocked=0  exists=62  needs-spec=0  planned=4
+OK rollback-plan-generator https://github.com/madicen/naitv-mcp-plugins/pull/66 base=plugin/accessibility-checker
+=== BUILD contract-testing-helper ===
+catalog: 66 entries  blocked=0  exists=63  needs-spec=0  planned=3
+OK contract-testing-helper https://github.com/madicen/naitv-mcp-plugins/pull/67 base=plugin/rollback-plan-generator
+=== BUILD incremental-refactoring-helper ===
+catalog: 66 entries  blocked=0  exists=64  needs-spec=0  planned=2
+OK incremental-refactoring-helper https://github.com/madicen/naitv-mcp-plugins/pull/68 base=plugin/contract-testing-helper
+=== BUILD memory-profiler ===
+catalog: 66 entries  blocked=0  exists=65  needs-spec=0  planned=1
+OK memory-profiler https://github.com/madicen/naitv-mcp-plugins/pull/69 base=plugin/incremental-refactoring-helper
+=== BUILD monitoring-alerting-setup ===
+catalog: 66 entries  blocked=0  exists=66  needs-spec=0  planned=0
+OK monitoring-alerting-setup https://github.com/madicen/naitv-mcp-plugins/pull/70 base=plugin/memory-profiler
+NO_MORE_BUILDABLE
+DONE built=53

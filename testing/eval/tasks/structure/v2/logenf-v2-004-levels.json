@@ -1,0 +1,20 @@
+{
+  "id": "logenf-v2-004-levels",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using logging-enforcer check_log_levels on README.md, report ok true and count 0.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "true",
+      "0"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "logging-enforcer"
+  ]
+}

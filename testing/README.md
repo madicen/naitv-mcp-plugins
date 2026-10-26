@@ -18,5 +18,9 @@ Run `./scripts/l4.sh structural-anchor` (or `RUN_L4=1 ./scripts/test.sh …`) fo
 integration; requires `naitv-mcp` on PATH.
 L5: `./scripts/eval.sh baseline` **before** any treatment run; then
 `./scripts/eval.sh treatment` (stub uses MCP tools under treatment).
-`AGENT=ollama OLLAMA_MODEL=qwen3:8b ./scripts/eval.sh treatment` for a real model
-tool-loop. Compare: `python3 testing/eval/compare_eval.py`.
+`make eval-baseline AGENT=ollama SUITE=navigation` then
+`make eval-treatment AGENT=ollama SUITE=navigation` (pinned model: `qwen3:8b`).
+Compare: `python3 testing/eval/compare_eval.py`.
+Leave-one-out ablation (stub default for CI): `make ablation`.
+Ollama ablation: `make l5-ablation` or
+`AGENT=ollama OLLAMA_MODEL=qwen3:8b python3 testing/eval/run_ablation.py --suite navigation --seeds 1 --agent ollama`.

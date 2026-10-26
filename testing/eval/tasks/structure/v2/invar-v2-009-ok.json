@@ -1,0 +1,19 @@
+{
+  "id": "invar-v2-009-ok",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker check_invariants on README.md, report ok true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}

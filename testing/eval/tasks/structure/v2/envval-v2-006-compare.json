@@ -1,0 +1,20 @@
+{
+  "id": "envval-v2-006-compare",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using environment-validator compare_env_templates, report template_path .env.example and missing API_KEY.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      ".env.example",
+      "API_KEY"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "environment-validator"
+  ]
+}

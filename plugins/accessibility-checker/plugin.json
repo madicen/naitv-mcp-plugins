@@ -1,0 +1,71 @@
+{
+  "name": "accessibility-checker",
+  "version": "0.1.0",
+  "description": "Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools.",
+  "author": "madicen",
+  "tags": [
+    "accessibility-checker"
+  ],
+  "entries": [
+    {
+      "kind": "tool",
+      "name": "check_a11y_file",
+      "delivery": "on-demand",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "body": "check_a11y_file for accessibility-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=check_a11y_file python3 ~/.config/naitv-mcp/tools/accessibility-checker/accessibility_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "list_a11y_rules",
+      "delivery": "on-demand",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "body": "list_a11y_rules for accessibility-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=list_a11y_rules python3 ~/.config/naitv-mcp/tools/accessibility-checker/accessibility_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "a11y_summary",
+      "delivery": "on-demand",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "body": "a11y_summary for accessibility-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=a11y_summary python3 ~/.config/naitv-mcp/tools/accessibility-checker/accessibility_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    },
+    {
+      "kind": "tool",
+      "name": "suggest_a11y_fixes",
+      "delivery": "on-demand",
+      "tags": [
+        "accessibility-checker"
+      ],
+      "body": "suggest_a11y_fixes for accessibility-checker.",
+      "fields": {
+        "exec": "TOOL_NAME=suggest_a11y_fixes python3 ~/.config/naitv-mcp/tools/accessibility-checker/accessibility_checker.py",
+        "io_mode": "json",
+        "timeout": "5s",
+        "params": "[{\"name\": \"root_path\", \"description\": \"Absolute project root\", \"required\": true}, {\"name\": \"query\", \"description\": \"Optional query/pattern\", \"required\": false}, {\"name\": \"path\", \"description\": \"Optional relative path\", \"required\": false}, {\"name\": \"limit\", \"description\": \"Result limit\", \"required\": false}, {\"name\": \"depth\", \"description\": \"Walk depth\", \"required\": false}]"
+      }
+    }
+  ]
+}

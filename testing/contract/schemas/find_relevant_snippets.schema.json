@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://naitv-mcp.dev/schemas/find_relevant_snippets.schema.json",
+  "title": "find_relevant_snippets",
+  "type": "object",
+  "required": ["snippets", "total_tokens"],
+  "properties": {
+    "snippets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "start_line", "end_line", "text", "score"],
+        "properties": {
+          "path": { "type": "string" },
+          "start_line": { "type": "integer", "minimum": 1 },
+          "end_line": { "type": "integer", "minimum": 1 },
+          "text": { "type": "string" },
+          "score": { "type": "number", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "total_tokens": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

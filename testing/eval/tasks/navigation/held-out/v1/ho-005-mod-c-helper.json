@@ -1,0 +1,17 @@
+{
+  "difficulty": "medium",
+  "control": false,
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mod_c",
+      "helper"
+    ]
+  },
+  "id": "ho-005-mod-c-helper",
+  "suite": "navigation",
+  "version": 1,
+  "category": "navigation",
+  "fixture": "deps-mini",
+  "request": "Which module defines helper used by mod_b?"
+}

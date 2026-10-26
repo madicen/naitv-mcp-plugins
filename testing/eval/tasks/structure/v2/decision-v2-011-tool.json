@@ -1,0 +1,20 @@
+{
+  "id": "decision-v2-011-tool",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using decision-log-runner parse_decision_log, report tool parse_decision_log and loaded true.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "parse_decision_log",
+      "true"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "decision-log-runner"
+  ]
+}

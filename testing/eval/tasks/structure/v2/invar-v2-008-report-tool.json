@@ -1,0 +1,19 @@
+{
+  "id": "invar-v2-008-report-tool",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using invariant-checker report_invariant_violations, report tool report_invariant_violations.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "report_invariant_violations"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "invariant-checker"
+  ]
+}
