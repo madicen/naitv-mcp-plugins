@@ -1,20 +1,21 @@
 {
-  "id": "depgraph-v2-011-go-edges",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-011-go-edges",
+  "difficulty": "hard",
   "fixture": "go-small",
-  "request": "Using dependency-graph-analyzer build_import_graph on go-small, report edge_count 1 and node_count 2.",
+  "request": "Using dependency-graph-analyzer build_import_graph on this go fixture, how many edges and nodes are in the graph, and which stdlib-like node is imported?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "1",
-      "2"
+      "2",
+      "testing"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }

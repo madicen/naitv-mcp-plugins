@@ -1,11 +1,15 @@
 {
-  "id": "docscrap-v2-014-adr-accepted",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper extract_sections (and ADR body) on docs/adr/0001-record-architecture.md, report Status Accepted plus Decision and Consequences sections.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-014-adr-accepted",
+  "difficulty": "hard",
+  "request": "Using doc-scraper extract_sections (and ADR body) on the ADR under docs/adr/, what heading and body value describe approval state, and which headings cover the chosen approach and outcomes?",
   "success": {
     "type": "answer_contains_all",
     "values": [
@@ -14,9 +18,5 @@
       "Decision",
       "Consequences"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

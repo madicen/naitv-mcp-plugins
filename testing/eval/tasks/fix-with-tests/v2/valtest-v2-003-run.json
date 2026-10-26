@@ -1,20 +1,20 @@
 {
-  "id": "valtest-v2-003-run",
   "suite": "fix-with-tests",
   "version": 2,
   "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-003-run",
   "difficulty": "medium",
   "fixture": "build-mini",
-  "request": "Using validate-and-test run_validation, report summary dry-run make: 0 test file(s) listed.",
+  "request": "Using validate-and-test run_validation on this fixture, what does the summary say about the dry-run for make and how many test files are listed?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "dry-run make",
       "0 test file"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "validate-and-test"
-  ]
+  }
 }

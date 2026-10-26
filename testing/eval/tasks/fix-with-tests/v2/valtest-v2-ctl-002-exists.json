@@ -2,10 +2,10 @@
   "id": "valtest-v2-ctl-002-exists",
   "suite": "fix-with-tests",
   "version": 2,
-  "category": "control",
+  "category": "fix-with-tests",
   "difficulty": "easy",
   "fixture": "build-mini",
-  "request": "Read README.md and mention README. Do not use plugin tools.",
+  "request": "Confirm this fixture has a readme; include the word README. Do not use plugin tools.",
   "success": {
     "type": "answer_contains_all",
     "values": [

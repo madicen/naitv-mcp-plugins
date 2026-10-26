@@ -1,20 +1,19 @@
 {
-  "id": "docscrap-v2-005-search-arch",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper search_doc_index with query architecture, report path docs/adr/0001-record-architecture.md.",
-  "success": {
-    "type": "answer_contains_all",
-    "values": [
-      "docs/adr/0001-record-architecture.md",
-      "architecture"
-    ]
-  },
   "control": false,
   "plugins_expected": [
     "doc-scraper"
-  ]
+  ],
+  "id": "docscrap-v2-005-search-arch",
+  "difficulty": "medium",
+  "request": "Using doc-scraper search_doc_index with query architecture, which document path appears among the hits?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "docs/adr/0001-record-architecture.md"
+    ]
+  }
 }

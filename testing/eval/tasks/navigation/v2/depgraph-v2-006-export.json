@@ -1,20 +1,20 @@
 {
-  "id": "depgraph-v2-006-export",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-006-export",
   "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using dependency-graph-analyzer export_graph, report format dot and edge_count 2.",
+  "request": "Using dependency-graph-analyzer export_graph on this fixture in Graphviz digraph form, what format string does the tool return and how many edges does the export report?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "dot",
       "2"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }

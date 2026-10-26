@@ -1,19 +1,19 @@
 {
-  "id": "docscrap-v2-008-adr-store",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper fetch_and_parse on the ADR, report the decision text mentions docs/adr/.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-008-adr-store",
+  "difficulty": "medium",
+  "request": "Using doc-scraper fetch_and_parse on the numbered architecture-decision markdown in this fixture, what directory path does the chosen-approach body say to store those decisions under?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "docs/adr/"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

@@ -1,20 +1,20 @@
 {
-  "id": "depgraph-v2-009-fan-a",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-009-fan-a",
+  "difficulty": "hard",
   "fixture": "py-small",
-  "request": "Using dependency-graph-analyzer query_dependencies with module pkg, report imported_by includes pkg.greeter and pkg.a.b.deep.",
+  "request": "Using dependency-graph-analyzer query_dependencies on the package root module, which modules list it under imported_by?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "pkg.greeter",
       "pkg.a.b.deep"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }

@@ -1,20 +1,20 @@
 {
-  "id": "depgraph-v2-008-fan-b",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-008-fan-b",
   "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using dependency-graph-analyzer find_hubs, report pkg.util.math fan_in 0.",
+  "request": "Using dependency-graph-analyzer find_hubs, what is the full module id of the math utility and what fan_in does it have?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "pkg.util.math",
       "0"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }

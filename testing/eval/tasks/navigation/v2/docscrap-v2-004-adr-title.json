@@ -1,19 +1,19 @@
 {
-  "id": "docscrap-v2-004-adr-title",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper extract_sections, report the ADR title section ADR 0001: Record architecture decisions.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-004-adr-title",
+  "difficulty": "medium",
+  "request": "Using doc-scraper extract_sections on the ADR under docs/adr/, what is the level-1 section title?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "ADR 0001: Record architecture decisions"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

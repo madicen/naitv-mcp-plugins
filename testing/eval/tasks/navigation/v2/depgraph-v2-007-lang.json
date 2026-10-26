@@ -1,19 +1,19 @@
 {
-  "id": "depgraph-v2-007-lang",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-007-lang",
+  "difficulty": "easy",
   "fixture": "py-small",
-  "request": "Using dependency-graph-analyzer build_import_graph, report language python.",
+  "request": "Using dependency-graph-analyzer build_import_graph on this fixture, what language does the tool report?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "python"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }

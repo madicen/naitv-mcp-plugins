@@ -1,20 +1,20 @@
 {
-  "id": "docscrap-v2-011-loaded",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper fetch_and_parse on README.md, report loaded true and path README.md.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-011-loaded",
+  "difficulty": "easy",
+  "request": "Using doc-scraper fetch_and_parse on this fixture's root readme, is the document loaded successfully (boolean field), and what path is returned?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "true",
       "README.md"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

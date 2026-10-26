@@ -1,20 +1,21 @@
 {
-  "id": "valtest-v2-010-exit",
   "suite": "fix-with-tests",
   "version": 2,
   "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-010-exit",
   "difficulty": "medium",
   "fixture": "build-mini",
-  "request": "Using validate-and-test run_validation, report exit_code 0 and ok true.",
+  "request": "Using validate-and-test run_validation on this make fixture, report exit_code, ok, and the dry-run summary fragment for make.",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "0",
-      "true"
+      "true",
+      "dry-run make"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "validate-and-test"
-  ]
+  }
 }

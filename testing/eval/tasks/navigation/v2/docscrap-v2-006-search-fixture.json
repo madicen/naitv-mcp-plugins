@@ -1,20 +1,20 @@
 {
-  "id": "docscrap-v2-006-search-fixture",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper search_doc_index with query fixture, report README.md and count 1.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-006-search-fixture",
+  "difficulty": "medium",
+  "request": "Using doc-scraper search_doc_index with query fixture, which path is hit and how many hits does the tool report?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "README.md",
       "1"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

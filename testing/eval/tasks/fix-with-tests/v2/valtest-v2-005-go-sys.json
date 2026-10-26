@@ -1,20 +1,20 @@
 {
-  "id": "valtest-v2-005-go-sys",
   "suite": "fix-with-tests",
   "version": 2,
   "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-005-go-sys",
   "difficulty": "medium",
   "fixture": "go-small",
-  "request": "Using validate-and-test detect_build_system, report build_system go and config_files go.mod.",
+  "request": "Using validate-and-test detect_build_system on this go fixture, what build system is detected and which config file is listed?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "go",
       "go.mod"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "validate-and-test"
-  ]
+  }
 }

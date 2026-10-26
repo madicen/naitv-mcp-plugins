@@ -1,20 +1,20 @@
 {
-  "id": "valtest-v2-001-make",
   "suite": "fix-with-tests",
   "version": 2,
   "category": "fix-with-tests",
-  "difficulty": "medium",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-001-make",
+  "difficulty": "easy",
   "fixture": "build-mini",
-  "request": "Using validate-and-test detect_build_system, report build_system make and config_files Makefile.",
+  "request": "Using validate-and-test detect_build_system on this fixture, what build system is detected and which config file is listed?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "make",
       "Makefile"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "validate-and-test"
-  ]
+  }
 }

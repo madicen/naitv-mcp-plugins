@@ -1,19 +1,19 @@
 {
-  "id": "valtest-v2-004-fail-sum",
   "suite": "fix-with-tests",
   "version": 2,
   "category": "fix-with-tests",
+  "control": false,
+  "plugins_expected": [
+    "validate-and-test"
+  ],
+  "id": "valtest-v2-004-fail-sum",
   "difficulty": "medium",
   "fixture": "build-mini",
-  "request": "Using validate-and-test summarize_failures, report summary no FAIL lines found.",
+  "request": "Using validate-and-test summarize_failures on a clean/passing log for this fixture, what does the summary say about FAIL lines?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "no FAIL lines found"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "validate-and-test"
-  ]
+  }
 }

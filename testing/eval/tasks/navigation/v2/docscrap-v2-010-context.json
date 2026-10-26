@@ -1,20 +1,20 @@
 {
-  "id": "docscrap-v2-010-context",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
   "fixture": "py-small",
-  "request": "Using doc-scraper fetch_and_parse on docs/adr/0001-record-architecture.md, report Context section exists and mentions py-small.",
+  "control": false,
+  "plugins_expected": [
+    "doc-scraper"
+  ],
+  "id": "docscrap-v2-010-context",
+  "difficulty": "medium",
+  "request": "Using doc-scraper fetch_and_parse on the ADR under docs/adr/, what heading covers background/situation, and which short fixture token appears in that section's body?",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "Context",
       "py-small"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "doc-scraper"
-  ]
+  }
 }

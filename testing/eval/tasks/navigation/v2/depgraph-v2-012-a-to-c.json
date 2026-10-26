@@ -1,20 +1,20 @@
 {
-  "id": "depgraph-v2-012-a-to-c",
   "suite": "navigation",
   "version": 2,
   "category": "navigation",
-  "difficulty": "medium",
+  "control": false,
+  "plugins_expected": [
+    "dependency-graph-analyzer"
+  ],
+  "id": "depgraph-v2-012-a-to-c",
+  "difficulty": "hard",
   "fixture": "py-small",
-  "request": "Using dependency-graph-analyzer build_import_graph, confirm edge from pkg.a.b.deep to pkg.",
+  "request": "Using dependency-graph-analyzer build_import_graph, report both ends of the import edge whose source is the deeply nested module under a.b.",
   "success": {
     "type": "answer_contains_all",
     "values": [
       "pkg.a.b.deep",
       "pkg"
     ]
-  },
-  "control": false,
-  "plugins_expected": [
-    "dependency-graph-analyzer"
-  ]
+  }
 }
