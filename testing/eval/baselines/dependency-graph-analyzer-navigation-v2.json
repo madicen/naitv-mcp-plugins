@@ -7,29 +7,29 @@
   "seeds": 3,
   "baseline_summary": {
     "n": 48,
-    "success_rate": 1.0,
+    "success_rate": 0.1875,
     "control_n": 12,
-    "control_success_rate": 1.0,
-    "mean_nonexistent_symbol_rate": 0.6666666666666666,
-    "mean_wall_seconds": 14.18106647664293,
+    "control_success_rate": 0.5,
+    "mean_nonexistent_symbol_rate": 0.4166666666666667,
+    "mean_wall_seconds": 13.461188491424158,
     "total_tool_calls": 0
   },
   "treatment_summary": {
     "n": 48,
-    "success_rate": 1.0,
+    "success_rate": 0.7916666666666666,
     "control_n": 12,
     "control_success_rate": 1.0,
     "mean_nonexistent_symbol_rate": 0.05555555555555555,
-    "mean_wall_seconds": 14.380320422753963,
-    "total_tool_calls": 37
+    "mean_wall_seconds": 30.36448464236552,
+    "total_tool_calls": 34
   },
   "verdict": {
-    "baseline_success_rate": 1.0,
-    "treatment_success_rate": 1.0,
-    "delta_pp": 0.0,
-    "control_drop_pp": 0.0,
+    "baseline_success_rate": 0.1875,
+    "treatment_success_rate": 0.7916666666666666,
+    "delta_pp": 60.416666666666664,
+    "control_drop_pp": -50.0,
     "tool_inflation_pct": null,
-    "nonexistent_rate_increase": -0.611111111111111,
+    "nonexistent_rate_increase": -0.36111111111111116,
     "gate": {
       "min_success_delta_pp": 10,
       "ci_must_exclude_zero": true,
@@ -37,8 +37,8 @@
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
     },
-    "passed": false,
-    "l5": "measured-no-uplift"
+    "passed": true,
+    "l5": "measured-helpful"
   },
   "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/navigation-v2-dependency-graph-analyzer-baseline-latest.json",
   "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/navigation-v2-dependency-graph-analyzer-treatment-latest.json"

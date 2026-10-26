@@ -7,29 +7,29 @@
   "seeds": 3,
   "baseline_summary": {
     "n": 48,
-    "success_rate": 0.9375,
+    "success_rate": 0.375,
     "control_n": 12,
     "control_success_rate": 1.0,
     "mean_nonexistent_symbol_rate": 0.25,
-    "mean_wall_seconds": 10.25630998868049,
+    "mean_wall_seconds": 24.218945624122473,
     "total_tool_calls": 0
   },
   "treatment_summary": {
     "n": 48,
-    "success_rate": 0.9583333333333334,
+    "success_rate": 0.9375,
     "control_n": 12,
-    "control_success_rate": 1.0,
-    "mean_nonexistent_symbol_rate": 0.06944444444444445,
-    "mean_wall_seconds": 15.281101829823456,
-    "total_tool_calls": 38
+    "control_success_rate": 0.9166666666666666,
+    "mean_nonexistent_symbol_rate": 0.05555555555555555,
+    "mean_wall_seconds": 16.705972054648253,
+    "total_tool_calls": 43
   },
   "verdict": {
-    "baseline_success_rate": 0.9375,
-    "treatment_success_rate": 0.9583333333333334,
-    "delta_pp": 2.083333333333337,
-    "control_drop_pp": 0.0,
+    "baseline_success_rate": 0.375,
+    "treatment_success_rate": 0.9375,
+    "delta_pp": 56.25,
+    "control_drop_pp": 8.333333333333337,
     "tool_inflation_pct": null,
-    "nonexistent_rate_increase": -0.18055555555555555,
+    "nonexistent_rate_increase": -0.19444444444444445,
     "gate": {
       "min_success_delta_pp": 10,
       "ci_must_exclude_zero": true,
