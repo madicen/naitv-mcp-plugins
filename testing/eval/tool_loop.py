@@ -202,22 +202,34 @@ def ollama_with_mcp(
     fixture_root = str((FIXTURES / task["fixture"]).resolve())
     allow = plugin_tool_names(plugins or [])
 
+    # Controls measure "tools don't regress easy answers" — never offer tools,
+    # or the model burns max turns calling them (empty final_answer → control_drop).
     tools_mcp: list[dict[str, Any]] = []
-    if client is not None and condition == "treatment":
+    if (
+        client is not None
+        and condition == "treatment"
+        and not task.get("control")
+    ):
         tools_mcp = list_plugin_tools(client, plugins=plugins or None)
         rng = random.Random(seed)
         rng.shuffle(tools_mcp)  # plan: randomize tool order per run
 
     ollama_tools = _mcp_to_ollama_tools(tools_mcp) if tools_mcp else None
 
-    system = (
-        "You are a careful coding assistant working on a local fixture repo. "
-        "Answer briefly. Copy paths and names exactly from tool JSON fields "
-        "(path, name, title, key) — do not invent CamelCase identifiers. "
-        "Do not narrate tool names in the final answer; just state the facts. "
-        "When tools are available, use them before answering. "
-        "When you are done, reply with the final answer as plain text (no tool call)."
-    )
+    if task.get("control"):
+        system = (
+            "You are a careful coding assistant. This is a CONTROL task: "
+            "do not call tools. Answer the request directly in plain text."
+        )
+    else:
+        system = (
+            "You are a careful coding assistant working on a local fixture repo. "
+            "Answer briefly. Copy paths and names exactly from tool JSON fields "
+            "(path, name, title, key) — do not invent CamelCase identifiers. "
+            "Do not narrate tool names in the final answer; just state the facts. "
+            "When tools are available, use them before answering. "
+            "When you are done, reply with the final answer as plain text (no tool call)."
+        )
     user = (
         f"Fixture repo root (absolute): {fixture_root}\n"
         f"Condition: {condition}\n\n"
