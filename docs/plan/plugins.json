@@ -342,7 +342,7 @@
       ],
       "depends_on_raw": "workspace-search",
       "eval_category": "multi-file",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=45.5pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=58.3pp). L5 v2 measured-helpful (qwen3:8b, seeds=3, \u0394=54.2pp).",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Matrix gives tool count (4) and perf only. Tool names needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=45.5pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=58.3pp). L5 v2 measured-helpful (qwen3:8b, seeds=3, \u0394=54.2pp). Multi-file leave-one-out (qwen3:8b, seeds=1): drop\to51% success vs drop context-injector/codegen\to26\u201327% \u2014 removed from multi-file treatment_plugins (hurts the combo).",
       "order": 13,
       "draft_tools": [
         "find_pattern_instances",
