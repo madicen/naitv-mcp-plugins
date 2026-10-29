@@ -11,23 +11,23 @@
     "control_n": 12,
     "control_success_rate": 1.0,
     "mean_nonexistent_symbol_rate": 0.25,
-    "mean_wall_seconds": 24.218945624122473,
+    "mean_wall_seconds": 25.445297394903417,
     "total_tool_calls": 0
   },
   "treatment_summary": {
     "n": 48,
-    "success_rate": 0.9375,
+    "success_rate": 0.9583333333333334,
     "control_n": 12,
-    "control_success_rate": 0.9166666666666666,
+    "control_success_rate": 1.0,
     "mean_nonexistent_symbol_rate": 0.05555555555555555,
-    "mean_wall_seconds": 16.705972054648253,
-    "total_tool_calls": 43
+    "mean_wall_seconds": 18.72012400786237,
+    "total_tool_calls": 38
   },
   "verdict": {
     "baseline_success_rate": 0.375,
-    "treatment_success_rate": 0.9375,
-    "delta_pp": 56.25,
-    "control_drop_pp": 8.333333333333337,
+    "treatment_success_rate": 0.9583333333333334,
+    "delta_pp": 58.333333333333336,
+    "control_drop_pp": 0.0,
     "tool_inflation_pct": null,
     "nonexistent_rate_increase": -0.19444444444444445,
     "gate": {
@@ -37,8 +37,8 @@
       "max_nonexistent_symbol_rate_increase": 0,
       "max_tool_call_inflation_pct": 25
     },
-    "passed": false,
-    "l5": "measured-no-uplift"
+    "passed": true,
+    "l5": "measured-helpful"
   },
   "baseline_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v2-validate-and-test-baseline-latest.json",
   "treatment_report": "/Users/michael.madicen/Documents/GitHub/naitv-mcp-plugins/testing/eval/runs/fix-with-tests-v2-validate-and-test-treatment-latest.json"

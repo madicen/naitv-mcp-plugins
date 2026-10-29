@@ -534,8 +534,8 @@
         "build-system-integrator"
       ],
       "eval_category": "fix-with-tests",
-      "l5": "measured-no-uplift",
-      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=17.6pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=18.8pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=2.1pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=56.2pp; gate fail: control_drop=8.3pp > 2pp).",
+      "l5": "measured-helpful",
+      "notes": "L1\u2013L4 green; L5 pending. Generated deterministic tools. Tool list needed. Approved first-draft tools from draft_tools. L5 measured-no-uplift (qwen3:8b, seeds=3, \u0394=17.6pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=18.8pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=2.1pp). L5 v2 measured-no-uplift (qwen3:8b, seeds=3, \u0394=56.2pp; gate fail: control_drop=8.3pp > 2pp). L5 v2 measured-helpful (qwen3:8b, seeds=3, \u0394=58.3pp).",
       "tool_count": 3,
       "implementation": "Build tools",
       "perf": "< 5s",
