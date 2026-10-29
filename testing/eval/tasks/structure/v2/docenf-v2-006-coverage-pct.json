@@ -1,0 +1,19 @@
+{
+  "id": "docenf-v2-006-coverage-pct",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc_coverage_report, what is coverage_pct? Answer with 25.0 or 25.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "25"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

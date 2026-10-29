@@ -1,0 +1,19 @@
+{
+  "id": "docenf-v2-011-go-coverage",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using doc_coverage_report with depth 5, what is undocumented count? Answer with 3.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "3"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

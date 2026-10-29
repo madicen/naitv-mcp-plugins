@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-011-go-pattern-add",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using search_by_pattern with pattern Add and depth 5, report the matching function name.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Add",
+      "function"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "symnav-v2-010-go-hello",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using find_symbol_definition with depth 5, what type is Hello and which file basename holds it?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Hello",
+      "method",
+      "greeter.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

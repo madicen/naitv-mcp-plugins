@@ -1,15 +1,24 @@
 {
-  "count": 2,
+  "count": 3,
   "items": [
     {
-      "path": "pkg/a/b/deep.py",
-      "score": 0.4667
+      "documented": false,
+      "line": 4,
+      "name": "Greeter",
+      "path": "pkg/greeter.py"
     },
     {
-      "path": "pkg/greeter.py",
-      "score": 0.5
+      "documented": false,
+      "line": 5,
+      "name": "Greeter.hello",
+      "path": "pkg/greeter.py"
+    },
+    {
+      "documented": false,
+      "line": 9,
+      "name": "add",
+      "path": "pkg/greeter.py"
     }
   ],
-  "tool": "find_undocumented",
-  "truncated": false
+  "tool": "find_undocumented"
 }

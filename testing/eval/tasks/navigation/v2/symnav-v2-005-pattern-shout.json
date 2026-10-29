@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-005-pattern-shout",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using search_by_pattern for shout, what function name matches?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "shout_count",
+      "function"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

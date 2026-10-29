@@ -1,0 +1,21 @@
+{
+  "id": "symnav-v2-002-format-greeting",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using find_symbol_definition, what file basename defines format_greeting, and what type is it?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.py",
+      "function",
+      "format_greeting"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

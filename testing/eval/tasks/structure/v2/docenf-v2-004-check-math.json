@@ -1,0 +1,20 @@
+{
+  "id": "docenf-v2-004-check-math",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using check_doc_comments on path pkg/util/math.py, is ok false? Mention missing_doc and mul.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mul",
+      "missing_doc"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

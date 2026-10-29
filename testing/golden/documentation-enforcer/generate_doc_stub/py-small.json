@@ -1,8 +1,10 @@
 {
-  "generated": "# generate_doc_stub\n# root=py-small\n# query=Greeter\n",
+  "generated": "# generate_doc_stub\n# path=README.md\n# symbol=Greeter\n\"\"\"TODO: document Greeter.\"\"\"\n",
   "items": [
     {
-      "text": "# generate_doc_stub\n# root=py-small\n# query=Greeter\n"
+      "name": "Greeter",
+      "path": "README.md",
+      "text": "\"\"\"TODO: document Greeter.\"\"\""
     }
   ],
   "ok": true,

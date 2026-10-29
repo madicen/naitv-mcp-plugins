@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-012-mul-def",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using get_symbol_references for mul, where is mul defined? Report math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "math.py",
+      "mul"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

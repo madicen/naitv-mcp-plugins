@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-003-add-fn",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Find the definition of add in this fixture. Report basename and that it is a function.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.py",
+      "function"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}
