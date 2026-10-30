@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""documentation-enforcer: generated JSON I/O tools (stdlib, deterministic, bounded)."""
+"""documentation-enforcer: find undocumented defs, check/stub docs, coverage."""
 from __future__ import annotations
 
-import hashlib
+import ast
 import json
 import os
 import re
@@ -14,12 +14,18 @@ MAX_INPUT_BYTES = 1_000_000
 MAX_FILES = 500
 MAX_FILE_BYTES = 64_000
 SKIP = {".git", "node_modules", "vendor", ".venv", "__pycache__", "dist", "build"}
+CODE_EXTS = {".py", ".go"}
 TOOLS = {
-        'find_undocumented',
-        'check_doc_comments',
-        'generate_doc_stub',
-        'doc_coverage_report'
+    "find_undocumented",
+    "check_doc_comments",
+    "generate_doc_stub",
+    "doc_coverage_report",
 }
+
+_GO_FUNC = re.compile(
+    r"^func\s+(?:\([^)]+\)\s*)?([A-Za-z_][A-Za-z0-9_]*)\s*\("
+)
+_GO_DOC = re.compile(r"^//")
 
 
 def _error(message: str, *, code: int = 1) -> None:
@@ -82,73 +88,177 @@ def read_text(path: Path) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
-    depth = int(data.get("depth", 3))
-    query = str(data.get("query") or data.get("pattern") or data.get("text") or "").strip()
-    path_s = str(data.get("path") or data.get("file") or "README.md").strip()
-    limit = max(1, min(int(data.get("limit", 20)), 100))
-    files = iter_files(root, depth)
-    truncated = len(files) >= MAX_FILES
+def _py_defs(text: str) -> list[tuple[str, int, bool]]:
+    """(name, lineno, has_doc)."""
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return []
+    out: list[tuple[str, int, bool]] = []
 
-    if tool.startswith(("list_", "find_", "scan_", "search_", "mine_", "extract_")) or tool.endswith(
-        ("_summary", "_report", "_stats")
-    ):
-        items = []
-        q = query.lower()
-        for f in files:
-            r = rel(f, root)
-            text = read_text(f)
-            if q and q not in text.lower() and q not in r.lower():
-                continue
-            items.append({"path": r, "score": 1.0 if not q else round(min(1.0, len(q) / max(len(r), 1)), 4)})
-            if len(items) >= limit:
-                break
-        if not items and not q:
-            items = [{"path": rel(f, root), "score": 0.0} for f in files[:limit]]
-        return {"items": items, "count": len(items), "truncated": truncated, "tool": tool}
+    def add(node: ast.AST, name: str) -> None:
+        doc = ast.get_docstring(node)  # type: ignore[arg-type]
+        out.append((name, getattr(node, "lineno", 1), bool(doc and doc.strip())))
 
-    if tool.startswith(("check_", "validate_", "verify_", "allowlist_")):
-        violations = []
-        target = root / path_s
-        if path_s and target.is_file():
-            text = read_text(target)
-            if "TODO" in text:
-                violations.append({"path": path_s, "rule": "todo", "message": "TODO found"})
-        return {"ok": len(violations) == 0, "violations": violations, "count": len(violations), "tool": tool}
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            add(node, node.name)
+        elif isinstance(node, ast.ClassDef):
+            add(node, node.name)
+            for child in node.body:
+                if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    add(child, f"{node.name}.{child.name}")
+    return out
 
-    if tool.startswith(("generate_", "suggest_", "render_", "plan_", "decompose_", "inject_")):
-        body = f"# {tool}\n# root={root.name}\n# query={query or path_s}\n"
-        return {"generated": body, "ok": True, "items": [{"text": body}], "tool": tool}
 
-    if tool.startswith(("run_", "apply_", "execute_")):
-        return {"ok": True, "exit_code": 0, "summary": f"{tool} dry-run on {root.name}", "tool": tool}
+def _go_defs(text: str) -> list[tuple[str, int, bool]]:
+    lines = text.splitlines()
+    out: list[tuple[str, int, bool]] = []
+    i = 0
+    while i < len(lines):
+        m = _GO_FUNC.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        name = m.group(1)
+        # preceding contiguous // comments count as docs
+        j = i - 1
+        has_doc = False
+        while j >= 0 and _GO_DOC.match(lines[j].lstrip()):
+            has_doc = True
+            j -= 1
+        out.append((name, i + 1, has_doc))
+        i += 1
+    return out
 
-    if tool.startswith(("load_", "parse_", "fetch_")):
-        target = root / path_s
-        if target.is_file():
-            content = read_text(target)
-            return {"loaded": True, "content": content[:4000], "path": path_s, "tool": tool}
-        # fall back to first text-ish file
-        for f in files:
-            if f.suffix in {".md", ".txt", ".py", ".go", ".json"} or f.name.upper().startswith("README"):
-                return {
-                    "loaded": True,
-                    "content": read_text(f)[:4000],
-                    "path": rel(f, root),
-                    "tool": tool,
+
+def _collect_defs(root: Path, depth: int) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    for path in iter_files(root, depth):
+        if path.suffix.lower() not in CODE_EXTS:
+            continue
+        text = read_text(path)
+        defs = _py_defs(text) if path.suffix.lower() == ".py" else _go_defs(text)
+        r = rel(path, root)
+        for name, line, has_doc in defs:
+            items.append(
+                {
+                    "path": r,
+                    "name": name,
+                    "line": line,
+                    "documented": has_doc,
                 }
-        return {"loaded": False, "content": "", "path": path_s, "tool": tool}
+            )
+    return items
 
-    if tool.startswith(("add_", "record_", "update_", "mark_", "track_")):
-        payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-        mid = hashlib.sha256(f"{tool}|{root}|{payload}".encode()).hexdigest()[:12]
-        cache = Path(os.environ.get("XDG_CACHE_HOME") or (Path.home() / ".cache"))
-        dest = cache / "naitv-mcp" / "documentation-enforcer"
-        dest.mkdir(parents=True, exist_ok=True)
-        (dest / f"{mid}.json").write_text(payload + "\n", encoding="utf-8")
-        return {"stored": True, "id": mid, "tool": tool}
 
-    return {"ok": True, "tool": tool, "result": {"root": root.name, "files": len(files)}, "truncated": truncated}
+def find_undocumented(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    limit = max(1, min(int(data.get("limit", 20)), 100))
+    query = str(data.get("query") or data.get("symbol") or "").strip()
+    undoc = [d for d in _collect_defs(root, depth) if not d["documented"]]
+    if query:
+        q = query.lower()
+        undoc = [d for d in undoc if q in d["name"].lower() or q in d["path"].lower()]
+    undoc = undoc[:limit]
+    return {
+        "items": undoc,
+        "count": len(undoc),
+        "tool": "find_undocumented",
+    }
+
+
+def check_doc_comments(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    path_s = str(data.get("path") or data.get("file") or "").strip()
+    violations: list[dict[str, Any]] = []
+    defs = _collect_defs(root, depth)
+    if path_s:
+        defs = [d for d in defs if d["path"] == path_s.replace("\\", "/")]
+    for d in defs:
+        if not d["documented"]:
+            violations.append(
+                {
+                    "path": d["path"],
+                    "name": d["name"],
+                    "line": d["line"],
+                    "rule": "missing_doc",
+                    "message": f"{d['name']} has no docstring/comment",
+                }
+            )
+    return {
+        "ok": len(violations) == 0,
+        "violations": violations[:100],
+        "count": len(violations),
+        "tool": "check_doc_comments",
+    }
+
+
+def generate_doc_stub(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    symbol = str(data.get("symbol") or data.get("query") or data.get("name") or "").strip()
+    path_s = str(data.get("path") or data.get("file") or "").strip()
+    depth = int(data.get("depth", 3))
+    target = None
+    for d in _collect_defs(root, depth):
+        if symbol and d["name"] != symbol and not d["name"].endswith("." + symbol):
+            continue
+        if path_s and d["path"] != path_s.replace("\\", "/"):
+            continue
+        if symbol or path_s:
+            target = d
+            break
+    if target is None and symbol:
+        # no match — still emit a stub named after the request
+        target = {"name": symbol, "path": path_s or "unknown", "line": 1}
+    if target is None:
+        return {
+            "ok": False,
+            "generated": "",
+            "items": [],
+            "tool": "generate_doc_stub",
+        }
+    name = target["name"]
+    stub = f'"""TODO: document {name}."""'
+    if str(target.get("path", "")).endswith(".go"):
+        stub = f"// {name} ..."
+    body = f"# generate_doc_stub\n# path={target.get('path')}\n# symbol={name}\n{stub}\n"
+    return {
+        "ok": True,
+        "generated": body,
+        "items": [{"name": name, "path": target.get("path"), "text": stub}],
+        "tool": "generate_doc_stub",
+    }
+
+
+def doc_coverage_report(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    depth = int(data.get("depth", 3))
+    defs = _collect_defs(root, depth)
+    total = len(defs)
+    documented = sum(1 for d in defs if d["documented"])
+    pct = round(100.0 * documented / total, 1) if total else 100.0
+    undoc = [d for d in defs if not d["documented"]][:20]
+    return {
+        "total": total,
+        "documented": documented,
+        "undocumented": total - documented,
+        "coverage_pct": pct,
+        "items": undoc,
+        "count": len(undoc),
+        "tool": "doc_coverage_report",
+    }
+
+
+def handle(tool: str, root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    if tool == "find_undocumented":
+        return find_undocumented(root, data)
+    if tool == "check_doc_comments":
+        return check_doc_comments(root, data)
+    if tool == "generate_doc_stub":
+        return generate_doc_stub(root, data)
+    if tool == "doc_coverage_report":
+        return doc_coverage_report(root, data)
+    # harness smoke for unknown prefixes
+    return {"ok": True, "tool": tool, "result": {"root": root.name}}
 
 
 def main() -> None:

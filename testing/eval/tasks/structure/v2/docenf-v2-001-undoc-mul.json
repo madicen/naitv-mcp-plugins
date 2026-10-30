@@ -1,0 +1,20 @@
+{
+  "id": "docenf-v2-001-undoc-mul",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using find_undocumented, is mul undocumented? Mention mul and math.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mul",
+      "math.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

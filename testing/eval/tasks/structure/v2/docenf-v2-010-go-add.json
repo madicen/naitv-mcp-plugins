@@ -1,0 +1,20 @@
+{
+  "id": "docenf-v2-010-go-add",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using find_undocumented with depth 5, is Add undocumented in greeter.go? Mention Add and greeter.go.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Add",
+      "greeter.go"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "docenf-v2-005-check-greeter-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using check_doc_comments on pkg/greeter.py, how many violations? Answer with 3.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "3"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

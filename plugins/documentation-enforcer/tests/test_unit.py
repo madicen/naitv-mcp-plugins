@@ -19,7 +19,11 @@ def test_handle_empty() -> None:
 
 def test_handle_py_small() -> None:
     out = mod.handle('find_undocumented', FIXTURES / "py-small", {"query": "Greeter", "depth": 3})
-    assert isinstance(out, dict)
+    assert out["count"] >= 1
+    assert any(i["name"].startswith("Greeter") for i in out["items"])
+    cov = mod.handle("doc_coverage_report", FIXTURES / "py-small", {"depth": 3})
+    assert cov["total"] == 8
+    assert cov["coverage_pct"] == 25.0
 
 def test_handle_all_branches() -> None:
     root = FIXTURES / "py-small"

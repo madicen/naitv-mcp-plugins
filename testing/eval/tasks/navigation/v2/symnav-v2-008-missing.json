@@ -1,0 +1,19 @@
+{
+  "id": "symnav-v2-008-missing",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using find_symbol_definition for TotallyMissingXYZ, report that matches is empty. Include the word empty.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "empty"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

@@ -218,8 +218,11 @@ def ollama_with_mcp(
 
     if task.get("control"):
         system = (
-            "You are a careful coding assistant. This is a CONTROL task: "
-            "do not call tools. Answer the request directly in plain text."
+            "You are a careful coding assistant on a real local fixture repo. "
+            "This is a CONTROL task: do not call tools. "
+            "The fixture root path in the user message exists on disk — "
+            "answer the request directly in plain text and include any "
+            "filenames or tokens the task asks for (e.g. README.md)."
         )
     else:
         system = (

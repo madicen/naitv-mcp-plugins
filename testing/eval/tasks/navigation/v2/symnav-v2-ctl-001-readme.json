@@ -1,0 +1,17 @@
+{
+  "id": "symnav-v2-ctl-001-readme",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "easy",
+  "fixture": "py-small",
+  "request": "Open the fixture readme without plugin tools and include README.md in your answer.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "README.md"
+    ]
+  },
+  "control": true,
+  "plugins_expected": []
+}

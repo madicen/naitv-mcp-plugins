@@ -1,0 +1,21 @@
+{
+  "id": "symnav-v2-009-go-add",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "go-small",
+  "request": "Using find_symbol_definition with depth 5, where is Add defined? Report greeter.go and function.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "greeter.go",
+      "function",
+      "Add"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-004-pattern-greet",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using search_by_pattern with pattern Greet, which class name matches?",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "Greeter",
+      "class"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

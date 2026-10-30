@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-007-greeter-refs",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "hard",
+  "fixture": "py-small",
+  "request": "Using get_symbol_references for Greeter, name a file under pkg/a that constructs it.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "deep.py",
+      "Greeter"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "docenf-v2-012-buried",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using find_undocumented, name the buried function path under pkg/a.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "buried",
+      "deep.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

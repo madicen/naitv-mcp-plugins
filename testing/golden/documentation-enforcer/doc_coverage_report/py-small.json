@@ -1,15 +1,46 @@
 {
-  "count": 2,
+  "count": 6,
+  "coverage_pct": 25.0,
+  "documented": 2,
   "items": [
     {
-      "path": "pkg/a/b/deep.py",
-      "score": 0.4667
+      "documented": false,
+      "line": 4,
+      "name": "buried",
+      "path": "pkg/a/b/deep.py"
     },
     {
-      "path": "pkg/greeter.py",
-      "score": 0.5
+      "documented": false,
+      "line": 4,
+      "name": "Greeter",
+      "path": "pkg/greeter.py"
+    },
+    {
+      "documented": false,
+      "line": 5,
+      "name": "Greeter.hello",
+      "path": "pkg/greeter.py"
+    },
+    {
+      "documented": false,
+      "line": 9,
+      "name": "add",
+      "path": "pkg/greeter.py"
+    },
+    {
+      "documented": false,
+      "line": 1,
+      "name": "mul",
+      "path": "pkg/util/math.py"
+    },
+    {
+      "documented": false,
+      "line": 1,
+      "name": "should_skip",
+      "path": "skip_me/secret.py"
     }
   ],
   "tool": "doc_coverage_report",
-  "truncated": false
+  "total": 8,
+  "undocumented": 6
 }

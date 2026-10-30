@@ -1,6 +1,9 @@
 {
   "count": 0,
+  "coverage_pct": 100.0,
+  "documented": 0,
   "items": [],
   "tool": "doc_coverage_report",
-  "truncated": false
+  "total": 0,
+  "undocumented": 0
 }

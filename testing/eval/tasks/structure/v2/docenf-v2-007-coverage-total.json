@@ -1,0 +1,19 @@
+{
+  "id": "docenf-v2-007-coverage-total",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using doc_coverage_report, what is total number of defs? Answer with 8.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "8"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

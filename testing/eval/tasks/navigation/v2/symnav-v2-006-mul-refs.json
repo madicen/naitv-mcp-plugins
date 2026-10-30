@@ -1,0 +1,20 @@
+{
+  "id": "symnav-v2-006-mul-refs",
+  "suite": "navigation",
+  "version": 2,
+  "category": "navigation",
+  "difficulty": "hard",
+  "fixture": "py-small",
+  "request": "Using get_symbol_references for mul, which greeter.py line context uses it? Mention mul and greeter.py.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "mul",
+      "greeter.py"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "symbol-navigator"
+  ]
+}

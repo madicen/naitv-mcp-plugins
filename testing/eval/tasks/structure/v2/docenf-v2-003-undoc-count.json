@@ -1,0 +1,19 @@
+{
+  "id": "docenf-v2-003-undoc-count",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using find_undocumented with limit 30, how many undocumented symbols? Answer with the integer count.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "6"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}

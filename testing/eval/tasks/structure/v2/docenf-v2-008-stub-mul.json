@@ -1,0 +1,20 @@
+{
+  "id": "docenf-v2-008-stub-mul",
+  "suite": "structure",
+  "version": 2,
+  "category": "structure",
+  "difficulty": "medium",
+  "fixture": "py-small",
+  "request": "Using generate_doc_stub for symbol mul on pkg/util/math.py, quote the TODO document mul stub text.",
+  "success": {
+    "type": "answer_contains_all",
+    "values": [
+      "TODO",
+      "mul"
+    ]
+  },
+  "control": false,
+  "plugins_expected": [
+    "documentation-enforcer"
+  ]
+}
