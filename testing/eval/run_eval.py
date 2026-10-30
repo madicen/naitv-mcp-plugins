@@ -80,17 +80,37 @@ def load_tasks(
     ]
     if not plugin:
         return tasks
-    # Per-plugin L5: P's tagged tasks + shared suite controls (no plugins_expected).
-    filtered = []
+    # Per-plugin L5: P's tagged tasks + controls that share P's id family
+    # (e.g. symnav-v2-ctl-*), not every suite control from sibling plugins.
+    tagged = [t for t in tasks if plugin in (t.get("plugins_expected") or [])]
+    prefixes = _task_family_prefixes(tagged)
+    filtered = list(tagged)
     for t in tasks:
-        pe = t.get("plugins_expected") or []
-        if plugin in pe:
+        if not t.get("control"):
+            continue
+        if t.get("plugins_expected"):
+            continue
+        tid = str(t.get("id") or "")
+        if prefixes and any(tid.startswith(p) for p in prefixes):
             filtered.append(t)
-        elif t.get("control") and not pe:
+        elif not prefixes:
+            # no tagged tasks yet — keep unscoped controls (legacy)
             filtered.append(t)
     if not filtered:
         raise SystemExit(f"no tasks for plugin={plugin!r} in suite={suite}")
     return filtered
+
+
+def _task_family_prefixes(tagged: list[dict[str, Any]]) -> set[str]:
+    """Map symnav-v2-001-foo → {'symnav-v2'}; nav-001-bar → {'nav'}."""
+    out: set[str] = set()
+    for t in tagged:
+        parts = str(t.get("id") or "").split("-")
+        if len(parts) >= 2 and parts[1].startswith("v") and parts[1][1:].isdigit():
+            out.add(f"{parts[0]}-{parts[1]}")
+        elif parts:
+            out.add(parts[0])
+    return out
 
 
 def project_map_for(fixture: str) -> dict[str, Any]:
